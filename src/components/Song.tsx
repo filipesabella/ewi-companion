@@ -5,7 +5,6 @@ import { Database } from '../db/Database';
 import { Song } from '../db/Song';
 import { useHotkeys } from '../lib/useHotkeys';
 import { Ewi } from './Ewi';
-import { Tracks } from './Tracks';
 
 require('../styles/song.less');
 
@@ -19,9 +18,6 @@ export function SongComponent({
   song,
   goBack,
   database, }: Props): JSX.Element {
-
-  const [currentTrack, setCurrentTrack] = useState(
-    song.tracks[song.selectedTrack]);
 
   const [notesDown, setNotesDown] = useState(new Set<number>());
 
@@ -63,15 +59,10 @@ export function SongComponent({
   });
 
   return <div id="song">
-    <Tracks
-      song={song}
-      database={database}
-      setCurrentTrack={setCurrentTrack}
-      currentTrack={currentTrack} />
     <Ewi
       database={database}
       song={song}
-      track={currentTrack}
+      track={song.track}
       notesDown={notesDown} />
   </div>;
 }

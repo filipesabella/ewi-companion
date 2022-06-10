@@ -1,3 +1,4 @@
+import { Midi, Track } from '@tonejs/midi';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Database } from '../db/Database';
@@ -16,6 +17,7 @@ export function SongSelector({
   setCurrentSong, }: Props): JSX.Element {
   const [songs, setSongs] = useState<Song[] | null>(null);
   const [reload, setReload] = useState({});
+  const [midi, setMidi] = useState<Midi | null>(null);
 
   useEffect(() => {
     database.listCurrentSongs().then(setSongs);
@@ -37,9 +39,23 @@ export function SongSelector({
     const fileReader = new FileReader();
     fileReader.onload = _ => {
       const midi = importMidi(file.name, fileReader.result as Buffer);
-      database.save(midi).then(_ => setReload({}));
+
+      if (midi.tracks.length === 1) {
+        database.save(midi).then(_ => setReload({}));
+      } else {
+        setMidi(midi);
+      }
     };
+
     fileReader.readAsArrayBuffer(file);
+  };
+
+  const selectTrack = (t: Track) => {
+    midi!.tracks = [t];
+    database.save(midi!).then(_ => {
+      setMidi(null);
+      setReload({});
+    });
   };
 
   return <div className="songSelector">
@@ -47,7 +63,7 @@ export function SongSelector({
     {songs !== null && <div className="currentSongs">
       <h1>Songs</h1>
       {songs.map(songContainer)}
-      <div className="importButton">
+      {!midi && <div className="importButton">
         <input
           type="file"
           id="importFileInput"
@@ -55,7 +71,26 @@ export function SongSelector({
           accept="midi">
         </input>
         <label htmlFor="importFileInput">Import a MIDI file</label>
+      </div>}
+    </div>}
+    {midi && <div className="trackSelector">
+      <div className="tracks">
+        <p>
+          This midi file has more than one track, which one
+          would you like to import?
+        </p>
+        <ul>
+          {midi.tracks.map((t, i) => <li
+            key={t.name + '-' + i}
+            onClick={_ => selectTrack(t)}>
+            {t.name || 'Track ' + i} - {t.instrument.name}
+          </li>)}
+        </ul>
+        <p
+          className="cancel"
+          onClick={_ => setMidi(null)}>Cancel</p>
       </div>
     </div>}
+
   </div>;
 }

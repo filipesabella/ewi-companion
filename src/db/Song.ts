@@ -4,8 +4,7 @@ import { roundNumber } from '../lib/utils';
 export interface Song {
   id: string;
   name: string;
-  tracks: Track[];
-  selectedTrack: number;
+  track: Track;
   bookmarks: number[];
 }
 

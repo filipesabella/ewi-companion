@@ -16,9 +16,10 @@ export function App(): JSX.Element {
 
     // load a song on start for debugging
     database.listCurrentSongs().then(songs => {
-      database.song(songs[0].id).then(s => {
-        setCurrentSong(s!);
-      });
+      // setCurrentSong(testSong);
+      // database.song(songs[0].id).then(s => {
+      //   setCurrentSong(s!);
+      // });
     });
   }, []);
 

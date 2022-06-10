@@ -30,8 +30,7 @@ export class Database {
     await db.songs.put({
       id: uuid(),
       name: midi.name,
-      tracks: midi.tracks.map(toneJSTrackToTrack),
-      selectedTrack: 0,
+      track: toneJSTrackToTrack(midi.tracks[0]),
       bookmarks: [],
     });
   }
@@ -43,19 +42,15 @@ export class Database {
   public async savePreferredFingering(
     song: Song, track: Track, note: Note, fingeringId: string | null)
     : Promise<void> {
-    const tracks = song.tracks;
     await db.songs.update(song.id, {
       ...song,
-      tracks: tracks.map(t =>
-        t.id === track.id
-          ? {
-            ...t,
-            notes: t.notes.map(n =>
-              n.id === note.id
-                ? { ...n, preferredEwiFingering: fingeringId }
-                : { ...n, preferredEwiFingering: null })
-          }
-          : t),
+      track: {
+        ...track,
+        notes: track.notes.map(n =>
+          n.id === note.id
+            ? { ...n, preferredEwiFingering: fingeringId }
+            : { ...n, preferredEwiFingering: null })
+      }
     });
   }
 }
@@ -85,7 +80,7 @@ class DixieNonSense extends Dexie {
   constructor() {
     super(dbName);
     this.version(1).stores({
-      songs: 'id, name, tracks, selectedTrack, bookmarks',
+      songs: 'id, name, track, bookmarks',
     });
   }
 }

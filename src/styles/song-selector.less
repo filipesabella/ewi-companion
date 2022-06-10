@@ -89,4 +89,46 @@
       text-decoration: underline;
     }
   }
+
+  .trackSelector {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    line-height: 1.5em;
+
+    .tracks {
+      background-color: var(--bg-color);
+      width: 32em;
+      margin-top: 10em;
+      padding: 1em;
+      line-height: 2.5em;
+
+      ul {
+        li {
+          font-size: 1.2em;
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .cancel {
+        margin-top: 1em;
+        cursor: pointer;
+        float: right;
+        width: auto;
+        &:hover {
+          color: var(--intense-color);
+        }
+      }
+    }
+  }
 }
