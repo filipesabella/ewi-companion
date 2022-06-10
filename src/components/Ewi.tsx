@@ -49,8 +49,12 @@ export function Ewi({
     52: gotoBookmark,
     53: gotoBookmark,
   }, {
-    38: _ => skipNote(1),
-    40: _ => skipNote(-1),
+    32: (_, e) => {
+      skipNote(1);
+      e.preventDefault();
+    },
+    39: _ => skipNote(1),
+    37: _ => skipNote(-1),
   });
 
   const empty = (i: number) => <div key={i} className="note"></div>;
