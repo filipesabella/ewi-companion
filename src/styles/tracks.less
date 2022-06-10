@@ -1,0 +1,31 @@
+.tracks {
+  position: absolute;
+  z-index: 3;
+  width: 10em;
+  height: 100%;
+  background: var(--other-color);
+  overflow: scroll;
+
+  display: flex;
+  flex-direction: column;
+
+  left: -9em;
+  transition: left .2s ease 0.2s;
+
+  &:hover {
+    left: 0em;
+    transition: left .2s ease;
+  }
+
+  .track {
+    line-height: 2em;
+    cursor: pointer;
+    padding: 1em;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--bg-color);
+
+    &.current p::before {
+      content: '> ';
+    }
+  }
+}

@@ -1,0 +1,134 @@
+@note-width: 6em;
+@notes-shown: 5;
+
+#ewi {
+  background-color: var(--bg-color);
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+
+  .main-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    // to accomodate the Tracks component
+    padding-left: 1em;
+
+    .notes-and-fingerings {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+
+      .notes-container {
+        position: absolute;
+        top: 0em;
+        left: 50%;
+        color: var(--text-color);
+
+        width: @note-width * @notes-shown;
+        height: @note-width;
+        margin-left: -((@notes-shown * @note-width) / 2);
+
+        overflow: hidden;
+
+        .notes-mask {
+          position: absolute;
+          top: 0;
+          height: @note-width;
+          width: @note-width * floor((@notes-shown / 2));
+
+          &.notes-mask-left {
+            left: 0;
+            background: linear-gradient(to left,
+                var(--bg-color-transparent),
+                var(--bg-color));
+          }
+
+          &.notes-mask-right {
+            left: @note-width * (@notes-shown - 2);
+            background: linear-gradient(to right,
+                var(--bg-color-transparent),
+                var(--bg-color));
+          }
+        }
+
+        .notes {
+          position: absolute;
+          top: 0;
+          left: 0;
+
+          display: flex;
+          flex-direction: row;
+
+          transition: left 0.3s ease-out;
+
+          div.note {
+            flex: 1;
+            width: @note-width;
+            line-height: @note-width;
+            text-align: center;
+
+            span {
+              font-size: @note-width / 3;
+            }
+          }
+        }
+      }
+
+      .ewi-fingerings {
+        background: var(--bg-color);
+        flex: 1;
+        overflow: auto;
+        margin-top: @note-width;
+
+        .fingerings-container {
+          margin: 1em 1em;
+          width: 100%;
+
+          color: var(--text-color);
+          text-align: center;
+
+          display: inline-flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
+
+          .fingering {
+            order: 2;
+            margin-right: 2em;
+            margin-bottom: 1em;
+            border: 1px solid var(--text-color);
+            padding: 1em;
+            border-radius: 1em;
+            height: 34em;
+            width: 10em;
+
+            &.preferred {
+              order: 1;
+              margin-left: 100%;
+              margin-right: 100%;
+            }
+
+            svg {
+              height: 100%;
+            }
+
+            .button,
+            .separator {
+              fill: var(--bg-color);
+              stroke: var(--text-color);
+              stroke-width: 2px;
+            }
+
+            .on {
+              fill: var(--text-color);
+            }
+          }
+        }
+      }
+    }
+  }
+}
