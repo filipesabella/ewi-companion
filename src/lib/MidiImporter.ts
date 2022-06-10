@@ -1,5 +1,5 @@
-import { Midi } from '../tonejs/Midi';
-import { Note } from '../tonejs/Note';
+import { Midi } from '@tonejs/midi';
+import { Note } from '@tonejs/midi/dist/Note';
 
 export function importMidi(fileName: string, input: Buffer): Midi {
   const midi = new Midi(input);

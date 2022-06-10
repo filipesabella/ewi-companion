@@ -1,8 +1,8 @@
+import { Midi } from '@tonejs/midi';
+import { Note as ToneJSNote } from '@tonejs/midi/dist/Note';
+import { Track as ToneJSTrack } from '@tonejs/midi/dist/Track';
 import Dexie from 'dexie';
 import { uuid } from '../lib/utils';
-import { Midi } from '../tonejs/Midi';
-import { Note as ToneJSNote } from '../tonejs/Note';
-import { Track as ToneJSTrack } from '../tonejs/Track';
 import { Note, Song, Track } from './Song';
 
 const dbName = 'midi-thing-db';
