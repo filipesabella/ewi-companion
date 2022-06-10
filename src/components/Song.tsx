@@ -46,14 +46,6 @@ export function SongComponent({
     });
   }, []);
 
-  // force re-render on resize
-  const [, setState] = useState();
-  useEffect(() => {
-    window.addEventListener('resize', () => {
-      setState({} as any);
-    });
-  }, []);
-
   useHotkeys({}, {
     27: _ => goBack(),
   });
