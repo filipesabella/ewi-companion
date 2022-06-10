@@ -5,7 +5,7 @@ import { Note, noteAtOrAfter, noteIndex, Song, Track } from '../db/Song';
 import { noteToFingerings } from '../lib/ewi';
 import { useHotkeys } from '../lib/useHotkeys';
 import { roundNumber } from '../lib/utils';
-import { EwiTrackControls } from './EwiTrackControls';
+import { ProgressBar } from './ProgressBar';
 
 require('../styles/ewi.less');
 
@@ -92,10 +92,10 @@ export function Ewi({
 
   return <div id="ewi">
     <div className="main-area">
-      <EwiTrackControls
+      <ProgressBar
         database={database}
         song={song}
-        note={currentNote} />
+        currentNote={currentNote} />
       <div className="notes-and-fingerings">
         <div className="notes-container">
           <div className="notes">
