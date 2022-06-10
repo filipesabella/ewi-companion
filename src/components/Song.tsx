@@ -33,12 +33,9 @@ export function SongComponent({
           console.error('No webmidi inputs');
           return;
         }
-        const inputs = WebMidi.inputs
-          // filter out the mac virtual midi input thing
-          .filter(i => !i.name.startsWith('IAC Driver Bus'));
 
-        const input = inputs[0];
-        console.log('Input', JSON.stringify(input));
+        const input = WebMidi.inputs[0];
+        console.log('Input', input);
 
         input.addListener('noteon', e => {
           setNotesDown(notes => new Set(notes.add(e.note.number)));
@@ -51,7 +48,7 @@ export function SongComponent({
         });
       }
     });
-  });
+  }, []);
 
   // force re-render on resize
   const [, setState] = useState();
@@ -59,7 +56,7 @@ export function SongComponent({
     window.addEventListener('resize', () => {
       setState({} as any);
     });
-  });
+  }, []);
 
   useHotkeys({}, {
     27: _ => goBack(),

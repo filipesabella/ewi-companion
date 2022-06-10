@@ -78,11 +78,6 @@ export function Ewi({
     currentNote.preferredEwiFingering = fingering;
   };
 
-  const onSeekClick = (time: number): void => {
-    const note = noteAtOrAfter(track, roundNumber(time / 1000))!;
-    setCurrentNote(note);
-  };
-
   useEffect(() => {
     scrollNotes(noteIndex(track, currentNote));
   });
