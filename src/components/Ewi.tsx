@@ -107,12 +107,10 @@ export function Ewi({
           <div className="notes-mask notes-mask-right"></div>
         </div>
         <div className="ewi-fingerings">
-          <div className="fingerings-container">
-            {noteToFingerings(
-              currentNote.name,
-              currentNote.preferredEwiFingering,
-              onClickFingering)}
-          </div>
+          {noteToFingerings(
+            currentNote.name,
+            currentNote.preferredEwiFingering,
+            onClickFingering)}
         </div>
       </div>
     </div>

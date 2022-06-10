@@ -14,25 +14,23 @@
     flex-direction: column;
 
     // to accomodate the Tracks component
-    padding-left: 1em;
+    // padding-left: 1em;
 
     .notes-and-fingerings {
       flex: 1;
       display: flex;
       flex-direction: column;
       position: relative;
+      overflow: hidden;
+      align-items: center;
 
       .notes-container {
-        position: absolute;
-        top: 0em;
-        left: 50%;
+        position: relative;
         color: var(--text-color);
+        overflow: hidden;
 
         width: @note-width * @notes-shown;
         height: @note-width;
-        margin-left: -((@notes-shown * @note-width) / 2);
-
-        overflow: hidden;
 
         .notes-mask {
           position: absolute;
@@ -72,7 +70,7 @@
             text-align: center;
 
             span {
-              font-size: @note-width / 3;
+              font-size: (@note-width / 3);
             }
           }
         }
@@ -82,59 +80,58 @@
         background: var(--bg-color);
         flex: 1;
         overflow: auto;
-        margin-top: @note-width;
+        margin-top: 2em;
+        color: var(--text-color);
 
-        .fingerings-container {
-          margin: 1em 1em;
-          width: 100%;
+        display: inline-flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        column-gap: 1em;
+        width: 100%;
 
-          color: var(--text-color);
-          text-align: center;
-
+        .fingering {
+          order: 2;
           display: inline-flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-          justify-content: center;
+          margin-bottom: 1em;
+          border: 1px solid var(--text-color);
+          padding: 1em;
+          border-radius: 1em;
+          height: 34em;
+          width: 10em;
 
-          .fingering {
-            order: 2;
-            margin-right: 2em;
-            margin-bottom: 1em;
-            border: 1px solid var(--text-color);
-            padding: 1em;
-            border-radius: 1em;
-            height: 34em;
-            width: 10em;
+          &.last-child {
+            margin-right: 0;
+          }
 
-            &.preferred {
-              order: 1;
-              margin-left: 100%;
-              margin-right: 100%;
-            }
+          &.preferred {
+            order: 1;
+            margin-left: 40%;
+            margin-right: 40%;
+          }
 
-            svg {
-              height: 100%;
-            }
+          svg {
+            height: 100%;
+          }
 
-            .button,
-            .separator,
-            .roller {
-              fill: var(--bg-color);
-              stroke: var(--text-color);
-            }
+          .button,
+          .separator,
+          .roller {
+            fill: var(--bg-color);
+            stroke: var(--text-color);
+          }
 
-            .button,
-            .separator {
-              stroke-width: 2px;
-            }
+          .button,
+          .separator {
+            stroke-width: 2px;
+          }
 
-            .roller {
-              stroke-width: 1px;
-            }
+          .roller {
+            stroke-width: 1px;
+          }
 
-            .on {
-              fill: var(--text-color);
-            }
+          .on {
+            fill: var(--text-color);
           }
         }
       }
