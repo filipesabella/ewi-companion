@@ -14,9 +14,7 @@ export interface Track {
 export interface Note {
   id: string;
   name: string;
-  time: number;
   midi: number;
-  duration: number;
   preferredEwiFingering: string | null;
 }
 

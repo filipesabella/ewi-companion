@@ -67,9 +67,7 @@ function toneJSNoteToNote(n: ToneJSNote): Note {
   return {
     id: uuid(),
     name: n.name,
-    duration: n.duration,
     midi: n.midi,
-    time: n.time,
     preferredEwiFingering: null,
   };
 }

@@ -1,5 +1,4 @@
 import { Midi } from '@tonejs/midi';
-import { Note } from '@tonejs/midi/dist/Note';
 
 export function importMidi(fileName: string, input: Buffer): Midi {
   const midi = new Midi(input);
@@ -17,17 +16,7 @@ export function importMidi(fileName: string, input: Buffer): Midi {
     }
   }
 
-  const minWaitInSeconds = 3;
-  const earliestNote = midi.tracks
-    .reduce((acc, t) => acc.concat(t.notes), [] as Note[])
-    .sort((a, b) => a.time - b.time)[0];
-  if (earliestNote.time < minWaitInSeconds) {
-    const diff = minWaitInSeconds - earliestNote.time;
-    midi.tracks.forEach(t => t.notes.forEach(n => n.time = n.time + diff));
-  }
-
   midi.tracks = midi.tracks.filter(t => t.notes.length > 0);
-
   midi.name = midi.name.trim() || fileName;
 
   return midi;
