@@ -54,7 +54,6 @@ export function SongComponent({
     <Ewi
       database={database}
       song={song}
-      track={song.track}
       notesDown={notesDown} />
   </div>;
 }

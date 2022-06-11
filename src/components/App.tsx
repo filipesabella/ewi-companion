@@ -44,16 +44,12 @@ const octaves = [/*0, 1, 2, */3, 4, 5, 6, 7, 8];
 const testSong: Song = {
   id: '111',
   name: 'henlo',
-  track: {
-    id: '22',
-    name: 'aa',
-    notes: octaves.flatMap(o => notes.map((n, ni) => ({
-      id: `${n}${o}`,
-      name: `${n}${o}`,
-      midi: 24 + o * 12 + ni,
-      preferredEwiFingering: null,
-    }))),
-  },
+  notes: octaves.flatMap(o => notes.map((n, ni) => ({
+    id: `${n}${o}`,
+    name: `${n}${o}`,
+    midi: 24 + o * 12 + ni,
+    preferredEwiFingering: null,
+  }))),
   bookmarks: [],
 };
 
@@ -61,15 +57,11 @@ const testSong: Song = {
 const testSong2: Song = {
   id: '111',
   name: 'henlo',
-  track: {
-    id: '22',
-    name: 'aa',
-    notes: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => ({
-      id: `${i}`,
-      name: 'A#4',
-      midi: 58,
-      preferredEwiFingering: null,
-    })),
-  },
+  notes: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => ({
+    id: `${i}`,
+    name: 'A#4',
+    midi: 58,
+    preferredEwiFingering: null,
+  })),
   bookmarks: [],
 };

@@ -1,9 +1,8 @@
 import { Midi } from '@tonejs/midi';
 import { Note as ToneJSNote } from '@tonejs/midi/dist/Note';
-import { Track as ToneJSTrack } from '@tonejs/midi/dist/Track';
 import Dexie from 'dexie';
 import { uuid } from '../lib/utils';
-import { Note, Song, Track } from './Song';
+import { Note, Song } from './Song';
 
 const dbName = 'midi-thing-db';
 
@@ -34,7 +33,7 @@ export class Database {
     await db.songs.put({
       id: uuid(),
       name: midi.name,
-      track: toneJSTrackToTrack(midi.tracks[0]),
+      notes: midi.tracks[0].notes.map(toneJSNoteToNote),
       bookmarks: [],
     });
   }
@@ -44,27 +43,16 @@ export class Database {
   }
 
   public async savePreferredFingering(
-    song: Song, track: Track, note: Note, fingeringId: string | null)
+    song: Song, note: Note, fingeringId: string | null)
     : Promise<void> {
     await db.songs.update(song.id, {
       ...song,
-      track: {
-        ...track,
-        notes: track.notes.map(n =>
-          n.id === note.id
-            ? { ...n, preferredEwiFingering: fingeringId }
-            : { ...n, preferredEwiFingering: null })
-      }
+      notes: song.notes.map(n =>
+        n.id === note.id
+          ? { ...n, preferredEwiFingering: fingeringId }
+          : { ...n, preferredEwiFingering: null })
     });
   }
-}
-
-function toneJSTrackToTrack(t: ToneJSTrack): Track {
-  return {
-    id: uuid(),
-    name: t.name,
-    notes: t.notes.map(toneJSNoteToNote),
-  };
 }
 
 function toneJSNoteToNote(n: ToneJSNote): Note {
@@ -82,7 +70,7 @@ class DixieNonSense extends Dexie {
   constructor() {
     super(dbName);
     this.version(1).stores({
-      songs: 'id, name, track, bookmarks',
+      songs: 'id, name, notes, bookmarks',
     });
   }
 }

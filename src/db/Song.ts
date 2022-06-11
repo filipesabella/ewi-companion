@@ -1,14 +1,8 @@
 export interface Song {
   id: string;
   name: string;
-  track: Track;
-  bookmarks: number[];
-}
-
-export interface Track {
-  id: string;
-  name: string;
   notes: Note[];
+  bookmarks: number[];
 }
 
 export interface Note {
@@ -18,9 +12,9 @@ export interface Note {
   preferredEwiFingering: string | null;
 }
 
-export function noteIndex(track: Track, note: Note): number {
-  for (let i = 0; i < track.notes.length; i++) {
-    if (track.notes[i].id === note.id) {
+export function noteIndex(song: Song, note: Note): number {
+  for (let i = 0; i < song.notes.length; i++) {
+    if (song.notes[i].id === note.id) {
       return i;
     }
   }

@@ -15,8 +15,8 @@ interface Props {
 
 export function ProgressBar({
   song, database, currentNote, gotoBookmark }: Props): JSX.Element {
-  const totalNotes = song.track.notes.length;
-  const currentNoteIndex = song.track.notes.indexOf(currentNote);
+  const totalNotes = song.notes.length;
+  const currentNoteIndex = song.notes.indexOf(currentNote);
 
   const completion = (currentNoteIndex + 1) * 100 / totalNotes;
 

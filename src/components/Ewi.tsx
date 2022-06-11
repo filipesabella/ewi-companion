@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Database } from '../db/Database';
-import { Note, noteIndex, Song, Track } from '../db/Song';
+import { Note, noteIndex, Song } from '../db/Song';
 import { noteToFingerings } from '../lib/ewi';
 import { useHotkeys } from '../lib/useHotkeys';
 import { ProgressBar } from './ProgressBar';
@@ -11,19 +11,17 @@ require('../styles/ewi.less');
 interface Props {
   database: Database;
   song: Song;
-  track: Track;
   notesDown: Set<number>;
 }
 
 export function Ewi({
   song,
-  track,
   notesDown,
   database, }: Props): JSX.Element {
-  const [currentNote, setCurrentNote] = useState<Note>(track.notes[0]);
+  const [currentNote, setCurrentNote] = useState<Note>(song.notes[0]);
 
   function gotoBookmark(bookmark: number): void {
-    setCurrentNote(song.track.notes[bookmark]);
+    setCurrentNote(song.notes[bookmark]);
   }
 
   function keyToBookmark(key: number): void {
@@ -34,12 +32,12 @@ export function Ewi({
   }
 
   function skipNote(delta: number): void {
-    const index = noteIndex(track, currentNote);
+    const index = noteIndex(song, currentNote);
     const newIndex = Math.min(
       Math.max(0, index + delta),
-      track.notes.length - 1);
+      song.notes.length - 1);
 
-    setCurrentNote(track.notes[newIndex]);
+    setCurrentNote(song.notes[newIndex]);
   }
 
   useHotkeys({
@@ -62,7 +60,7 @@ export function Ewi({
   });
 
   const empty = (i: number) => <div key={i} className="note"></div>;
-  const noteContainers = track.notes.map((n, i) =>
+  const noteContainers = song.notes.map((n, i) =>
     <div key={i} className="note"><span>{n.name}</span></div>);
 
   const onClickFingering = async (fingeringId: string) => {
@@ -73,7 +71,6 @@ export function Ewi({
 
     await database.savePreferredFingering(
       song,
-      track,
       currentNote,
       fingering);
 
@@ -87,11 +84,11 @@ export function Ewi({
   };
 
   useEffect(() => {
-    scrollNotes(noteIndex(track, currentNote));
+    scrollNotes(noteIndex(song, currentNote));
   });
 
   useEffect(() => {
-    setCurrentNote(checkPressedNotes(track, notesDown, currentNote))
+    setCurrentNote(checkPressedNotes(song, notesDown, currentNote))
   }, [notesDown]);
 
   return <div id="ewi">
@@ -123,14 +120,14 @@ export function Ewi({
 }
 
 function checkPressedNotes(
-  track: Track,
+  song: Song,
   notesDown: Set<number>,
   currentNote: Note): Note {
   if (notesDown.has(currentNote.midi)) {
-    const nextIndex = noteIndex(track, currentNote) + 1;
+    const nextIndex = noteIndex(song, currentNote) + 1;
 
-    if (nextIndex < track.notes.length) {
-      return track.notes[nextIndex];
+    if (nextIndex < song.notes.length) {
+      return song.notes[nextIndex];
     } else {
       return currentNote;
     }
