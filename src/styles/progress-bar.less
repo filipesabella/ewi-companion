@@ -8,7 +8,89 @@
   display: flex;
   flex-direction: row;
 
+  .createBookmark {
+    position: absolute;
+    top: 2.2em;
+    z-index: 3;
+    transition: left 500ms;
+    cursor: pointer;
+    padding: .25em;
+    margin-left: -2em;
+
+    svg {
+      width: 1.5em;
+      stroke: var(--text-color);
+      fill: transparent;
+      stroke-width: 30px;
+    }
+
+    &:hover {
+      svg {
+        fill: var(--text-color);
+      }
+    }
+  }
+
+  .bookmarks {
+    position: absolute;
+    top: 2.4em;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    height: 2em;
+
+    >div {
+      position: absolute;
+      margin-left: -1.7em;
+      display: flex;
+      flex-direction: column;
+
+      >div {
+        cursor: pointer;
+
+        svg {
+          width: 1.5em;
+          stroke-width: 30px;
+        }
+
+        &:hover {
+          svg {
+            fill: var(--other-color);
+          }
+        }
+      }
+
+      .bookmark {
+        svg {
+          fill: var(--text-color);
+        }
+
+        &:hover {
+          +div {
+            display: block;
+          }
+        }
+      }
+
+      .deleteBookmark {
+        display: none;
+        svg {
+          fill: var(--text-color);
+        }
+
+        &:hover {
+          display: block;
+
+          svg {
+            fill: var(--other-color);
+          }
+        }
+      }
+    }
+  }
+
   .progress {
+    height: 2em;
     background-color: var(--bg-color);
     transition: width 500ms;
 

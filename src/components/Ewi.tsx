@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Database } from '../db/Database';
-import { Note, noteAtOrAfter, noteIndex, Song, Track } from '../db/Song';
+import { Note, noteIndex, Song, Track } from '../db/Song';
 import { noteToFingerings } from '../lib/ewi';
 import { useHotkeys } from '../lib/useHotkeys';
-import { roundNumber } from '../lib/utils';
 import { ProgressBar } from './ProgressBar';
 
 require('../styles/ewi.less');
@@ -23,14 +22,15 @@ export function Ewi({
   database, }: Props): JSX.Element {
   const [currentNote, setCurrentNote] = useState<Note>(track.notes[0]);
 
-  function gotoBookmark(key: number): void {
-    // numbers 1 through 5
+  function gotoBookmark(bookmark: number): void {
+    setCurrentNote(song.track.notes[bookmark]);
+  }
+
+  function keyToBookmark(key: number): void {
+    // numbers 1 through 9
     const index = key - 48;
-    const bookmark = song.bookmarks[index];
-    if (bookmark) {
-      const note = noteAtOrAfter(track, roundNumber(bookmark / 1000))!;
-      setCurrentNote(note);
-    }
+    const bookmark = song.bookmarks[index - 1];
+    bookmark && gotoBookmark(bookmark);
   }
 
   function skipNote(delta: number): void {
@@ -43,11 +43,15 @@ export function Ewi({
   }
 
   useHotkeys({
-    49: gotoBookmark,
-    50: gotoBookmark,
-    51: gotoBookmark,
-    52: gotoBookmark,
-    53: gotoBookmark,
+    49: keyToBookmark,
+    50: keyToBookmark,
+    51: keyToBookmark,
+    52: keyToBookmark,
+    53: keyToBookmark,
+    54: keyToBookmark,
+    55: keyToBookmark,
+    56: keyToBookmark,
+    57: keyToBookmark,
   }, {
     32: (_, e) => {
       skipNote(1);
@@ -95,7 +99,8 @@ export function Ewi({
       <ProgressBar
         database={database}
         song={song}
-        currentNote={currentNote} />
+        currentNote={currentNote}
+        gotoBookmark={gotoBookmark} />
       <div className="notes-and-fingerings">
         <div className="notes-container">
           <div className="notes">
