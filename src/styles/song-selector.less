@@ -8,7 +8,6 @@
   .currentSongs {
     margin: 0 auto;
     margin-top: 5em;
-    width: 25em;
     display: flex;
     flex-direction: column;
 
@@ -21,43 +20,47 @@
 
     .song {
       margin: .75em 0;
-
-      &:first-child {
-        background: red;
-        margin-top: 0;
-      }
-
       display: flex;
+      position: relative;
 
       .title {
         flex: 1;
-      }
-
-      .button {
-        padding-left: 1em;
-      }
-
-      .button {
-        display: none;
-        background: none;
-        border: none;
-        color: var(--text-color);
-        filter: brightness(55%);
-        font-size: .5em;
+        font-size: 1.1em;
 
         &:hover {
-          filter: brightness(100%);
-          cursor: pointer;
+          text-decoration: underline;
         }
       }
 
-      .title:hover {
-        cursor: pointer;
-        filter: brightness(150%);
+      button:hover {
+        color: var(--intense-color);
       }
 
-      .title:hover+.button,
-      .button:hover {
+      .title,
+      button {
+        color: var(--text-color);
+
+        &:hover {
+          cursor: pointer;
+          filter: brightness(150%);
+        }
+      }
+
+      .actions {
+        display: none;
+        position: absolute;
+        right: -5.5em;
+
+        button {
+          padding-left: 1em;
+          background: none;
+          border: none;
+          font-size: .8em;
+        }
+      }
+
+      &:hover .actions,
+      .actions:hover {
         display: block;
       }
     }
@@ -125,6 +128,7 @@
         cursor: pointer;
         float: right;
         width: auto;
+
         &:hover {
           color: var(--intense-color);
         }

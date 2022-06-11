@@ -23,17 +23,6 @@ export function SongSelector({
     database.listCurrentSongs().then(setSongs);
   }, [reload]);
 
-  function songContainer(s: Song): JSX.Element {
-    return <div
-      key={s.id}
-      className="song">
-      <p
-        className="title"
-        onClick={_ => database.song(s.id).then(s => setCurrentSong(s!))}>
-        {s.name}</p>
-    </div>;
-  }
-
   const importFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
     const fileReader = new FileReader();
@@ -58,11 +47,21 @@ export function SongSelector({
     });
   };
 
+  const selectSong = (s: Song) => {
+    database.song(s.id).then(s => setCurrentSong(s!));
+  };
+
+  const deleteSong = (s: Song) => {
+    if (confirm('Delete this song?')) {
+      database.deleteSong(s.id).then(_ => setReload({}));
+    }
+  };
+
   return <div className="songSelector">
     {songs === null && <div>Loading songs...</div>}
     {songs !== null && <div className="currentSongs">
       <h1>Songs</h1>
-      {songs.map(songContainer)}
+      {songs.map(song => songContainer(song, selectSong, deleteSong,))}
       {!midi && <div className="importButton">
         <input
           type="file"
@@ -92,5 +91,25 @@ export function SongSelector({
       </div>
     </div>}
 
+  </div>;
+}
+
+function songContainer(
+  s: Song,
+  selectSong: (song: Song) => void,
+  deleteSong: (song: Song) => void): JSX.Element {
+
+  return <div
+    key={s.id}
+    className="song">
+    <p
+      className="title"
+      onClick={_ => selectSong(s)}>
+      {s.name}
+    </p>
+    <div className="actions">
+      <button onClick={_ => deleteSong(s)}>edit</button>
+      <button onClick={_ => deleteSong(s)}>delete</button>
+    </div>
   </div>;
 }

@@ -26,6 +26,10 @@ export class Database {
     return await db.songs.get(id);
   }
 
+  public async deleteSong(id: string): Promise<void> {
+    await db.songs.delete(id);
+  }
+
   public async save(midi: Midi): Promise<void> {
     await db.songs.put({
       id: uuid(),
