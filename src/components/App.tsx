@@ -17,7 +17,7 @@ export function App(): JSX.Element {
     // load a song on start for debugging
     database.listCurrentSongs().then(songs => {
       // setCurrentSong(testSong);
-      database.song(songs[0].id).then(s => {;
+      database.song(songs[0].id).then(s => {
         setCurrentSong(s!);
       });
     });
@@ -66,7 +66,7 @@ const testSong2: Song = {
   track: {
     id: '22',
     name: 'aa',
-    notes: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1].map((_, i) => ({
+    notes: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => ({
       id: `${i}`,
       name: 'A#4',
       midi: 58,
