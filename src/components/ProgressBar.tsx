@@ -37,7 +37,7 @@ export function ProgressBar({
   }, []);
 
   const saveBookmark = async () => {
-    song.bookmarks = [...new Set(song.bookmarks).add(currentNoteIndex)];
+    song.bookmarks = [...new Set(song.bookmarks).add(currentNoteIndex)].sort();
     await database.saveSong(song);
     setShowBookmarks(false);
   };
