@@ -20,7 +20,7 @@ export function ProgressBar({
 
   const completion = (currentNoteIndex + 1) * 100 / totalNotes;
 
-  const [showBookmarks, setShowBookmarks] = useState(true);
+  const [showBookmarks, setShowBookmarks] = useState(false);
 
   useEffect(() => {
     let timeoutId = 0;
@@ -28,11 +28,8 @@ export function ProgressBar({
       setShowBookmarks(true);
       window.clearTimeout(timeoutId);
 
-      if (!(e.target! as any).closest('.progressBar')) {
-        timeoutId = window.setTimeout(() => setShowBookmarks(false), 1000);
-      } else {
-        timeoutId = window.setTimeout(() => setShowBookmarks(false), 5000);
-      }
+      const time = !!(e.target! as any).closest('.progressBar') ? 5000 : 1000;
+      timeoutId = window.setTimeout(() => setShowBookmarks(false), time);
     };
     document.addEventListener('mousemove', listener);
 
@@ -55,7 +52,7 @@ export function ProgressBar({
     {showBookmarks && <div className="bookmarks">
       {song.bookmarks.map((b, i) => <div
         key={b}
-        style={{ left: ((b + 1) * 100 / totalNotes) + '%' }}>
+        style={{ left: Math.min(((b + 1) * 100 / totalNotes), 98.5) + '%' }}>
         <div
           className="bookmark"
           onClick={() => gotoBookmark(b)}
@@ -69,7 +66,7 @@ export function ProgressBar({
     </div>}
     {showBookmarks && <div onClick={() => saveBookmark()}
       className="createBookmark"
-      style={{ left: completion + '%' }}>
+      style={{ left: Math.min(completion, 98.5) + '%' }}>
       {icons.star}
     </div>}
     <div className="progress" style={{ width: completion + '%' }}>
