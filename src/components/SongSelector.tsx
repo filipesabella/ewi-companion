@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Database } from '../db/Database';
 import { Song } from '../db/Song';
 import { importMidi } from '../lib/MidiImporter';
+import { SongEdit } from './SongEdit';
 
 require('../styles/song-selector.less');
 
@@ -18,6 +19,7 @@ export function SongSelector({
   const [songs, setSongs] = useState<Song[] | null>(null);
   const [reload, setReload] = useState({});
   const [midi, setMidi] = useState<Midi | null>(null);
+  const [songToEdit, setSongToEdit] = useState<Song | null>(null);
 
   useEffect(() => {
     database.listCurrentSongs().then(setSongs);
@@ -61,7 +63,8 @@ export function SongSelector({
     {songs === null && <div>Loading songs...</div>}
     {songs !== null && <div className="currentSongs">
       <h1>Songs</h1>
-      {songs.map(song => songContainer(song, selectSong, deleteSong,))}
+      {songs.map(song =>
+        songContainer(song, selectSong, setSongToEdit, deleteSong))}
       {!midi && <div className="importButton">
         <input
           type="file"
@@ -90,13 +93,19 @@ export function SongSelector({
           onClick={_ => setMidi(null)}>Cancel</p>
       </div>
     </div>}
-
+    {songToEdit && <SongEdit song={songToEdit}
+      close={() => {
+        setSongToEdit(null);
+        setReload({});
+      }}
+      database={database} />}
   </div>;
 }
 
 function songContainer(
   s: Song,
   selectSong: (song: Song) => void,
+  editSong: (song: Song) => void,
   deleteSong: (song: Song) => void): JSX.Element {
 
   return <div
@@ -108,7 +117,7 @@ function songContainer(
       {s.name}
     </p>
     <div className="actions">
-      <button onClick={_ => deleteSong(s)}>edit</button>
+      <button onClick={_ => editSong(s)}>edit</button>
       <button onClick={_ => deleteSong(s)}>delete</button>
     </div>
   </div>;

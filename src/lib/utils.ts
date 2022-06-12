@@ -16,3 +16,13 @@ export function uuid() {
     return v.toString(16);
   });
 }
+
+export function noteNameToMidi(note: string): number {
+  const noteNames = [
+    'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
+  ];
+  const noteName = note.toUpperCase();
+  const octave = parseInt(note.slice(-1));
+  const noteIndex = noteNames.indexOf(noteName);
+  return noteIndex + (octave - 1) * 12;
+}
