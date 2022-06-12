@@ -76,20 +76,32 @@ export function SongSelector({
     }
   };
 
+  const newSong = () => {
+    setSongToEdit({
+      id: uuid(),
+      name: '',
+      notes: [],
+      bookmarks: [],
+    });
+  };
+
   return <div className="songSelector">
     {songs === null && <div>Loading songs...</div>}
     {songs !== null && <div className="currentSongs">
       <h1>Songs</h1>
       {songs.map(song =>
         songContainer(song, selectSong, setSongToEdit, deleteSong))}
-      {!midi && <div className="importButton">
-        <input
-          type="file"
-          id="importFileInput"
-          onChange={e => importFile(e)}
-          accept="midi">
-        </input>
-        <label htmlFor="importFileInput">Import a MIDI file</label>
+      {!midi && <div className="actions">
+        <div className="importButton">
+          <input
+            type="file"
+            id="importFileInput"
+            onChange={e => importFile(e)}
+            accept="midi">
+          </input>
+          <label htmlFor="importFileInput">Import a MIDI file</label>
+        </div>
+        <label onClick={() => newSong()}>Write song</label>
       </div>}
     </div>}
     {midi && <div className="trackSelector">

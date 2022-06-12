@@ -12,9 +12,7 @@ interface Props {
 }
 
 export function SongEdit({ song, close, database }: Props): JSX.Element {
-  const originalNotes = song.notes.map(n => n.name)
-    .map(n => n.includes('#') ? n : n + ' ')
-    .join(' ');
+  const originalNotes = song.notes.map(n => n.name).join(' ');
 
   const [valid, setValid] = useState(true);
   const [name, setName] = useState(song.name);
@@ -41,7 +39,7 @@ export function SongEdit({ song, close, database }: Props): JSX.Element {
       .replace(/\s{2,}/g, ' ')
       .split(' ')
       .filter(n => n.length > 0)
-      .every(n => n.match(/^([A-G]|[a-g])\#?\d$/));
+      .every(n => n.match(/^(A|A#|B|C|C#|D|D#|E|F|F#|G|G#)\d$/));
 
     setValid(nameValid && notesValid);
   }, [name, notes]);
@@ -50,10 +48,14 @@ export function SongEdit({ song, close, database }: Props): JSX.Element {
     <div className="song">
       <label>Name</label>
       <input
+        autoFocus
         value={name}
         onChange={e => setName(e.target.value.trim())} />
       <label>Notes</label>
       <textarea
+        placeholder={
+          'valid notes (in any octave): A1 A#1 B1 C1 C#1 D1 D#1 ' +
+          'E1 F1 F#1 G1 G#1'}
         defaultValue={notes}
         onChange={e => setNotes(e.target.value.trim())}></textarea>
       <div className="actions">

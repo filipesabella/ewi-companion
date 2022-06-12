@@ -64,32 +64,34 @@
         display: block;
       }
     }
-  }
 
-  .importButton {
-    margin-top: 2em;
-    color: var(--intense-color);
+    >.actions {
+      line-height: 2em;
+      label {
+        color: var(--intense-color);
+        cursor: pointer;
+        display: inline-block;
+        padding-left: 2rem 4rem;
 
-    [type="file"] {
-      border: 0;
-      clip: rect(0, 0, 0, 0);
-      height: 1px;
-      overflow: hidden;
-      padding: 0;
-      position: absolute !important;
-      white-space: nowrap;
-      width: 1px;
-    }
+        &:hover {
+          text-decoration: underline;
+        }
+      }
 
-    [type="file"]+label {
-      cursor: pointer;
-      display: inline-block;
-      padding-left: 2rem 4rem;
-    }
+      .importButton {
+        margin-top: 1em;
 
-    [type="file"]:focus+label,
-    [type="file"]+label:hover {
-      text-decoration: underline;
+        [type="file"] {
+          border: 0;
+          clip: rect(0, 0, 0, 0);
+          height: 1px;
+          overflow: hidden;
+          padding: 0;
+          position: absolute !important;
+          white-space: nowrap;
+          width: 1px;
+        }
+      }
     }
   }
 
