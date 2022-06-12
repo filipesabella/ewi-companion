@@ -1,7 +1,4 @@
-import { Midi } from '@tonejs/midi';
-import { Note as ToneJSNote } from '@tonejs/midi/dist/Note';
 import Dexie from 'dexie';
-import { uuid } from '../lib/utils';
 import { Note, Song } from './Song';
 
 const dbName = 'midi-thing-db';
@@ -29,39 +26,46 @@ export class Database {
     await db.songs.delete(id);
   }
 
-  public async save(midi: Midi): Promise<void> {
-    await db.songs.put({
-      id: uuid(),
-      name: midi.name,
-      notes: midi.tracks[0].notes.map(toneJSNoteToNote),
-      bookmarks: [],
-    });
-  }
-
   public async saveSong(song: Song): Promise<void> {
     await db.songs.update(song.id, song);
+  }
+
+  public async upsertSong(song: Song): Promise<void> {
+    const existingSong = await db.songs.get(song.id);
+    if (existingSong) {
+      const wereTheNotesUpdated = existingSong.notes.map(n => n.midi)
+        .join(',') !== song.notes.map(n => n.midi).join(',');
+
+      if (wereTheNotesUpdated) {
+        console.log('aaaaa');
+        // this erases bookmarks and preferred fingering
+        await db.songs.update(song.id, song);
+      } else {
+        console.log('bbbb');
+
+        await db.songs.update(song.id, {
+          ...existingSong,
+          name: song.name,
+        });
+      }
+    } else {
+      await db.songs.add(song);
+    }
   }
 
   public async savePreferredFingering(
     song: Song, note: Note, fingeringId: string | null)
     : Promise<void> {
+    console.log('tf');
+
     await db.songs.update(song.id, {
       ...song,
       notes: song.notes.map(n =>
         n.id === note.id
           ? { ...n, preferredEwiFingering: fingeringId }
-          : { ...n, preferredEwiFingering: null })
+          : n)
     });
   }
-}
-
-function toneJSNoteToNote(n: ToneJSNote): Note {
-  return {
-    id: uuid(),
-    name: n.name,
-    midi: n.midi,
-    preferredEwiFingering: null,
-  };
 }
 
 class DixieNonSense extends Dexie {

@@ -22,27 +22,17 @@ export function SongEdit({ song, close, database }: Props): JSX.Element {
 
   const save = () => {
     const normalisedNotes = notes.replace(/\s{2,}/g, ' ');
-    const notesUpdated = originalNotes
-      .replace(/\s{2,}/g, ' ') !== normalisedNotes;
 
-    if (notesUpdated) {
-      database.saveSong({
-        ...song,
-        name,
-        notes: normalisedNotes.split(' ').map(n => ({
-          id: uuid(),
-          name: n,
-          midi: noteNameToMidi(n),
-          preferredEwiFingering: null,
-        })),
-        bookmarks: [],
-      }).then(close);
-    } else {
-      database.saveSong({
-        ...song,
-        name,
-      }).then(close);
-    }
+    database.upsertSong({
+      ...song,
+      name,
+      notes: normalisedNotes.split(' ').map(n => ({
+        id: uuid(),
+        name: n,
+        midi: noteNameToMidi(n),
+        preferredEwiFingering: null,
+      })),
+    }).then(close);
   };
 
   useEffect(() => {
@@ -50,6 +40,7 @@ export function SongEdit({ song, close, database }: Props): JSX.Element {
     const notesValid = notes
       .replace(/\s{2,}/g, ' ')
       .split(' ')
+      .filter(n => n.length > 0)
       .every(n => n.match(/^([A-G]|[a-g])\#?\d$/));
 
     setValid(nameValid && notesValid);

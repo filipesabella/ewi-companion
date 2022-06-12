@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Database } from '../db/Database';
 import { Song } from '../db/Song';
 import { importMidi } from '../lib/MidiImporter';
+import { uuid } from '../lib/utils';
 import { SongEdit } from './SongEdit';
 
 require('../styles/song-selector.less');
@@ -32,7 +33,17 @@ export function SongSelector({
       const midi = importMidi(file.name, fileReader.result as Buffer);
 
       if (midi.tracks.length === 1) {
-        database.save(midi).then(_ => setReload({}));
+        setSongToEdit({
+          id: uuid(),
+          name: midi.name,
+          notes: midi.tracks[0].notes.map(n => ({
+            id: uuid(),
+            name: n.name,
+            midi: n.midi,
+            preferredEwiFingering: null,
+          })),
+          bookmarks: [],
+        });
       } else {
         setMidi(midi);
       }
@@ -42,11 +53,17 @@ export function SongSelector({
   };
 
   const selectTrack = (t: Track) => {
-    midi!.tracks = [t];
-    database.save(midi!).then(_ => {
-      setMidi(null);
-      setReload({});
-    });
+    setSongToEdit({
+      id: uuid(),
+      name: midi!.name,
+      notes: t.notes.map(n => ({
+        id: uuid(),
+        name: n.name,
+        midi: n.midi,
+        preferredEwiFingering: null,
+      })),
+      bookmarks: [],
+    })
   };
 
   const selectSong = (s: Song) => {
@@ -96,6 +113,7 @@ export function SongSelector({
     {songToEdit && <SongEdit song={songToEdit}
       close={() => {
         setSongToEdit(null);
+        setMidi(null);
         setReload({});
       }}
       database={database} />}
