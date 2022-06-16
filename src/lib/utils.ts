@@ -21,8 +21,8 @@ export function noteNameToMidi(note: string): number {
   const noteNames = [
     'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
   ];
-  const noteName = note.toUpperCase();
+  const noteName = note.toUpperCase().replace(/\d/, '');
   const octave = parseInt(note.slice(-1));
   const noteIndex = noteNames.indexOf(noteName);
-  return noteIndex + (octave - 1) * 12;
+  return noteIndex + octave * 12;
 }
