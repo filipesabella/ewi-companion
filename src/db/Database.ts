@@ -37,12 +37,9 @@ export class Database {
         .join(',') !== song.notes.map(n => n.midi).join(',');
 
       if (wereTheNotesUpdated) {
-        console.log('aaaaa');
         // this erases bookmarks and preferred fingering
         await db.songs.update(song.id, song);
       } else {
-        console.log('bbbb');
-
         await db.songs.update(song.id, {
           ...existingSong,
           name: song.name,
@@ -56,8 +53,6 @@ export class Database {
   public async savePreferredFingering(
     song: Song, note: Note, fingeringId: string | null)
     : Promise<void> {
-    console.log('tf');
-
     await db.songs.update(song.id, {
       ...song,
       notes: song.notes.map(n =>
