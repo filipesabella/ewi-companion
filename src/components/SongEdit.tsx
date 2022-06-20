@@ -24,7 +24,7 @@ export function SongEdit({ song, close, database }: Props): JSX.Element {
     database.upsertSong({
       ...song,
       name,
-      notes: normalisedNotes.split(' ').map(n => ({
+      notes: normalisedNotes.split(/\s/).map(n => ({
         id: uuid(),
         name: n,
         midi: noteNameToMidi(n),
@@ -35,11 +35,12 @@ export function SongEdit({ song, close, database }: Props): JSX.Element {
 
   useEffect(() => {
     const nameValid = name.length > 0;
+
     const notesValid = notes
       .replace(/\s{2,}/g, ' ')
-      .split(' ')
+      .split(/\s/)
       .filter(n => n.length > 0)
-      .every(n => n.match(/^(A|A#|B|C|C#|D|D#|E|F|F#|G|G#)\d$/));
+      .every(n => n.match(/^(A|A#|B|C|C#|D|D#|E|F|F#|G|G#)\d\n?$/));
 
     setValid(nameValid && notesValid);
   }, [name, notes]);

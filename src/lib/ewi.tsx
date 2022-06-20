@@ -129,6 +129,10 @@ export function noteToFingerings(
   const fingerings = noteToFingering(note);
   const octave = parseInt(note.replace(/[^0-9]+/gi, ''));
 
+  if (!fingerings) {
+    throw `No fingering for note ${note}`;
+  }
+
   return fingerings.map((fingering, i) => {
     const octaveModifier = fingering[0]
     const fingers = fingering[1];
