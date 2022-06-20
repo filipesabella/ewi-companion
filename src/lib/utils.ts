@@ -17,12 +17,19 @@ export function uuid() {
   });
 }
 
+const noteNames = [
+  'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
+];
+
 export function noteNameToMidi(note: string): number {
-  const noteNames = [
-    'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
-  ];
   const noteName = note.toUpperCase().replace(/\d/, '');
   const octave = parseInt(note.slice(-1));
   const noteIndex = noteNames.indexOf(noteName);
   return noteIndex + octave * 12;
+}
+
+export function midiToNoteName(midi: number): string {
+  const octave = Math.floor(midi / 12);
+  const noteIndex = midi % 12;
+  return noteNames[noteIndex] + octave;
 }

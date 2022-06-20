@@ -4,6 +4,7 @@ import { Database } from '../db/Database';
 import { Note, noteIndex, Song } from '../db/Song';
 import { noteToFingerings } from '../lib/ewi';
 import { useHotkeys } from '../lib/useHotkeys';
+import { midiToNoteName } from '../lib/utils';
 import { ProgressBar } from './ProgressBar';
 
 require('../styles/ewi.less');
@@ -11,14 +12,15 @@ require('../styles/ewi.less');
 interface Props {
   database: Database;
   song: Song;
-  notesDown: Set<number>;
+  noteDown: number | null;
 }
 
 export function Ewi({
   song,
-  notesDown,
+  noteDown,
   database, }: Props): JSX.Element {
   const [currentNote, setCurrentNote] = useState<Note>(song.notes[0]);
+  const [wrongNote, setWrongNote] = useState<string | null>(null);
 
   function gotoBookmark(bookmark: number): void {
     setCurrentNote(song.notes[bookmark]);
@@ -88,8 +90,15 @@ export function Ewi({
   });
 
   useEffect(() => {
-    setCurrentNote(checkPressedNotes(song, notesDown, currentNote))
-  }, [notesDown]);
+    if (noteDown === currentNote.midi) {
+      setCurrentNote(nextNote(song, currentNote));
+      setWrongNote(null);
+    } else {
+
+      noteDown && setWrongNote(midiToNoteName(noteDown));
+      console.log(wrongNote);
+    }
+  }, [noteDown]);
 
   return <div id="ewi">
     <div className="main-area">
@@ -108,6 +117,9 @@ export function Ewi({
           <div className="notes-mask notes-mask-left"></div>
           <div className="notes-mask notes-mask-right"></div>
         </div>
+        {wrongNote &&
+          <div key={wrongNote}
+            className="wrong-note">{wrongNote}</div>}
         <div className="ewi-fingerings">
           {noteToFingerings(
             currentNote.name,
@@ -119,21 +131,16 @@ export function Ewi({
   </div>;
 }
 
-function checkPressedNotes(
+function nextNote(
   song: Song,
-  notesDown: Set<number>,
   currentNote: Note): Note {
-  if (notesDown.has(currentNote.midi)) {
-    const nextIndex = noteIndex(song, currentNote) + 1;
+  const nextIndex = noteIndex(song, currentNote) + 1;
 
-    if (nextIndex < song.notes.length) {
-      return song.notes[nextIndex];
-    } else {
-      return currentNote;
-    }
+  if (nextIndex < song.notes.length) {
+    return song.notes[nextIndex];
+  } else {
+    return currentNote;
   }
-
-  return currentNote;
 }
 
 function scrollNotes(index: number): void {

@@ -136,5 +136,24 @@
         }
       }
     }
+
+    .wrong-note {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 40%;
+      padding: .25em 0;
+      font-size: 4em;
+      background-image: linear-gradient(to right, transparent, var(--error-color), transparent);
+      text-align: center;
+      opacity: 0;
+      animation: flash 500ms linear forwards;
+    }
+  }
+}
+
+@keyframes flash {
+  50% {
+    opacity: 1;
   }
 }

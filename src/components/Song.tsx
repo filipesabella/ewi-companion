@@ -19,7 +19,7 @@ export function SongComponent({
   goBack,
   database, }: Props): JSX.Element {
 
-  const [notesDown, setNotesDown] = useState(new Set<number>());
+  const [noteDown, setNoteDown] = useState<number | null>(null);
 
   useEffect(() => {
     WebMidi.enable({
@@ -34,13 +34,10 @@ export function SongComponent({
         console.log('Input', input);
 
         input.addListener('noteon', e => {
-          setNotesDown(notes => new Set(notes.add(e.note.number)));
+          setNoteDown(e.note.number);
         });
         input.addListener('noteoff', e => {
-          setNotesDown(notes => {
-            notes.delete(e.note.number);
-            return new Set(notes);
-          });
+          setNoteDown(0);
         });
       }
     });
@@ -54,7 +51,7 @@ export function SongComponent({
     <Ewi
       database={database}
       song={song}
-      notesDown={notesDown} />
+      noteDown={noteDown} />
   </div>;
 }
 
