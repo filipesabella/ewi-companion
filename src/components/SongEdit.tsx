@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Database } from '../db/Database';
 import { Song } from '../db/Song';
-import { noteNameToMidi, uuid } from '../lib/utils';
+import { midiToNoteName, noteNameToMidi, uuid } from '../lib/utils';
 import '../styles/song-editor.less';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function SongEdit({ song, close, database }: Props): JSX.Element {
-  const originalNotes = song.notes.map(n => n.name).join(' ');
+  const originalNotes = song.notes.map(n => midiToNoteName(n.midi)).join(' ');
 
   const [valid, setValid] = useState(true);
   const [name, setName] = useState(song.name);

@@ -63,7 +63,7 @@ export function Ewi({
 
   const empty = (i: number) => <div key={i} className="note"></div>;
   const noteContainers = song.notes.map((n, i) =>
-    <div key={i} className="note"><span>{n.name}</span></div>);
+    <div key={i} className="note"><span>{midiToNoteName(n.midi)}</span></div>);
 
   const onClickFingering = async (fingeringId: string) => {
     // reset to null if clicking on currently preferred fingering
@@ -122,7 +122,7 @@ export function Ewi({
             className="wrong-note">{wrongNote}</div>}
         <div className="ewi-fingerings">
           {noteToFingerings(
-            currentNote.name,
+            currentNote.midi,
             currentNote.preferredEwiFingering,
             onClickFingering)}
         </div>

@@ -38,7 +38,6 @@ export function SongSelector({
           name: midi.name,
           notes: midi.tracks[0].notes.map(n => ({
             id: uuid(),
-            name: n.name,
             midi: n.midi,
             preferredEwiFingering: null,
           })),

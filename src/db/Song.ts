@@ -7,7 +7,6 @@ export interface Song {
 
 export interface Note {
   id: string;
-  name: string;
   midi: number;
   preferredEwiFingering: string | null;
 }
