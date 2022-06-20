@@ -141,6 +141,6 @@ function scrollNotes(index: number): void {
     getComputedStyle(document.querySelector('#ewi .note')!).width || '0';
 
   const container = document.querySelector<HTMLElement>('#ewi .notes')!;
-  const newLeft = parseInt(noteWidth) * index * -1;
+  const newLeft = parseFloat(noteWidth) * index * -1;
   container.style.left = newLeft + 'px';
 }
