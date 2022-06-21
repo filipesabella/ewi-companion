@@ -70,17 +70,14 @@ export function Ewi({ song, noteDown }: Props): JSX.Element {
         ? null : fingeringId;
 
     await database.savePreferredFingering(
-      song,
-      currentNote,
+      song.id,
+      currentNote.id,
       fingering);
 
     setCurrentNote({
       ...currentNote,
       preferredEwiFingering: fingering
     });
-
-    // to go around funky business with the setInterval up there. ugly
-    currentNote.preferredEwiFingering = fingering;
   };
 
   useEffect(() => {

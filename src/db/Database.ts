@@ -1,13 +1,13 @@
 import Dexie from 'dexie';
-import { Note, Song } from './Song';
+import { Song } from './Song';
 
 const dbName = 'midi-thing-db';
 
-let db: DixieNonSense;
+let db: DexieNonSense;
 
 export class Database {
   constructor() {
-    db = new DixieNonSense();
+    db = new DexieNonSense();
   }
 
   public async initialize(): Promise<void> {
@@ -51,19 +51,17 @@ export class Database {
   }
 
   public async savePreferredFingering(
-    song: Song, note: Note, fingeringId: string | null)
-    : Promise<void> {
-    await db.songs.update(song.id, {
-      ...song,
-      notes: song.notes.map(n =>
-        n.id === note.id
+    songId: string, noteId: string, fingeringId: string | null): Promise<void> {
+    db.songs.where({ id: songId }).modify(song => {
+      song.notes = song.notes.map(n =>
+        n.id === noteId
           ? { ...n, preferredEwiFingering: fingeringId }
           : n)
     });
   }
 }
 
-class DixieNonSense extends Dexie {
+class DexieNonSense extends Dexie {
   songs: Dexie.Table<Song, string>;
 
   constructor() {
