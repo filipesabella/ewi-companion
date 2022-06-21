@@ -16,25 +16,22 @@ export function SongComponent({ song, goBack }: Props): JSX.Element {
   const [noteDown, setNoteDown] = useState<number | null>(null);
 
   useEffect(() => {
-    WebMidi.enable({
-      callback: (err: any) => {
-        if (err) throw err;
-        if (WebMidi.inputs.length === 0) {
-          console.error('No webmidi inputs');
-          return;
-        }
-
-        const input = WebMidi.inputs[0];
-        console.log('Input', input);
-
-        input.addListener('noteon', e => {
-          setNoteDown(e.note.number);
-        });
-        input.addListener('noteoff', e => {
-          setNoteDown(0);
-        });
+    WebMidi.enable().then(() => {
+      if (WebMidi.inputs.length === 0) {
+        console.error('No webmidi inputs');
+        return;
       }
-    });
+
+      const input = WebMidi.inputs[0];
+      console.log('Input', WebMidi.inputs);
+
+      input.addListener('noteon', e => {
+        setNoteDown(e.note.number);
+      });
+      input.addListener('noteoff', () => {
+        setNoteDown(null);
+      });
+    }).catch(err => alert(err));
   }, []);
 
   useHotkeys({}, {
