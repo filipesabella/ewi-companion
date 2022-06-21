@@ -88,9 +88,9 @@ export function Ewi({ song, noteDown }: Props): JSX.Element {
           <div className="notes-mask notes-mask-left"></div>
           <div className="notes-mask notes-mask-right"></div>
         </div>
-        {wrongNote &&
-          <div key={wrongNote}
-            className="wrong-note">{wrongNote}</div>}
+        {wrongNote && <div key={wrongNote} className="wrong-note">
+          {wrongNote}
+        </div>}
         <div className="ewi-fingerings">
           {noteToFingerings(
             currentNote.midi,
