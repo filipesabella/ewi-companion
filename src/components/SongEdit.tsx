@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { Song } from '../db/Song';
+import { useHotkeys } from '../lib/useHotkeys';
 import { midiToNoteName, noteNameToMidi, uuid } from '../lib/utils';
 import '../styles/song-editor.less';
 import { AppContext } from './App';
@@ -33,6 +34,10 @@ export function SongEdit({ song, close }: Props): JSX.Element {
       })),
     }).then(close);
   };
+
+  useHotkeys({}, {
+    27: _ => close(),
+  });
 
   useEffect(() => {
     const nameValid = name.length > 0;
