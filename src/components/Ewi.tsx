@@ -89,9 +89,7 @@ export function Ewi({ song, noteDown }: Props): JSX.Element {
       setCurrentNote(nextNote(song, currentNote));
       setWrongNote(null);
     } else {
-
       noteDown && setWrongNote(midiToNoteName(noteDown));
-      console.log(wrongNote);
     }
   }, [noteDown]);
 
