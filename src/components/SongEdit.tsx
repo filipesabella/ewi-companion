@@ -1,17 +1,18 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { Database } from '../db/Database';
+import { useContext, useEffect, useState } from 'react';
 import { Song } from '../db/Song';
 import { midiToNoteName, noteNameToMidi, uuid } from '../lib/utils';
 import '../styles/song-editor.less';
+import { AppContext } from './App';
 
 interface Props {
   song: Song;
   close: () => void;
-  database: Database;
 }
 
-export function SongEdit({ song, close, database }: Props): JSX.Element {
+export function SongEdit({ song, close }: Props): JSX.Element {
+  const { database } = useContext(AppContext);
+
   const originalNotes = song.notes.map(n => midiToNoteName(n.midi)).join(' ');
 
   const [valid, setValid] = useState(true);

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { WebMidi } from 'webmidi';
-import { Database } from '../db/Database';
 import { Song } from '../db/Song';
 import { useHotkeys } from '../lib/useHotkeys';
 import { Ewi } from './Ewi';
@@ -11,14 +10,9 @@ require('../styles/song.less');
 interface Props {
   goBack: () => void;
   song: Song;
-  database: Database;
 }
 
-export function SongComponent({
-  song,
-  goBack,
-  database, }: Props): JSX.Element {
-
+export function SongComponent({ song, goBack }: Props): JSX.Element {
   const [noteDown, setNoteDown] = useState<number | null>(null);
 
   useEffect(() => {
@@ -48,10 +42,7 @@ export function SongComponent({
   });
 
   return <div id="song">
-    <Ewi
-      database={database}
-      song={song}
-      noteDown={noteDown} />
+    <Ewi song={song} noteDown={noteDown} />
   </div>;
 }
 

@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { Database } from '../db/Database';
 import { Song } from '../db/Song';
 import { SongComponent } from './Song';
 import { SongSelector } from './SongSelector';
 
 const database = new Database();
+
+export const AppContext = createContext({ database });
 
 export function App(): JSX.Element {
   const [loading, setLoading] = useState(true);
@@ -17,23 +19,23 @@ export function App(): JSX.Element {
     // load a song on start for debugging
     database.listCurrentSongs().then(songs => {
       // setCurrentSong(testSong);
-      // database.song(songs[0].id).then(s => {
-      //   setCurrentSong(s!);
-      // });
+      database.song(songs[1].id).then(s => {
+        setCurrentSong(s!);
+      });
     });
   }, []);
 
   const app = loading
     ? <div className="app">Loading...</div>
-    : <div className="app">
-      {!currentSong && <SongSelector
-        database={database}
-        setCurrentSong={setCurrentSong} />}
-      {currentSong && <SongComponent
-        goBack={() => setCurrentSong(null)}
-        song={currentSong}
-        database={database} />}
-    </div>;
+    : <AppContext.Provider value={{database}}>
+      <div className="app">
+        {!currentSong && <SongSelector
+          setCurrentSong={setCurrentSong} />}
+        {currentSong && <SongComponent
+          goBack={() => setCurrentSong(null)}
+          song={currentSong} />}
+      </div>
+    </AppContext.Provider>;
 
   return app;
 }

@@ -1,22 +1,22 @@
 import { Midi, Track } from '@tonejs/midi';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { Database } from '../db/Database';
+import { useContext, useEffect, useState } from 'react';
 import { Song } from '../db/Song';
 import { importMidi } from '../lib/MidiImporter';
 import { uuid } from '../lib/utils';
+import { AppContext } from './App';
 import { SongEdit } from './SongEdit';
 
 require('../styles/song-selector.less');
 
 interface Props {
-  database: Database;
   setCurrentSong: (song: Song) => void;
 }
 
 export function SongSelector({
-  database,
   setCurrentSong, }: Props): JSX.Element {
+  const { database } = useContext(AppContext);
+
   const [songs, setSongs] = useState<Song[] | null>(null);
   const [reload, setReload] = useState({});
   const [midi, setMidi] = useState<Midi | null>(null);
@@ -126,8 +126,7 @@ export function SongSelector({
         setSongToEdit(null);
         setMidi(null);
         setReload({});
-      }}
-      database={database} />}
+      }} />}
   </div>;
 }
 

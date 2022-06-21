@@ -1,20 +1,21 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { Database } from '../db/Database';
+import { useContext, useEffect, useState } from 'react';
 import { Note, Song } from '../db/Song';
 import { icons } from '../icons';
+import { AppContext } from './App';
 
 require('../styles/progress-bar.less');
 
 interface Props {
-  database: Database;
   song: Song;
   currentNote: Note;
   gotoBookmark: (key: number) => void;
 }
 
 export function ProgressBar({
-  song, database, currentNote, gotoBookmark }: Props): JSX.Element {
+  song, currentNote, gotoBookmark }: Props): JSX.Element {
+  const { database } = useContext(AppContext);
+
   const totalNotes = song.notes.length;
   const currentNoteIndex = song.notes.indexOf(currentNote);
 

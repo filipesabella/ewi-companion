@@ -1,24 +1,22 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { Database } from '../db/Database';
+import { useContext, useEffect, useState } from 'react';
 import { Note, noteIndex, Song } from '../db/Song';
 import { noteToFingerings } from '../lib/ewi';
 import { useHotkeys } from '../lib/useHotkeys';
 import { midiToNoteName } from '../lib/utils';
+import { AppContext } from './App';
 import { ProgressBar } from './ProgressBar';
 
 require('../styles/ewi.less');
 
 interface Props {
-  database: Database;
   song: Song;
   noteDown: number | null;
 }
 
-export function Ewi({
-  song,
-  noteDown,
-  database, }: Props): JSX.Element {
+export function Ewi({ song, noteDown }: Props): JSX.Element {
+  const { database } = useContext(AppContext);
+
   const [currentNote, setCurrentNote] = useState<Note>(song.notes[0]);
   const [wrongNote, setWrongNote] = useState<string | null>(null);
 
@@ -103,7 +101,6 @@ export function Ewi({
   return <div id="ewi">
     <div className="main-area">
       <ProgressBar
-        database={database}
         song={song}
         currentNote={currentNote}
         gotoBookmark={gotoBookmark} />
