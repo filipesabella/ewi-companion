@@ -13,7 +13,7 @@ interface Props {
 }
 
 export function SongComponent({ song, goBack }: Props): JSX.Element {
-  const [noteDown, setNoteDown] = useState<number | null>(null);
+  const [noteBeingPlayed, setNoteBeingPlayed] = useState<number | null>(null);
 
   useEffect(() => {
     WebMidi.enable().then(() => {
@@ -26,10 +26,10 @@ export function SongComponent({ song, goBack }: Props): JSX.Element {
       console.log('Input', WebMidi.inputs);
 
       input.addListener('noteon', e => {
-        setNoteDown(e.note.number);
+        setNoteBeingPlayed(e.note.number);
       });
       input.addListener('noteoff', () => {
-        setNoteDown(null);
+        setNoteBeingPlayed(null);
       });
     }).catch(err => alert(err));
   }, []);
@@ -39,7 +39,7 @@ export function SongComponent({ song, goBack }: Props): JSX.Element {
   });
 
   return <div id="song">
-    <Ewi song={song} noteDown={noteDown} />
+    <Ewi song={song} noteBeingPlayed={noteBeingPlayed} />
   </div>;
 }
 

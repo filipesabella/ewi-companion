@@ -11,10 +11,10 @@ require('../styles/ewi.less');
 
 interface Props {
   song: Song;
-  noteDown: number | null;
+  noteBeingPlayed: number | null;
 }
 
-export function Ewi({ song, noteDown }: Props): JSX.Element {
+export function Ewi({ song, noteBeingPlayed }: Props): JSX.Element {
   const { database } = useContext(AppContext);
 
   const [currentNote, setCurrentNote] = useState<Note>(song.notes[0]);
@@ -64,13 +64,13 @@ export function Ewi({ song, noteDown }: Props): JSX.Element {
   });
 
   useEffect(() => {
-    if (noteDown === currentNote.midi) {
+    if (noteBeingPlayed === currentNote.midi) {
       setCurrentNote(nextNote(song, currentNote));
       setWrongNote(null);
     } else {
-      noteDown && setWrongNote(midiToNoteName(noteDown));
+      noteBeingPlayed && setWrongNote(midiToNoteName(noteBeingPlayed));
     }
-  }, [noteDown]);
+  }, [noteBeingPlayed]);
 
   return <div id="ewi">
     <div className="main-area">
