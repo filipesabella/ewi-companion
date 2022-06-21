@@ -129,12 +129,7 @@ function nextNote(
   song: Song,
   currentNote: Note): Note {
   const nextIndex = noteIndex(song, currentNote) + 1;
-
-  if (nextIndex < song.notes.length) {
-    return song.notes[nextIndex];
-  } else {
-    return currentNote;
-  }
+  return nextIndex < song.notes.length ? song.notes[nextIndex] : currentNote;
 }
 
 function scrollNotes(index: number): void {
