@@ -51,7 +51,7 @@ export function SongEdit({ song, close }: Props): JSX.Element {
     setValid(nameValid && notesValid);
   }, [name, notes]);
 
-  return <div className="songEditor">
+  return <div className="song-editor">
     <div className="song">
       <label>Name</label>
       <input

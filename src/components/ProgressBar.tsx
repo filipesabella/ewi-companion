@@ -29,7 +29,7 @@ export function ProgressBar({
       setShowBookmarks(true);
       window.clearTimeout(timeoutId);
 
-      const time = !!(e.target! as any).closest('.progressBar') ? 5000 : 1000;
+      const time = !!(e.target! as any).closest('.progress-bar') ? 5000 : 1000;
       timeoutId = window.setTimeout(() => setShowBookmarks(false), time);
     };
     document.addEventListener('mousemove', listener);
@@ -49,7 +49,7 @@ export function ProgressBar({
     setShowBookmarks(false);
   };
 
-  return <div className="progressBar">
+  return <div className="progress-bar">
     {showBookmarks && <div className="bookmarks">
       {song.bookmarks.map((b, i) => <div
         key={b}
@@ -66,7 +66,7 @@ export function ProgressBar({
       }
     </div>}
     {showBookmarks && <div onClick={() => saveBookmark()}
-      className="createBookmark"
+      className="create-bookmark"
       style={{ left: Math.min(completion, 98.5) + '%' }}>
       {icons.star}
     </div>}

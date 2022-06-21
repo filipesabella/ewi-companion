@@ -103,7 +103,7 @@ export function SongSelector({
         <label onClick={() => newSong()}>Write song</label>
       </div>}
     </div>}
-    {midi && <div className="trackSelector">
+    {midi && <div className="track-selector">
       <div className="tracks">
         <p>
           This midi file has more than one track, which one
