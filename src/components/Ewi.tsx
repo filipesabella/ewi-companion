@@ -20,18 +20,7 @@ export function Ewi({ song, noteDown }: Props): JSX.Element {
   const [currentNote, setCurrentNote] = useState<Note>(song.notes[0]);
   const [wrongNote, setWrongNote] = useState<string | null>(null);
 
-  function gotoBookmark(bookmark: number): void {
-    setCurrentNote(song.notes[bookmark]);
-  }
-
-  function keyToBookmark(key: number): void {
-    // numbers 1 through 9
-    const index = key - 48;
-    const bookmark = song.bookmarks[index - 1];
-    bookmark && gotoBookmark(bookmark);
-  }
-
-  function skipNote(delta: number): void {
+  const skipNote = (delta: number) => {
     const index = noteIndex(song, currentNote);
     const newIndex = Math.min(
       Math.max(0, index + delta),
@@ -40,17 +29,7 @@ export function Ewi({ song, noteDown }: Props): JSX.Element {
     setCurrentNote(song.notes[newIndex]);
   }
 
-  useHotkeys({
-    49: keyToBookmark,
-    50: keyToBookmark,
-    51: keyToBookmark,
-    52: keyToBookmark,
-    53: keyToBookmark,
-    54: keyToBookmark,
-    55: keyToBookmark,
-    56: keyToBookmark,
-    57: keyToBookmark,
-  }, {
+  useHotkeys({}, {
     32: (_, e) => {
       skipNote(1);
       e.preventDefault();
@@ -98,7 +77,7 @@ export function Ewi({ song, noteDown }: Props): JSX.Element {
       <ProgressBar
         song={song}
         currentNote={currentNote}
-        gotoBookmark={gotoBookmark} />
+        setCurrentNote={setCurrentNote} />
       <div className="notes-and-fingerings">
         <div className="notes-container">
           <div className="notes">

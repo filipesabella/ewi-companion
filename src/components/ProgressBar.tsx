@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { Note, Song } from '../db/Song';
 import { icons } from '../icons';
+import { useHotkeys } from '../lib/useHotkeys';
 import { AppContext } from './App';
 
 require('../styles/progress-bar.less');
@@ -9,11 +10,11 @@ require('../styles/progress-bar.less');
 interface Props {
   song: Song;
   currentNote: Note;
-  gotoBookmark: (key: number) => void;
+  setCurrentNote: (note: Note) => void;
 }
 
 export function ProgressBar({
-  song, currentNote, gotoBookmark }: Props): JSX.Element {
+  song, currentNote, setCurrentNote }: Props): JSX.Element {
   const { database } = useContext(AppContext);
 
   const totalNotes = song.notes.length;
@@ -22,6 +23,29 @@ export function ProgressBar({
   const completion = (currentNoteIndex + 1) * 100 / totalNotes;
 
   const [showBookmarks, setShowBookmarks] = useState(false);
+
+  const gotoBookmark = (bookmark: number) => {
+    setCurrentNote(song.notes[bookmark]);
+  }
+
+  const keyToBookmark = (key: number) => {
+    // numbers 1 through 9
+    const index = key - 48;
+    const bookmark = song.bookmarks[index - 1];
+    bookmark && gotoBookmark(bookmark);
+  }
+
+  useHotkeys({
+    49: keyToBookmark,
+    50: keyToBookmark,
+    51: keyToBookmark,
+    52: keyToBookmark,
+    53: keyToBookmark,
+    54: keyToBookmark,
+    55: keyToBookmark,
+    56: keyToBookmark,
+    57: keyToBookmark,
+  }, {});
 
   useEffect(() => {
     let timeoutId = 0;
