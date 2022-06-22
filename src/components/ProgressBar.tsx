@@ -29,10 +29,11 @@ export function ProgressBar({
   }
 
   const keyToBookmark = (key: number) => {
+
     // numbers 1 through 9
     const index = key - 48;
     const bookmark = song.bookmarks[index - 1];
-    bookmark && gotoBookmark(bookmark);
+    bookmark !== undefined && gotoBookmark(bookmark);
   }
 
   useHotkeys({
