@@ -28,7 +28,7 @@ export function SongEdit({ song, close }: Props): JSX.Element {
       name,
       notes: normalisedNotes.split(/\s/).map(n => ({
         id: uuid(),
-        name: n,
+        name: n.trim(),
         midi: noteNameToMidi(n),
         preferredEwiFingering: null,
       })),
@@ -57,7 +57,7 @@ export function SongEdit({ song, close }: Props): JSX.Element {
       <input
         autoFocus
         value={name}
-        onChange={e => setName(e.target.value.trim())} />
+        onChange={e => setName(e.target.value)} />
       <label>Notes</label>
       <textarea
         placeholder={
