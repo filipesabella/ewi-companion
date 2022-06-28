@@ -54,7 +54,7 @@ export function SongSelector({
   const selectTrack = (t: Track) => {
     setSongToEdit({
       id: uuid(),
-      name: midi!.name,
+      name: midi!.name + ' - ' + t.name,
       notes: t.notes.map(n => ({
         id: uuid(),
         name: n.name,
