@@ -19,14 +19,28 @@ export function Ewi({ song, noteBeingPlayed }: Props): JSX.Element {
 
   const [currentNote, setCurrentNote] = useState<Note>(song.notes[0]);
   const [wrongNote, setWrongNote] = useState<string | null>(null);
+  const [finished, setFinished] = useState(false);
+
+  const changeCurrentNote = (n: Note | null) => {
+    if (n) {
+      setCurrentNote(n);
+      setFinished(false);
+      setWrongNote(null);
+    } else {
+      setFinished(true);
+    }
+  };
 
   const skipNote = (delta: number) => {
     const index = noteIndex(song, currentNote);
-    const newIndex = Math.min(
-      Math.max(0, index + delta),
-      song.notes.length - 1);
+    const newIndex = index + delta;
+    const normalisedIndex = newIndex < 0
+      ? song.notes.length - 1
+      : newIndex > song.notes.length - 1
+        ? 0
+        : newIndex;
 
-    setCurrentNote(song.notes[newIndex]);
+    changeCurrentNote(song.notes[normalisedIndex]);
   }
 
   useHotkeys({}, {
@@ -65,8 +79,7 @@ export function Ewi({ song, noteBeingPlayed }: Props): JSX.Element {
 
   useEffect(() => {
     if (noteBeingPlayed === currentNote.midi) {
-      setCurrentNote(nextNote(song, currentNote));
-      setWrongNote(null);
+      changeCurrentNote(nextNote(song, currentNote));
     } else {
       noteBeingPlayed && setWrongNote(midiToNoteName(noteBeingPlayed));
     }
@@ -91,12 +104,15 @@ export function Ewi({ song, noteBeingPlayed }: Props): JSX.Element {
         {wrongNote && <div key={wrongNote} className="wrong-note">
           {wrongNote}
         </div>}
-        <div className="ewi-fingerings">
+        {finished && <div className="finished">
+          End
+        </div>}
+        {!finished && <div className="ewi-fingerings">
           {noteToFingerings(
             currentNote.midi,
             currentNote.preferredEwiFingering,
             onClickFingering)}
-        </div>
+        </div>}
       </div>
     </div>
   </div>;
@@ -104,9 +120,9 @@ export function Ewi({ song, noteBeingPlayed }: Props): JSX.Element {
 
 function nextNote(
   song: Song,
-  currentNote: Note): Note {
+  currentNote: Note): Note | null {
   const nextIndex = noteIndex(song, currentNote) + 1;
-  return nextIndex < song.notes.length ? song.notes[nextIndex] : currentNote;
+  return song.notes[nextIndex];
 }
 
 function scrollNotes(index: number): void {
