@@ -1,5 +1,170 @@
+@note-width: 6em;
+@notes-shown: 5;
+
 #song {
   width: 100%;
   height: 100vh;
   background: var(--bg-color);
+
+  >.ewi {
+    background-color: var(--bg-color);
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+
+    .main-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      .notes-and-fingerings {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        align-items: center;
+
+        .notes-container {
+          position: relative;
+          color: var(--text-color);
+          overflow: hidden;
+
+          width: @note-width * @notes-shown;
+          height: @note-width;
+
+          .notes-mask {
+            position: absolute;
+            top: 0;
+            height: @note-width;
+            width: @note-width * floor((@notes-shown / 2));
+
+            &.notes-mask-left {
+              left: 0;
+              background: linear-gradient(to left,
+                  var(--bg-color-transparent),
+                  var(--bg-color));
+            }
+
+            &.notes-mask-right {
+              left: @note-width * (@notes-shown - 2);
+              background: linear-gradient(to right,
+                  var(--bg-color-transparent),
+                  var(--bg-color));
+            }
+          }
+
+          .notes {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            display: flex;
+            flex-direction: row;
+
+            transition: left 0.3s ease-out;
+
+            div.note {
+              flex: 1;
+              width: @note-width;
+              line-height: @note-width;
+              text-align: center;
+
+              span {
+                font-size: (@note-width / 3);
+              }
+            }
+          }
+        }
+
+        .ewi-fingerings {
+          background: var(--bg-color);
+          flex: 1;
+          overflow: auto;
+          margin-top: 2em;
+          color: var(--text-color);
+
+          display: inline-flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
+          column-gap: 1em;
+          row-gap: 1em;
+          width: 100%;
+
+          .fingering {
+            order: 2;
+            display: inline-flex;
+            border: 1px solid var(--text-color);
+            padding: 1em;
+            border-radius: 1em;
+            height: 34em;
+            width: 10em;
+
+            &.last-child {
+              margin-right: 0;
+            }
+
+            &.preferred {
+              order: 1;
+              margin-left: 40%;
+              margin-right: 40%;
+            }
+
+            svg {
+              height: 100%;
+            }
+
+            .button,
+            .separator,
+            .roller {
+              fill: var(--bg-color);
+              stroke: var(--text-color);
+            }
+
+            .button,
+            .separator {
+              stroke-width: 2px;
+            }
+
+            .roller {
+              stroke-width: 1px;
+            }
+
+            .on {
+              fill: var(--text-color);
+            }
+          }
+        }
+      }
+
+      .wrong-note {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 40%;
+        padding: .25em 0;
+        font-size: 4em;
+        background-image: linear-gradient(to right, transparent, var(--error-color), transparent);
+        text-align: center;
+        opacity: 0;
+        animation: flash 500ms linear forwards;
+      }
+
+    }
+
+    .finished {
+      font-size: 6em;
+      margin: auto;
+      color: var(--text-color);
+    }
+  }
+
+  @keyframes flash {
+    50% {
+      opacity: 1;
+    }
+  }
+
 }
