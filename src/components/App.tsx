@@ -2,16 +2,22 @@ import * as React from 'react';
 import { createContext, useEffect, useState } from 'react';
 import { Database } from '../db/Database';
 import { Song } from '../db/Song';
+import { InputChooser } from './InputChooser';
 import { SongComponent } from './Song';
 import { SongSelector } from './SongSelector';
 
 const database = new Database();
 
-export const AppContext = createContext({ database });
+export const AppContext = createContext({
+  database,
+  noteBeingPlayed: null as number | null,
+});
 
 export function App(): JSX.Element {
   const [loading, setLoading] = useState(true);
   const [currentSong, setCurrentSong] = useState<Song | null>(null);
+
+  const [noteBeingPlayed, setNoteBeingPlayed] = useState<number | null>(null);
 
   useEffect(() => {
     database.initialize().then(_ => setLoading(false));
@@ -19,15 +25,16 @@ export function App(): JSX.Element {
     // load a song on start for debugging
     database.listCurrentSongs().then(songs => {
       // setCurrentSong(testSong);
-      database.song(songs[1].id).then(s => {
-        setCurrentSong(s!);
+      database.song(songs[2].id).then(s => {
+        // setCurrentSong(s!);
       });
     });
   }, []);
 
+
   const app = loading
     ? <div className="app">Loading...</div>
-    : <AppContext.Provider value={{database}}>
+    : <AppContext.Provider value={{ database, noteBeingPlayed, }}>
       <div className="app">
         {!currentSong && <SongSelector
           setCurrentSong={setCurrentSong} />}
@@ -35,6 +42,7 @@ export function App(): JSX.Element {
           goBack={() => setCurrentSong(null)}
           song={currentSong} />}
       </div>
+      <InputChooser setNoteBeingPlayed={setNoteBeingPlayed} />
     </AppContext.Provider>;
 
   return app;

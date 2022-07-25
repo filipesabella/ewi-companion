@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { WebMidi } from 'webmidi';
 import { Song } from '../db/Song';
 import { useHotkeys } from '../lib/useHotkeys';
 import { Ewi } from './Ewi';
@@ -12,34 +10,14 @@ interface Props {
   song: Song;
 }
 
+// TODO delete this component
 export function SongComponent({ song, goBack }: Props): JSX.Element {
-  const [noteBeingPlayed, setNoteBeingPlayed] = useState<number | null>(null);
-
-  useEffect(() => {
-    WebMidi.enable().then(() => {
-      if (WebMidi.inputs.length === 0) {
-        console.error('No webmidi inputs');
-        return;
-      }
-
-      const input = WebMidi.inputs[0];
-      console.log('Input', WebMidi.inputs);
-
-      input.addListener('noteon', e => {
-        setNoteBeingPlayed(e.note.number);
-      });
-      input.addListener('noteoff', () => {
-        setNoteBeingPlayed(null);
-      });
-    }).catch(err => alert(err));
-  }, []);
-
   useHotkeys({}, {
     27: _ => goBack(),
   });
 
   return <div id="song">
-    <Ewi song={song} noteBeingPlayed={noteBeingPlayed} />
+    <Ewi song={song} />
   </div>;
 }
 

@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { Note, Song } from '../db/Song';
 import { icons } from '../icons';
+import { useAwakeMouse } from '../lib/useAwakeMouse';
 import { useHotkeys } from '../lib/useHotkeys';
 import { AppContext } from './App';
 
@@ -48,19 +49,11 @@ export function ProgressBar({
     57: keyToBookmark,
   }, {});
 
-  useEffect(() => {
-    let timeoutId = 0;
-    const listener = (e: MouseEvent) => {
-      setShowBookmarks(true);
-      window.clearTimeout(timeoutId);
-
-      const time = !!(e.target! as any).closest('.progress-bar') ? 5000 : 1000;
-      timeoutId = window.setTimeout(() => setShowBookmarks(false), time);
-    };
-    document.addEventListener('mousemove', listener);
-
-    return () => document.removeEventListener('mousemove', listener);
-  }, []);
+  useAwakeMouse(
+    () => setShowBookmarks(true),
+    () => setShowBookmarks(false),
+    e => !!(e.target! as any).closest('.progress-bar') ? 5000 : 1000,
+  );
 
   const saveBookmark = async () => {
     song.bookmarks = [...new Set(song.bookmarks).add(currentNoteIndex)].sort();

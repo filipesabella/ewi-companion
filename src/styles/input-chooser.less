@@ -1,0 +1,25 @@
+#input-chooser {
+  position: fixed;
+  right: 1em;
+  bottom: 1em;
+  color: var(--text-color);
+  background: var(--other-color);
+  padding: 1em;
+  line-height: 2em;
+
+  ul {
+    list-style: disc inside;
+
+    li {
+      cursor: pointer;
+
+      &:hover {
+        color: var(--bg-color);
+      }
+
+      &.selected {
+        color: green;
+      }
+    }
+  }
+}

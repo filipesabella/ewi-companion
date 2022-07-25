@@ -11,11 +11,10 @@ require('../styles/ewi.less');
 
 interface Props {
   song: Song;
-  noteBeingPlayed: number | null;
 }
 
-export function Ewi({ song, noteBeingPlayed }: Props): JSX.Element {
-  const { database } = useContext(AppContext);
+export function Ewi({ song }: Props): JSX.Element {
+  const { database, noteBeingPlayed } = useContext(AppContext);
 
   const [currentNote, setCurrentNote] = useState<Note>(song.notes[0]);
   const [wrongNote, setWrongNote] = useState<string | null>(null);
