@@ -23,7 +23,12 @@ export function InputChooser({ setNoteBeingPlayed }: Props): JSX.Element {
       }
 
       WebMidi.addListener('connected', () => {
-        setAvailableInputs([...WebMidi.inputs]);
+        const inputs = WebMidi.inputs;
+        setAvailableInputs([...inputs]);
+
+        if (inputs.length === 1) {
+          selectInput(inputs[0]);
+        }
       });
 
       WebMidi.addListener('disconnected', () => {
