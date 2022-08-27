@@ -33,9 +33,9 @@ export function App(): JSX.Element {
 
 
   const app = loading
-    ? <div className="app">Loading...</div>
+    ? <div id="app">Loading...</div>
     : <AppContext.Provider value={{ database, noteBeingPlayed, }}>
-      <div className="app">
+      <div id="app">
         {!currentSong && <SongSelector
           setCurrentSong={setCurrentSong} />}
         {currentSong && <SongComponent

@@ -89,7 +89,7 @@ export function SongSelector({
     });
   };
 
-  return <div className="songSelector">
+  return <div id="songSelector">
     {songs === null && <div>Loading songs...</div>}
     {songs !== null && <div className="currentSongs">
       <h1>Songs</h1>
