@@ -17,7 +17,8 @@ export class Database {
   }
 
   public async listCurrentSongs(): Promise<Song[]> {
-    return await db.songs.toArray();
+    return (await db.songs.toArray())
+      .sort((a, b) => a.name.localeCompare(b.name));
   }
 
   public async song(id: string): Promise<Song | undefined> {
