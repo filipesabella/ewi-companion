@@ -32,8 +32,12 @@ export function ProgressBar({
   const keyToBookmark = (key: number) => {
     // numbers 1 through 9
     const index = key - 48;
-    const bookmark = song.bookmarks[index - 1];
-    bookmark !== undefined && gotoBookmark(bookmark);
+    if (index === 1) { // defaults pressing 1 to go to the start
+      setCurrentNote(song.notes[0]);
+    } else {
+      const bookmark = song.bookmarks[index - 2];
+      bookmark !== undefined && gotoBookmark(bookmark);
+    }
   }
 
   useHotkeys({
@@ -70,11 +74,11 @@ export function ProgressBar({
     {showBookmarks && <div className="bookmarks">
       {song.bookmarks.map((b, i) => <div
         key={b}
-        style={{ left: Math.min(((b + 1) * 100 / totalNotes), 98.5) + '%' }}>
+        style={{ left: Math.min((b * 100 / (totalNotes - 1)), 98.5) + '%' }}>
         <div
           className="bookmark"
           onClick={() => gotoBookmark(b)}
-          title={`Click or press ${i + 1} to navigate`}>{icons.star}</div>
+          title={`Click or press ${i + 2} to navigate`}>{icons.star}</div>
         <div
           className="deleteBookmark"
           onClick={() => deleteBookmark(b)}
