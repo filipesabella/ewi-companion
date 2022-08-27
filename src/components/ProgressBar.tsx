@@ -55,7 +55,7 @@ export function ProgressBar({
   useAwakeMouse(
     () => setShowBookmarks(true),
     () => setShowBookmarks(false),
-    e => !!(e.target! as any).closest('.progress-bar') ? 5000 : 1000,
+    e => !!(e.target! as any).closest('.progress-bar') ? 3000 : 1000,
   );
 
   const saveBookmark = async () => {
