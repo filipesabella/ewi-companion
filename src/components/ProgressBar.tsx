@@ -21,7 +21,7 @@ export function ProgressBar({
   const totalNotes = song.notes.length;
   const currentNoteIndex = song.notes.indexOf(currentNote);
 
-  const completion = (currentNoteIndex + 1) * 100 / totalNotes;
+  const completion = currentNoteIndex * 100 / (totalNotes - 1);
 
   const [showBookmarks, setShowBookmarks] = useState(false);
 
@@ -30,7 +30,6 @@ export function ProgressBar({
   }
 
   const keyToBookmark = (key: number) => {
-
     // numbers 1 through 9
     const index = key - 48;
     const bookmark = song.bookmarks[index - 1];
