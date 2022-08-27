@@ -100,7 +100,7 @@ export function SongComponent({ song, goBack }: Props): JSX.Element {
   useAwakeMouse(
     () => setShowBack(true),
     () => setShowBack(false),
-    e => 1000,
+    () => 1000,
   );
 
   useHotkeys({}, {
