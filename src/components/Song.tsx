@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { Note, noteIndex, Song } from '../db/Song';
 import { noteToFingerings } from '../lib/ewi';
+import { useAwakeMouse } from '../lib/useAwakeMouse';
 import { useHotkeys } from '../lib/useHotkeys';
 import { midiToNoteName } from '../lib/utils';
 import { AppContext } from './App';
@@ -14,9 +15,6 @@ interface Props {
 }
 
 export function SongComponent({ song, goBack }: Props): JSX.Element {
-  useHotkeys({}, {
-    27: _ => goBack(),
-  });
   const { database, noteBeingPlayed } = useContext(AppContext);
 
   const [currentNote, setCurrentNote] = useState<Note>(song.notes[0]);
@@ -87,6 +85,17 @@ export function SongComponent({ song, goBack }: Props): JSX.Element {
     }
   }, [noteBeingPlayed]);
 
+  const [showBack, setShowBack] = useState(false);
+  useAwakeMouse(
+    () => setShowBack(true),
+    () => setShowBack(false),
+    e => 1000,
+  );
+
+  useHotkeys({}, {
+    27: _ => goBack(),
+  });
+
   return <div id="song">
     <div className="ewi">
       <div className="main-area">
@@ -119,6 +128,9 @@ export function SongComponent({ song, goBack }: Props): JSX.Element {
         </div>
       </div>
     </div>
+    {showBack && <div
+      className="goBack"
+      onClick={() => goBack()}>Go back</div>}
   </div>;
 }
 
