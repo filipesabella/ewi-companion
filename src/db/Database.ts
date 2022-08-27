@@ -1,6 +1,8 @@
 import Dexie from 'dexie';
 import { Song } from './Song';
 
+// TODO rename to ewi-companion-db
+// TODO add some default songs
 const dbName = 'midi-thing-db';
 
 let db: DexieNonSense;
