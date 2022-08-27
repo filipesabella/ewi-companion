@@ -62,6 +62,23 @@ export class Database {
           : n)
     });
   }
+
+  public async toJSON(): Promise<string> {
+    return JSON.stringify(await this.listCurrentSongs());
+  }
+
+  public async import(data: any): Promise<boolean> {
+    try {
+      await db.transaction('rw', db.songs, async () => {
+        await db.songs.clear();
+        await db.songs.bulkAdd(data);
+      });
+      return true;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
 }
 
 class DexieNonSense extends Dexie {

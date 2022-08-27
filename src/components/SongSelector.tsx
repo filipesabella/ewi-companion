@@ -5,6 +5,8 @@ import { Song } from '../db/Song';
 import { importMidi } from '../lib/MidiImporter';
 import { uuid } from '../lib/utils';
 import { AppContext } from './App';
+import { DatabaseExporter } from './DatabaseExporter';
+import { DatabaseImporter } from './DatabaseImporter';
 import { SongEdit } from './SongEdit';
 
 require('../styles/song-selector.less');
@@ -21,6 +23,9 @@ export function SongSelector({
   const [reload, setReload] = useState({});
   const [midi, setMidi] = useState<Midi | null>(null);
   const [songToEdit, setSongToEdit] = useState<Song | null>(null);
+
+  const [exportingSongs, setExportingSongs] = useState<boolean>(false);
+  const [importingSongs, setImportingSongs] = useState<boolean>(false);
 
   useEffect(() => {
     database.listCurrentSongs().then(setSongs);
@@ -100,7 +105,13 @@ export function SongSelector({
           </input>
           <label htmlFor="importFileInput">Import a MIDI file</label>
         </div>
-        <label onClick={() => newSong()}>Write song</label>
+        <div><label onClick={() => newSong()}>Write song</label></div>
+        <div>
+          <label onClick={() => setExportingSongs(true)}>Export songs</label>
+        </div>
+        <div>
+          <label onClick={() => setImportingSongs(true)}>Import songs</label>
+        </div>
       </div>}
     </div>}
     {midi && <div className="track-selector">
@@ -127,6 +138,10 @@ export function SongSelector({
         setMidi(null);
         setReload({});
       }} />}
+    {exportingSongs && <DatabaseExporter
+      close={() => setExportingSongs(false)} />}
+    {importingSongs && <DatabaseImporter
+      close={() => setImportingSongs(false)} />}
   </div>;
 }
 
