@@ -1,14 +1,7 @@
+@import 'main.less';
+
 .song-editor {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  line-height: 1.5em;
+  .dialog();
 
   .song {
     background-color: var(--bg-color);
@@ -47,7 +40,9 @@
         padding: .5em;
 
       }
-      .save[disabled], .save[disabled]:hover {
+
+      .save[disabled],
+      .save[disabled]:hover {
         color: grey;
         border-color: grey;
       }
