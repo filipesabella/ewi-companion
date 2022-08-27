@@ -66,19 +66,25 @@ export function InputChooser({ setNoteBeingPlayed }: Props): JSX.Element {
     style={{ display: showing || connectedToId === null ? 'block' : 'none' }}>
     {availableInputs.length === 0
       ? <div>No input devices found</div>
-      : <div>
+      : <>
         <p>
-          Available MIDI devices
+          Available MIDI devices:
           {connectedToId === null ? ' (click to connect)' : ''}
         </p>
         <ul>
-          {availableInputs.map(i => <li key={id(i)}
-            className={id(i) === connectedToId ? 'selected' : ''}
-            onClick={() => selectInput(i)}>
-            {i.name} {i.manufacturer ? `(${i.manufacturer})` : ''}
-          </li>)}
+          {availableInputs.map(i => {
+            const connected = id(i) === connectedToId;
+
+            return <li key={id(i)}
+              className={connected ? 'selected' : ''}
+              onClick={() => selectInput(i)}>
+              {i.name}
+              {i.manufacturer ? ` (${i.manufacturer})` : ''}
+              {connected ? ' (connected)' : ''}
+            </li>;
+          })}
         </ul>
-      </div>}
+      </>}
   </div>;
 }
 
