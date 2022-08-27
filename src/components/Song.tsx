@@ -14,11 +14,16 @@ interface Props {
   song: Song;
 }
 
+interface WrongNote {
+  key: string;
+  note: string;
+}
+
 export function SongComponent({ song, goBack }: Props): JSX.Element {
   const { database, noteBeingPlayed } = useContext(AppContext);
 
   const [currentNote, setCurrentNote] = useState<Note>(song.notes[0]);
-  const [wrongNote, setWrongNote] = useState<string | null>(null);
+  const [wrongNote, setWrongNote] = useState<WrongNote | null>(null);
   const [finished, setFinished] = useState(false);
 
   const changeCurrentNote = (n: Note | null) => {
@@ -78,10 +83,16 @@ export function SongComponent({ song, goBack }: Props): JSX.Element {
   });
 
   useEffect(() => {
-    if (noteBeingPlayed === currentNote.midi) {
-      changeCurrentNote(nextNote(song, currentNote));
-    } else {
-      noteBeingPlayed && setWrongNote(midiToNoteName(noteBeingPlayed));
+    // `noteOff` event sets `noteBeingPlayed` to null
+    if (noteBeingPlayed) {
+      if (noteBeingPlayed === currentNote.midi) {
+        changeCurrentNote(nextNote(song, currentNote));
+      } else {
+        setWrongNote({
+          key: Math.random() + '',
+          note:midiToNoteName(noteBeingPlayed),
+        });
+      }
     }
   }, [noteBeingPlayed]);
 
@@ -113,8 +124,8 @@ export function SongComponent({ song, goBack }: Props): JSX.Element {
             <div className="notes-mask notes-mask-left"></div>
             <div className="notes-mask notes-mask-right"></div>
           </div>
-          {wrongNote && <div key={wrongNote} className="wrong-note">
-            {wrongNote}
+          {wrongNote && <div key={wrongNote.key} className="wrong-note">
+            {wrongNote.note}
           </div>}
           {finished && <div className="finished">
             End
