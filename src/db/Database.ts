@@ -1,7 +1,7 @@
 import Dexie from 'dexie';
-import { Song } from './Song';
+import { uuid } from '../lib/utils';
+import { Note, Song } from './Song';
 
-// TODO add some default songs
 const dbName = 'ewi-companion-db';
 
 let db: DexieNonSense;
@@ -12,6 +12,11 @@ export class Database {
   }
 
   public async initialize(): Promise<void> {
+    // seed data
+    db.on('populate', async () => {
+      await db.songs.bulkPut(seedSongs());
+    });
+
     await db.open();
   }
 
@@ -89,4 +94,24 @@ class DexieNonSense extends Dexie {
       songs: 'id, name, notes, bookmarks',
     });
   }
+}
+
+function seedSongs(): Song[] {
+  const notes: Note[] = [];
+  for (let i = 48; i <= 83 + 83 - 48; i++) {
+    notes.push({
+      id: uuid(),
+      midi: i <= 83 ? i : 83 - i % 83,
+      preferredEwiFingering: null,
+    })
+  }
+
+  const allNotes: Song = {
+    id: uuid(),
+    name: '01 All Notes',
+    notes,
+    bookmarks: [],
+  };
+
+  return [allNotes];
 }
