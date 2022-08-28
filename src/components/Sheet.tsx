@@ -45,7 +45,7 @@ export function Sheet({
   // variable amount of ledger lines
   const extraRowIndex = (4 - amountOfLedgersUp) * -2;
   const noteTop = -15 + (noteRowIndex + extraRowIndex) * intervalHeight;
-  const sharpTop = 2 + sharpRowIndex * intervalHeight;
+  const sharpTop = 2 + (sharpRowIndex + extraRowIndex) * intervalHeight;
 
   return <div id="sheet">
     <div className="clef"
