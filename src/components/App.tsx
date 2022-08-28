@@ -22,7 +22,7 @@ export function App(): JSX.Element {
   useEffect(() => {
     database.initialize().then(_ => setLoading(false));
 
-    // load a song on start for debugging
+    // load a song on start for debugging, add ?=song=<index> to url
     const songIndex = window.location.search.split('?')[1]?.split('=')[1];
     if (songIndex) {
       database.listCurrentSongs().then(songs => {

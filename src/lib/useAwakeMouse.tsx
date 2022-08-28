@@ -1,7 +1,5 @@
 import { useEffect } from 'react';
 
-type KeyHandlers = { [key: number]: (key: number, e: KeyboardEvent) => void };
-
 /**
  * A hook that shows and auto-hides an element when the user moves the mouse.
  */
@@ -19,5 +17,5 @@ export function useAwakeMouse(
     document.addEventListener('mousemove', listener);
 
     return () => document.removeEventListener('mousemove', listener);
-  }, []);;
+  }, []);
 }

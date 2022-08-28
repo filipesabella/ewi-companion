@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
-import { Note, noteIndex, Song } from '../db/Song';
+import { Note, Song } from '../db/Song';
 import { noteToFingerings } from '../lib/ewi';
 import { useAwakeMouse } from '../lib/useAwakeMouse';
 import { useHotkeys } from '../lib/useHotkeys';
 import { midiToNoteName } from '../lib/utils';
+import '../styles/song.less';
 import { AppContext } from './App';
 import { ProgressBar } from './ProgressBar';
-require('../styles/song.less');
 
 interface Props {
   goBack: () => void;
@@ -90,7 +90,7 @@ export function SongComponent({ song, goBack }: Props): JSX.Element {
       } else {
         setWrongNote({
           key: Math.random() + '',
-          note:midiToNoteName(noteBeingPlayed),
+          note: midiToNoteName(noteBeingPlayed),
         });
       }
     }
@@ -160,3 +160,13 @@ function scrollNotes(index: number): void {
   const newLeft = parseFloat(noteWidth) * index * -1;
   container.style.left = newLeft + 'px';
 }
+
+function noteIndex(song: Song, note: Note): number {
+  for (let i = 0; i < song.notes.length; i++) {
+    if (song.notes[i].id === note.id) {
+      return i;
+    }
+  }
+  return -1;
+}
+
