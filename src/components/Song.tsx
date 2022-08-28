@@ -109,9 +109,9 @@ export function SongComponent({ song, goBack }: Props): JSX.Element {
   });
 
   const lowestNote = React.useMemo(() =>
-    song.notes.sort((a, b) => a.midi - b.midi)[0].midi, [song]);
+    [...song.notes].sort((a, b) => a.midi - b.midi)[0].midi, [song]);
   const highestNote = React.useMemo(() =>
-    song.notes.sort((a, b) => b.midi - a.midi)[0].midi, [song]);
+    [...song.notes].sort((a, b) => b.midi - a.midi)[0].midi, [song]);
 
   return <div id="song">
     <div className="ewi">
