@@ -27,7 +27,7 @@ export function ProgressBar({
 
   const gotoBookmark = (bookmark: number) => {
     setCurrentNote(song.notes[bookmark]);
-  }
+  };
 
   const keyToBookmark = (key: number) => {
     // numbers 1 through 9
@@ -38,7 +38,7 @@ export function ProgressBar({
       const bookmark = song.bookmarks[index - 2];
       bookmark !== undefined && gotoBookmark(bookmark);
     }
-  }
+  };
 
   useHotkeys({
     49: keyToBookmark,
@@ -59,7 +59,8 @@ export function ProgressBar({
   );
 
   const saveBookmark = async () => {
-    song.bookmarks = [...new Set(song.bookmarks).add(currentNoteIndex)].sort();
+    song.bookmarks = [...new Set(song.bookmarks).add(currentNoteIndex)]
+      .sort((a, b) => a - b);
     await database.saveSong(song);
     setShowBookmarks(false);
   };
