@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html"
+    "build": "BASE_PATH=/ewi-companion parcel build --out-dir docs --public-url ./ src/index.html"
   },
   "devDependencies": {
     "@types/dexie": "^1.3.1",
