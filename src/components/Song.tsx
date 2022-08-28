@@ -8,6 +8,7 @@ import { midiToNoteName } from '../lib/utils';
 import '../styles/song.less';
 import { AppContext } from './App';
 import { ProgressBar } from './ProgressBar';
+import { showMusicSheet } from './Settings';
 import { Sheet } from './Sheet';
 
 interface Props {
@@ -113,6 +114,8 @@ export function SongComponent({ song, goBack }: Props): JSX.Element {
   const highestNote = React.useMemo(() =>
     [...song.notes].sort((a, b) => b.midi - a.midi)[0].midi, [song]);
 
+  const showSheet = React.useMemo(() => showMusicSheet(), []);
+
   return <div id="song">
     <div className="ewi">
       <div className="main-area">
@@ -130,10 +133,10 @@ export function SongComponent({ song, goBack }: Props): JSX.Element {
             <div className="notes-mask notes-mask-left"></div>
             <div className="notes-mask notes-mask-right"></div>
           </div>
-          <Sheet
+          {showSheet && <Sheet
             lowestNote={lowestNote}
             highestNote={highestNote}
-            currentNote={currentNote} />
+            currentNote={currentNote} />}
           {wrongNote && <div key={wrongNote.key} className="wrong-note">
             {wrongNote.note}
           </div>}

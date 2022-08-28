@@ -21,7 +21,7 @@ export function SongSelector({
   const [reload, setReload] = useState({});
   const [midi, setMidi] = useState<Midi | null>(null);
   const [songToEdit, setSongToEdit] = useState<Song | null>(null);
-  const [showSettings, setShowSettings] = useState<boolean>(true);
+  const [showSettings, setShowSettings] = useState<boolean>(false);
 
   useEffect(() => {
     database.listCurrentSongs().then(setSongs);
