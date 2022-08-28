@@ -109,6 +109,13 @@ export function SongComponent({ song, goBack }: Props): JSX.Element {
     27: _ => goBack(),
   });
 
+  const [showControls, setShowControls] = useState(false);
+  useAwakeMouse(
+    () => setShowControls(true),
+    () => setShowControls(false),
+    () => 1000,
+  );
+
   const lowestNote = React.useMemo(() =>
     [...song.notes].sort((a, b) => a.midi - b.midi)[0].midi, [song]);
   const highestNote = React.useMemo(() =>
@@ -132,6 +139,16 @@ export function SongComponent({ song, goBack }: Props): JSX.Element {
             </div>
             <div className="notes-mask notes-mask-left"></div>
             <div className="notes-mask notes-mask-right"></div>
+            {showControls && <>
+              <div className="go-left"
+                onClick={() => skipNote(-1)}
+                title="Press left-arrow to go back one note">‹
+              </div>
+              <div className="go-right"
+                onClick={() => skipNote(1)}
+                title="Press left-arrow or spacebar to go to the next note">›
+              </div>
+            </>}
           </div>
           {showSheet && <Sheet
             lowestNote={lowestNote}
@@ -152,10 +169,12 @@ export function SongComponent({ song, goBack }: Props): JSX.Element {
         </div>
       </div>
     </div>
-    {showBack && <div
-      className="goBack"
-      onClick={() => goBack()}>Go back</div>}
-  </div>;
+    {
+      showBack && <div
+        className="goBack"
+        onClick={() => goBack()}>Go back</div>
+    }
+  </div >;
 }
 
 function nextNote(

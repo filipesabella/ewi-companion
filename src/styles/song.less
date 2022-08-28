@@ -76,6 +76,24 @@
               }
             }
           }
+
+          .go-right,
+          .go-left {
+            color: var(--text-color);
+            font-size: 3em;
+            line-height: 1em;
+            position: absolute;
+            top: .5em;
+            user-select: none;
+            cursor: pointer;
+
+            &:hover {
+              color: var(--other-color);
+            }
+          }
+          .go-right {
+            right: 0;
+          }
         }
 
         .ewi-fingerings {
@@ -179,6 +197,7 @@
     font-size: 2em;
     color: var(--text-color);
     cursor: pointer;
+
     &:hover {
       color: var(--other-color);
     }
