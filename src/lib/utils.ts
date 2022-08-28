@@ -21,3 +21,7 @@ export function midiToNoteName(midi: number): string {
   const noteIndex = midi % 12;
   return noteNames[noteIndex] + octave;
 }
+
+export function isSharp(midi: number): boolean {
+  return midiToNoteName(midi).includes('#');
+}

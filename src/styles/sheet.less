@@ -1,0 +1,52 @@
+#sheet {
+  color: var(--text-color);
+  position: relative;
+
+  .clef {
+    position: absolute;
+    font-size: 4em;
+    top: 55px;
+  }
+
+  .note {
+    position: absolute;
+    font-size: 2em;
+    top: -15px;
+    left: 110px;
+  }
+
+  .sharp {
+    position: absolute;
+    top: 3em;
+    left: 3em;
+  }
+
+  .staff,
+  .ledger {
+    div {
+      height: .7em;
+      border-bottom: 1px solid var(--text-color);
+    }
+  }
+
+  .ledger {
+    width: 10em;
+    height: 3em;
+    div {
+      width: 1em;
+      margin-left: 109px;
+    }
+  }
+
+  .staff div {
+    width: 10em;
+  }
+
+  .octave {
+    position: absolute;
+    font-size: 2em;
+    top: .5em;
+    left: 1em;
+    display: none;
+  }
+}
