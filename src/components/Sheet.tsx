@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Note } from '../db/Song';
 import { isSharp, midiToNoteName } from '../lib/utils';
+
 import '../styles/sheet.less';
 
 interface Props {

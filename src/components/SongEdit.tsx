@@ -3,8 +3,9 @@ import { useContext, useEffect, useState } from 'react';
 import { Song } from '../db/Song';
 import { useHotkeys } from '../lib/useHotkeys';
 import { midiToNoteName, noteNameToMidi, uuid } from '../lib/utils';
-import '../styles/song-editor.less';
 import { AppContext } from './App';
+
+import '../styles/song-editor.less';
 
 interface Props {
   song: Song;

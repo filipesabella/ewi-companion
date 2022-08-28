@@ -4,10 +4,11 @@ import { useContext, useEffect, useState } from 'react';
 import { Song } from '../db/Song';
 import { importMidi } from '../lib/MidiImporter';
 import { uuid } from '../lib/utils';
-import '../styles/song-selector.less';
 import { AppContext } from './App';
 import { Settings } from './Settings';
 import { SongEdit } from './SongEdit';
+
+import '../styles/song-selector.less';
 
 interface Props {
   setCurrentSong: (song: Song) => void;

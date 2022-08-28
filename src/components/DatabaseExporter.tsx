@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { useHotkeys } from '../lib/useHotkeys';
-import '../styles/database-exporter.less';
 import { AppContext } from './App';
+
+import '../styles/database-exporter.less';
 
 interface Props {
   close: () => void;

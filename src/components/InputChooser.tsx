@@ -2,7 +2,8 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Input, WebMidi } from 'webmidi';
 import { useAwakeMouse } from '../lib/useAwakeMouse';
-require('../styles/input-chooser.less');
+
+import '../styles/input-chooser.less';
 
 interface Props {
   setNoteBeingPlayed: (note: number | null) => void;

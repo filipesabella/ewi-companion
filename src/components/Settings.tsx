@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useHotkeys } from '../lib/useHotkeys';
-import '../styles/settings.less';
 import { DatabaseExporter } from './DatabaseExporter';
 import { DatabaseImporter } from './DatabaseImporter';
+
+import '../styles/settings.less';
 
 interface Props {
   close: () => void;

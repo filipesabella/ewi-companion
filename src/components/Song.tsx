@@ -5,11 +5,12 @@ import { noteToFingerings } from '../lib/ewi';
 import { useAwakeMouse } from '../lib/useAwakeMouse';
 import { useHotkeys } from '../lib/useHotkeys';
 import { midiToNoteName } from '../lib/utils';
-import '../styles/song.less';
 import { AppContext } from './App';
 import { ProgressBar } from './ProgressBar';
 import { showMusicSheet } from './Settings';
 import { Sheet } from './Sheet';
+
+import '../styles/song.less';
 
 interface Props {
   goBack: () => void;
