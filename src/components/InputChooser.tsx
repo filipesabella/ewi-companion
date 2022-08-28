@@ -35,7 +35,14 @@ export function InputChooser({ setNoteBeingPlayed }: Props): JSX.Element {
       WebMidi.addListener('disconnected', () => {
         setAvailableInputs([...WebMidi.inputs]);
       });
-    }).catch(err => alert(err));
+    }).catch(e => {
+      console.error(e);
+
+      const message = 'Sadly, the MIDI api does not work on this browser, ' +
+        'please try with Chrome/Edge/Brave/Safari.';
+
+      alert(message);
+    });
 
     return () => {
       WebMidi.removeListener('connected');
@@ -55,7 +62,7 @@ export function InputChooser({ setNoteBeingPlayed }: Props): JSX.Element {
     input.addListener('noteoff', () => {
       setNoteBeingPlayed(null);
     });
-  }
+  };
 
   useAwakeMouse(
     () => setShowing(true),
