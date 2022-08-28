@@ -173,6 +173,7 @@ export function SongComponent({ song, goBack }: Props): JSX.Element {
     {
       showBack && <div
         className="goBack"
+        title="Press Esc to go back to song selection"
         onClick={() => goBack()}>Go back</div>
     }
   </div >;
