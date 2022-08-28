@@ -15,13 +15,15 @@ Then, connect your EWI to your computer using a [midi to usb cable](https://sear
 * Import MIDI files
 * Write simple songs/scales by hand
 * Click a particular fingering to select it from the others
-* Bookmark a certain passage by clicking the empty bookmark icon on the progess bar. Navigate to it by either clickingor pressing the 1-9 keys
+* Bookmark a certain passage by clicking the empty bookmark icon on the progess bar. Navigate to it by either clicking or pressing the 1-9 keys
 * Show a simplified music sheet with the current note, enable this in the settings screen
 
-# Self-hosting
-TODO
+## Self-hosting
 
-# Development
+This is a client-side only application, and as such, you only need to host the static files.
+Either build them yourself with `yarn build`, or download them from [here](https://github.com/filipesabella/ewi-companion/tree/build/docs).
+
+## Development
 
 ```
 yarn install
