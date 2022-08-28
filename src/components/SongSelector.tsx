@@ -4,12 +4,10 @@ import { useContext, useEffect, useState } from 'react';
 import { Song } from '../db/Song';
 import { importMidi } from '../lib/MidiImporter';
 import { uuid } from '../lib/utils';
+import '../styles/song-selector.less';
 import { AppContext } from './App';
-import { DatabaseExporter } from './DatabaseExporter';
-import { DatabaseImporter } from './DatabaseImporter';
+import { Settings } from './Settings';
 import { SongEdit } from './SongEdit';
-
-require('../styles/song-selector.less');
 
 interface Props {
   setCurrentSong: (song: Song) => void;
@@ -23,9 +21,7 @@ export function SongSelector({
   const [reload, setReload] = useState({});
   const [midi, setMidi] = useState<Midi | null>(null);
   const [songToEdit, setSongToEdit] = useState<Song | null>(null);
-
-  const [exportingSongs, setExportingSongs] = useState<boolean>(false);
-  const [importingSongs, setImportingSongs] = useState<boolean>(false);
+  const [showSettings, setShowSettings] = useState<boolean>(true);
 
   useEffect(() => {
     database.listCurrentSongs().then(setSongs);
@@ -106,14 +102,10 @@ export function SongSelector({
           <label htmlFor="importFileInput">Import a MIDI file</label>
         </div>
         <div><label onClick={() => newSong()}>Write song</label></div>
-        <div>
-          <label onClick={() => setExportingSongs(true)}>Export songs</label>
-        </div>
-        <div>
-          <label onClick={() => setImportingSongs(true)}>Import songs</label>
-        </div>
+        <div><label onClick={() => setShowSettings(true)}>Settings</label></div>
       </div>}
     </div>}
+    {showSettings && <Settings close={() => setShowSettings(false)} />}
     {midi && <div className="track-selector">
       <div className="tracks">
         <p>
@@ -138,10 +130,6 @@ export function SongSelector({
         setMidi(null);
         setReload({});
       }} />}
-    {exportingSongs && <DatabaseExporter
-      close={() => setExportingSongs(false)} />}
-    {importingSongs && <DatabaseImporter
-      close={() => setImportingSongs(false)} />}
   </div>;
 }
 

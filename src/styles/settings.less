@@ -1,0 +1,89 @@
+@import 'main.less';
+
+#settings {
+  .dialog();
+
+  .settings {
+    background-color: var(--bg-color);
+    width: 40em;
+    margin: 5em;
+    padding: 1em;
+    line-height: 2em;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    button {
+      .button();
+    }
+
+    fieldset {
+      border: 1px solid var(--text-color);
+      padding: 1em;
+      border-radius: 3px;
+
+      legend {
+        font-size: 1.2em;
+      }
+    }
+
+    .container {
+      flex: 1;
+      position: relative;
+
+      button {
+        margin-right: 1em;
+      }
+
+      .showSheet {
+        display: flex;
+        column-gap: .5em;
+        align-items: baseline;
+
+        input[type="checkbox"] {
+          appearance: none;
+          margin: 0;
+          color: var(--text-color);
+          width: 1.15em;
+          height: 1.15em;
+          border: 2px solid var(--text-color);
+          border-radius: 0.15em;
+          transform: translateY(-0.075em);
+          display: grid;
+          place-content: center;
+        }
+
+        input[type="checkbox"]::before {
+          content: "";
+          width: 0.65em;
+          height: 0.65em;
+          clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+          transform: scale(0);
+          box-shadow: inset 1em 1em var(--text-color);
+        }
+
+        input[type="checkbox"]:checked::before {
+          transform: scale(1);
+        }
+      }
+
+    }
+
+    .actions {
+      display: flex;
+      justify-content: end;
+      align-items: baseline;
+
+      .close {
+        margin-top: 1em;
+        cursor: pointer;
+        width: auto;
+
+        &:hover {
+          border-color: var(--intense-color);
+          color: var(--intense-color);
+        }
+      }
+    }
+  }
+}
