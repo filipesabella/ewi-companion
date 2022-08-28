@@ -25,6 +25,12 @@ export function Sheet({
   const sharp = isSharp(midi);
   const normalisedNote = sharp ? midi - 1 : midi;
 
+  // this determines the `top` style attribute of almost all other elements
+  const amountOfLedgersUp = highestNote >= 79 ? 4
+    : highestNote >= 76 ? 3
+      : highestNote >= 72 ? 2
+        : highestNote >= 69 ? 1 : 0;
+
   const va = midi > highestNoteNoVA && midi <= highestNoteNoMA;
   const vb = midi < lowestNoteNoVB && midi >= lowestNoteNoMB;
   const ma = midi > highestNoteNoMA;
@@ -34,16 +40,21 @@ export function Sheet({
   const sharpRowIndex =
     rowIndexes[midiToNoteName(normalisedSharpNotePosition(midi))] || 0;
 
-  const noteTop = -15 + noteRowIndex * intervalHeight;
+  // we only draw the ledgers that are going to be used in the song, because of
+  // that we need to adjust the `top` style on the notes to account for a
+  // variable amount of ledger lines
+  const extraRowIndex = (4 - amountOfLedgersUp) * -2;
+  const noteTop = -15 + (noteRowIndex + extraRowIndex) * intervalHeight;
   const sharpTop = 2 + sharpRowIndex * intervalHeight;
 
   return <div id="sheet">
-    <div className="clef">𝄞</div>
+    <div className="clef"
+      style={{ top: 15 * amountOfLedgersUp }}>𝄞</div>
     <div className="ledger ledger-up">
-      {highestNote >= 79 && <div></div>}
-      {highestNote >= 76 && <div></div>}
-      {highestNote >= 72 && <div></div>}
-      {highestNote >= 69 && <div></div>}
+      {highestNote >= 79 && <div className='1'></div>}
+      {highestNote >= 76 && <div className='2'></div>}
+      {highestNote >= 72 && <div className='3'></div>}
+      {highestNote >= 69 && <div className='4'></div>}
     </div>
     <div className="staff">
       <div></div>
@@ -63,14 +74,17 @@ export function Sheet({
       top: sharpTop + 'px'
     }}>♯</div>
     <div className="note" style={{ top: noteTop + 'px' }}>𝅝</div>
-    <div className="octave"
-      style={{ display: va ? 'block' : 'none' }}>𝄶</div>
-    <div className="octave"
-      style={{ display: vb ? 'block' : 'none' }}>𝄷</div>
-    <div className="octave"
-      style={{ display: ma ? 'block' : 'none' }}>𝄸</div>
-    <div className="octave"
-      style={{ display: mb ? 'block' : 'none' }}>𝄹</div>
+    <div className="octaves"
+      style={{ top: amountOfLedgersUp < 3 ? 75 : amountOfLedgersUp * 8 }}>
+      <div className="octave"
+        style={{ display: va ? 'block' : 'none' }}>𝄶</div>
+      <div className="octave"
+        style={{ display: vb ? 'block' : 'none' }}>𝄷</div>
+      <div className="octave"
+        style={{ display: ma ? 'block' : 'none' }}>𝄸</div>
+      <div className="octave"
+        style={{ display: mb ? 'block' : 'none' }}>𝄹</div>
+    </div>
   </div>;
 }
 
@@ -136,7 +150,7 @@ const rowIndexes: { [key: string]: number } = {
   'E2': 23,
   'D2': 24,
   'C2': 18,
-  'B1': 21,
-  'A1': 22, // midi 22
+  'B1': 19,
+  'A1': 20, // midi 22
 };
 
