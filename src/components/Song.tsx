@@ -29,9 +29,13 @@ interface WrongNote {
   note: string;
 }
 
-export function SongComponent({ song, goBack }: Props): React.JSX.Element {
+export function SongComponent(props: Props): React.JSX.Element {
+  const { goBack } = props;
   const { database, noteBeingPlayed } = useContext(AppContext);
 
+  // local copy so in-session edits (e.g. preferred fingerings) are reflected
+  // when navigating back to a note, without reloading from the database
+  const [song, setSong] = useState<Song>(props.song);
   const [currentNote, setCurrentNote] = useState<Note>(song.notes[0]);
   const [wrongNote, setWrongNote] = useState<WrongNote | null>(null);
   const [finished, setFinished] = useState(false);
@@ -80,16 +84,18 @@ export function SongComponent({ song, goBack }: Props): React.JSX.Element {
       ? null
       : fingeringId;
 
+    const updatedNote = { ...currentNote, preferredEwiFingering: fingering };
+    setSong({
+      ...song,
+      notes: song.notes.map(n => n.id === updatedNote.id ? updatedNote : n),
+    });
+    setCurrentNote(updatedNote);
+
     await database.savePreferredFingering(
       song.id,
       currentNote.id,
       fingering,
     );
-
-    setCurrentNote({
-      ...currentNote,
-      preferredEwiFingering: fingering,
-    });
   };
 
   useEffect(() => {

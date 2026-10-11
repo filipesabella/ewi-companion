@@ -65,7 +65,7 @@ export class Database {
     noteId: string,
     fingeringId: string | null,
   ): Promise<void> {
-    db.songs.where({ id: songId }).modify(song => {
+    await db.songs.where({ id: songId }).modify(song => {
       song.notes = song.notes.map(n =>
         n.id === noteId
           ? { ...n, preferredEwiFingering: fingeringId }
