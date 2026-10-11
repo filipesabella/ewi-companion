@@ -22,7 +22,7 @@ interface WrongNote {
   note: string;
 }
 
-export function SongComponent({ song, goBack }: Props): JSX.Element {
+export function SongComponent({ song, goBack }: Props): React.JSX.Element {
   const { database, noteBeingPlayed } = useContext(AppContext);
 
   const [currentNote, setCurrentNote] = useState<Note>(song.notes[0]);

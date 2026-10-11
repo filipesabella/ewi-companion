@@ -12,7 +12,7 @@ interface Props {
   close: () => void;
 }
 
-export function SongEdit({ song, close }: Props): JSX.Element {
+export function SongEdit({ song, close }: Props): React.JSX.Element {
   const { database } = useContext(AppContext);
 
   const originalNotes = song.notes.map(n => midiToNoteName(n.midi)).join(' ');

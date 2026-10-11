@@ -20,7 +20,7 @@ const intervalHeight = 6.8;
 export function Sheet({
   currentNote,
   lowestNote,
-  highestNote, }: Props): JSX.Element {
+  highestNote, }: Props): React.JSX.Element {
   const midi = currentNote.midi;
 
   const sharp = isSharp(midi);

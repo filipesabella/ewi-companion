@@ -15,7 +15,7 @@ interface Props {
 }
 
 export function SongSelector({
-  setCurrentSong, }: Props): JSX.Element {
+  setCurrentSong, }: Props): React.JSX.Element {
   const { database } = useContext(AppContext);
 
   const [songs, setSongs] = useState<Song[] | null>(null);
@@ -32,7 +32,7 @@ export function SongSelector({
     const file = e.target.files![0];
     const fileReader = new FileReader();
     fileReader.onload = _ => {
-      const midi = importMidi(file.name, fileReader.result as Buffer);
+      const midi = importMidi(file.name, fileReader.result as ArrayBuffer);
 
       if (midi.tracks.length === 1) {
         setSongToEdit({
@@ -138,7 +138,7 @@ function songContainer(
   s: Song,
   selectSong: (song: Song) => void,
   editSong: (song: Song) => void,
-  deleteSong: (song: Song) => void): JSX.Element {
+  deleteSong: (song: Song) => void): React.JSX.Element {
 
   return <div
     key={s.id}

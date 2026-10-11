@@ -1,31 +1,35 @@
 {
-  "externalTranspiler": "babel",
-  "compileOnSave": true,
   "include": [
     "./src/**/*.ts",
     "./src/**/*.tsx"
   ],
   "compilerOptions": {
-    "outDir": "dist",
-    "target": "es6",
-    "module": "commonjs",
+    "target": "es2020",
+    "module": "esnext",
     "noImplicitAny": true,
-    "lib": ["es6", "dom"],
+    "lib": [
+      "es2020",
+      "dom"
+    ],
     "strictNullChecks": true,
     "removeComments": true,
-    "jsx": "react",
-    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
     "preserveConstEnums": true,
-    "sourceMap": true,
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noUnusedLocals": false,
-    "noUnusedParameters": false
+    "noUnusedParameters": false,
+    "types": [
+      "vite/client"
+    ],
+    "noEmit": true,
+    "isolatedModules": true
   },
   "exclude": [
     "node_modules",
-    "dist"
+    "docs"
   ],
   "formatCodeOptions": {
     "indentSize": 2,

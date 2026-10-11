@@ -127,7 +127,7 @@ const noteToFingering = (note: string): [number, number[]][] => {
 export function noteToFingerings(
   midi: number,
   preferredFingering: string | null,
-  onClick: (fingeringId: string) => void): JSX.Element[] {
+  onClick: (fingeringId: string) => void): React.JSX.Element[] {
   const note = midiToNoteName(midi);
   const fingerings = noteToFingering(note);
   const octave = parseInt(note.replace(/[^0-9]+/gi, ''));

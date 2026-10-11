@@ -15,7 +15,7 @@ interface Props {
 }
 
 export function ProgressBar({
-  song, currentNote, setCurrentNote }: Props): JSX.Element {
+  song, currentNote, setCurrentNote }: Props): React.JSX.Element {
   const { database } = useContext(AppContext);
 
   const totalNotes = song.notes.length;

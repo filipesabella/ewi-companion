@@ -9,7 +9,7 @@ interface Props {
   close: () => void;
 }
 
-export function DatabaseExporter({ close }: Props): JSX.Element {
+export function DatabaseExporter({ close }: Props): React.JSX.Element {
   const { database } = useContext(AppContext);
 
   const [data, setData] = useState<string | null>(null);

@@ -1,6 +1,6 @@
 import { Midi } from '@tonejs/midi';
 
-export function importMidi(fileName: string, input: Buffer): Midi {
+export function importMidi(fileName: string, input: ArrayBuffer): Midi {
   const midi = new Midi(input);
   if (midi.tracks.length === 2) {
     // assume it's a single piano track with different tracks for left and

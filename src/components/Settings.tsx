@@ -9,7 +9,7 @@ import '../styles/settings.less';
 interface Props {
   close: () => void;
 }
-export function Settings({ close }: Props): JSX.Element {
+export function Settings({ close }: Props): React.JSX.Element {
   const [exportingSongs, setExportingSongs] = useState<boolean>(false);
   const [importingSongs, setImportingSongs] = useState<boolean>(false);
 

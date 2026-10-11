@@ -13,7 +13,7 @@ export const AppContext = createContext({
   noteBeingPlayed: null as number | null,
 });
 
-export function App(): JSX.Element {
+export function App(): React.JSX.Element {
   const [loading, setLoading] = useState(true);
   const [currentSong, setCurrentSong] = useState<Song | null>(null);
 

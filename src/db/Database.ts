@@ -34,7 +34,7 @@ export class Database {
   }
 
   public async saveSong(song: Song): Promise<void> {
-    await db.songs.update(song.id, song);
+    await db.songs.put(song);
   }
 
   public async upsertSong(song: Song): Promise<void> {
@@ -45,7 +45,7 @@ export class Database {
 
       if (wereTheNotesUpdated) {
         // this erases bookmarks and preferred fingering
-        await db.songs.update(song.id, song);
+        await db.songs.put(song);
       } else {
         await db.songs.update(song.id, {
           ...existingSong,
@@ -86,7 +86,7 @@ export class Database {
 }
 
 class DexieNonSense extends Dexie {
-  songs: Dexie.Table<Song, string>;
+  declare songs: Dexie.Table<Song, string>;
 
   constructor() {
     super(dbName);

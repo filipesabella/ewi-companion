@@ -9,7 +9,7 @@ interface Props {
   setNoteBeingPlayed: (note: number | null) => void;
 }
 
-export function InputChooser({ setNoteBeingPlayed }: Props): JSX.Element {
+export function InputChooser({ setNoteBeingPlayed }: Props): React.JSX.Element {
   const [showing, setShowing] = useState(true);
   const [availableInputs, setAvailableInputs] = useState<Input[]>([]);
   const [connectedToId, setConnectedToId] = useState<string | null>(null);
