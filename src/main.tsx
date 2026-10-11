@@ -4,7 +4,7 @@ import 'reset-css/reset.css';
 import 'typeface-barlow/index.css';
 import { App } from './components/App';
 
-import './styles/main.less';
+import './styles/main.scss';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);

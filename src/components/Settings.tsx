@@ -4,7 +4,7 @@ import { useHotkeys } from '../lib/useHotkeys';
 import { DatabaseExporter } from './DatabaseExporter';
 import { DatabaseImporter } from './DatabaseImporter';
 
-import '../styles/settings.less';
+import '../styles/settings.scss';
 
 interface Props {
   close: () => void;

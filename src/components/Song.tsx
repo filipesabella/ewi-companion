@@ -10,7 +10,7 @@ import { ProgressBar } from './ProgressBar';
 import { showMusicSheet } from './Settings';
 import { Sheet } from './Sheet';
 
-import '../styles/song.less';
+import '../styles/song.scss';
 
 interface Props {
   goBack: () => void;

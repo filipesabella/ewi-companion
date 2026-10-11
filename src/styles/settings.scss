@@ -1,7 +1,7 @@
-@import 'main.less';
+@use 'mixins' as *;
 
 #settings {
-  .dialog();
+  @include dialog;
 
   .settings {
     background-color: var(--bg-color);
@@ -13,7 +13,7 @@
     flex-direction: column;
 
     button {
-      .button();
+      @include button;
     }
 
     fieldset {

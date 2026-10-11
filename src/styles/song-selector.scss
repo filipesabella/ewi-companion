@@ -1,4 +1,4 @@
-@import 'main.less';
+@use 'mixins' as *;
 
 #songSelector {
   background: var(--bg-color);
@@ -97,7 +97,7 @@
   }
 
   .track-selector {
-    .dialog();
+    @include dialog;
 
     .tracks {
       background-color: var(--bg-color);

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Note } from '../db/Song';
 import { isSharp, midiToNoteName } from '../lib/utils';
 
-import '../styles/sheet.less';
+import '../styles/sheet.scss';
 
 interface Props {
   currentNote: Note;

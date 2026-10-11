@@ -1,9 +1,9 @@
-@import 'main.less';
+@use 'mixins' as *;
 
-#database-exporter {
-  .dialog();
+.song-editor {
+  @include dialog;
 
-  .database {
+  .song {
     background-color: var(--bg-color);
     width: 40em;
     margin: 5em;
@@ -14,16 +14,16 @@
     display: flex;
     flex-direction: column;
 
-    >p {
-      padding: 0 0 1em 0;
+    label+input {
+      margin-bottom: .5em;
     }
 
-    h2 {
-      color: red;
+    input,
+    textarea {
+      width: 99%;
     }
 
     textarea {
-      width: 99%;
       flex: 1;
     }
 
@@ -33,16 +33,16 @@
       align-items: baseline;
 
       .save {
-        .button();
-        margin-left: .8em;
+        @include button;
       }
 
-      .save[disabled], .save[disabled]:hover {
+      .save[disabled],
+      .save[disabled]:hover {
         color: grey;
         border-color: grey;
       }
 
-      .close,
+      .cancel,
       .save {
         margin-top: 1em;
         cursor: pointer;
@@ -52,6 +52,11 @@
           border-color: var(--intense-color);
           color: var(--intense-color);
         }
+      }
+
+      .cancel {
+        font-size: .8em;
+        margin-right: 2em;
       }
     }
   }

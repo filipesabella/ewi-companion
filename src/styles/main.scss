@@ -23,27 +23,6 @@ body {
   height: 100%;
 }
 
-.dialog() {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  line-height: 1.5em;
-}
-
-.button() {
-  background-color: transparent;
-  color: var(--text-color);
-  border: 1px solid var(--text-color);
-  border-radius: 5px;
-  padding: .5em;
-}
-
 ::-webkit-scrollbar,
 ::-webkit-scrollbar-button:start:increment,
 ::-webkit-scrollbar-button:start:decrement,

@@ -1,5 +1,7 @@
-@note-width: 6em;
-@notes-shown: 5;
+@use 'sass:math';
+
+$note-width: 6em;
+$notes-shown: 5;
 
 #song {
   width: 100%;
@@ -31,14 +33,14 @@
           color: var(--text-color);
           overflow: hidden;
 
-          width: @note-width * @notes-shown;
-          height: @note-width;
+          width: $note-width * $notes-shown;
+          height: $note-width;
 
           .notes-mask {
             position: absolute;
             top: 0;
-            height: @note-width;
-            width: @note-width * floor((@notes-shown / 2));
+            height: $note-width;
+            width: $note-width * math.floor(math.div($notes-shown, 2));
 
             &.notes-mask-left {
               left: 0;
@@ -48,7 +50,7 @@
             }
 
             &.notes-mask-right {
-              left: @note-width * (@notes-shown - 2);
+              left: $note-width * ($notes-shown - 2);
               background: linear-gradient(to right,
                   var(--bg-color-transparent),
                   var(--bg-color));
@@ -67,12 +69,12 @@
 
             div.note {
               flex: 1;
-              width: @note-width;
-              line-height: @note-width;
+              width: $note-width;
+              line-height: $note-width;
               text-align: center;
 
               span {
-                font-size: (@note-width / 3);
+                font-size: math.div($note-width, 3);
               }
             }
           }

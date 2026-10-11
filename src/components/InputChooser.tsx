@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Input, WebMidi } from 'webmidi';
 import { useAwakeMouse } from '../lib/useAwakeMouse';
 
-import '../styles/input-chooser.less';
+import '../styles/input-chooser.scss';
 
 interface Props {
   setNoteBeingPlayed: (note: number | null) => void;

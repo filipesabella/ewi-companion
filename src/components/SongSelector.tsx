@@ -8,7 +8,7 @@ import { AppContext } from './App';
 import { Settings } from './Settings';
 import { SongEdit } from './SongEdit';
 
-import '../styles/song-selector.less';
+import '../styles/song-selector.scss';
 
 interface Props {
   setCurrentSong: (song: Song) => void;

@@ -6,7 +6,7 @@ import { useAwakeMouse } from '../lib/useAwakeMouse';
 import { useHotkeys } from '../lib/useHotkeys';
 import { AppContext } from './App';
 
-import '../styles/progress-bar.less';
+import '../styles/progress-bar.scss';
 
 interface Props {
   song: Song;

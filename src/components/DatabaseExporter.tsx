@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useHotkeys } from '../lib/useHotkeys';
 import { AppContext } from './App';
 
-import '../styles/database-exporter.less';
+import '../styles/database-exporter.scss';
 
 interface Props {
   close: () => void;

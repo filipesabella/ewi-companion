@@ -5,7 +5,7 @@ import { useHotkeys } from '../lib/useHotkeys';
 import { midiToNoteName, noteNameToMidi, uuid } from '../lib/utils';
 import { AppContext } from './App';
 
-import '../styles/song-editor.less';
+import '../styles/song-editor.scss';
 
 interface Props {
   song: Song;
