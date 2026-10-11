@@ -127,7 +127,8 @@ const noteToFingering = (note: string): [number, number[]][] => {
 export function noteToFingerings(
   midi: number,
   preferredFingering: string | null,
-  onClick: (fingeringId: string) => void): React.JSX.Element[] {
+  onClick: (fingeringId: string) => void,
+): React.JSX.Element[] {
   const note = midiToNoteName(midi);
   const fingerings = noteToFingering(note);
   const octave = parseInt(note.replace(/[^0-9]+/gi, ''));
@@ -137,7 +138,7 @@ export function noteToFingerings(
   }
 
   return fingerings.map((fingering, i) => {
-    const octaveModifier = fingering[0]
+    const octaveModifier = fingering[0];
     const fingers = fingering[1];
 
     const fingeringId = `${note}_${i}`;
@@ -149,12 +150,15 @@ export function noteToFingerings(
       'roller ' + (index === octaveModifier + octave ? 'on' : '');
 
     // from https://fingering.bretpimentel.com/
-    return <div key={i}
-      className={'fingering' + (fingeringId === preferredFingering ? ' preferred' : '')}
+    return <div
+      key={i}
+      className={'fingering'
+        + (fingeringId === preferredFingering ? ' preferred' : '')}
       onClick={_ => onClick(fingeringId)}>
       <svg>
         <g name="Octave rollers">
-          <path name="Octave roller 8"
+          <path
+            name="Octave roller 8"
             className={octaveRollerClassName(8)}
             d="M12.999774
                   21.445836C12.999774
@@ -204,7 +208,8 @@ export function noteToFingerings(
                   12.999774
                   21.445836">
           </path>
-          <path name="Octave roller 7"
+          <path
+            name="Octave roller 7"
             className={octaveRollerClassName(7)}
             d="M12.999774
                   41.445835C12.999774
@@ -254,7 +259,8 @@ export function noteToFingerings(
                   12.999774
                   41.445835">
           </path>
-          <path name="Octave roller 6"
+          <path
+            name="Octave roller 6"
             className={octaveRollerClassName(6)}
             d="M12.990632
                   61.96999C12.990632
@@ -304,7 +310,8 @@ export function noteToFingerings(
                   12.990632
                   61.96999">
           </path>
-          <path name="Octave roller 5"
+          <path
+            name="Octave roller 5"
             className={octaveRollerClassName(5)}
             d="M12.999774
                   81.445839C12.999774
@@ -354,7 +361,8 @@ export function noteToFingerings(
                   12.999774
                   81.445839">
           </path>
-          <path name="Octave roller 4"
+          <path
+            name="Octave roller 4"
             className={octaveRollerClassName(4)}
             d="M13.000258
                   101.43311C13.000258
@@ -404,7 +412,8 @@ export function noteToFingerings(
                   13.000258
                   101.43311">
           </path>
-          <path name="Octave roller 3"
+          <path
+            name="Octave roller 3"
             className={octaveRollerClassName(3)}
             d="M13.000258
                   121.43311C13.000258
@@ -454,7 +463,8 @@ export function noteToFingerings(
                   13.000258
                   121.43311">
           </path>
-          <path name="Octave roller 2"
+          <path
+            name="Octave roller 2"
             className={octaveRollerClassName(2)}
             d="M13.000258
                   141.43311C13.000258
@@ -504,7 +514,8 @@ export function noteToFingerings(
                   13.000258
                   141.43311">
           </path>
-          <path name="Octave roller 1"
+          <path
+            name="Octave roller 1"
             className={octaveRollerClassName(1)}
             d="M13.000258
                   161.43311C13.000258

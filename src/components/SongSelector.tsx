@@ -1,6 +1,13 @@
-import { Midi, Track } from '@tonejs/midi';
+import {
+  Midi,
+  Track,
+} from '@tonejs/midi';
 import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import {
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { Song } from '../db/Song';
 import { importMidi } from '../lib/MidiImporter';
 import { uuid } from '../lib/utils';
@@ -15,7 +22,8 @@ interface Props {
 }
 
 export function SongSelector({
-  setCurrentSong, }: Props): React.JSX.Element {
+  setCurrentSong,
+}: Props): React.JSX.Element {
   const { database } = useContext(AppContext);
 
   const [songs, setSongs] = useState<Song[] | null>(null);
@@ -64,7 +72,7 @@ export function SongSelector({
         preferredEwiFingering: null,
       })),
       bookmarks: [],
-    })
+    });
   };
 
   const selectSong = (s: Song) => {
@@ -91,7 +99,8 @@ export function SongSelector({
     {songs !== null && <div className="currentSongs">
       <h1>Songs</h1>
       {songs.map(song =>
-        songContainer(song, selectSong, setSongToEdit, deleteSong))}
+        songContainer(song, selectSong, setSongToEdit, deleteSong)
+      )}
       {!midi && <div className="actions">
         <div className="importButton">
           <input
@@ -102,30 +111,39 @@ export function SongSelector({
           </input>
           <label htmlFor="importFileInput">Import a MIDI file</label>
         </div>
-        <div><label onClick={() => newSong()}>Write song</label></div>
-        <div><label onClick={() => setShowSettings(true)}>Settings</label></div>
+        <div>
+          <label onClick={() => newSong()}>Write song</label>
+        </div>
+        <div>
+          <label onClick={() => setShowSettings(true)}>Settings</label>
+        </div>
       </div>}
     </div>}
     {showSettings && <Settings close={() => setShowSettings(false)} />}
     {midi && <div className="track-selector">
       <div className="tracks">
         <p>
-          This midi file has more than one track, which one
-          would you like to import?
+          This midi file has more than one track, which one would you like to
+          import?
         </p>
         <ul>
-          {midi.tracks.map((t, i) => <li
-            key={t.name + '-' + i}
-            onClick={_ => selectTrack(t)}>
-            {t.name || 'Track ' + i} - {t.instrument.name}
-          </li>)}
+          {midi.tracks.map((t, i) =>
+            <li
+              key={t.name + '-' + i}
+              onClick={_ => selectTrack(t)}>
+              {t.name || 'Track ' + i} - {t.instrument.name}
+            </li>
+          )}
         </ul>
         <p
           className="cancel"
-          onClick={_ => setMidi(null)}>Cancel</p>
+          onClick={_ => setMidi(null)}>
+          Cancel
+        </p>
       </div>
     </div>}
-    {songToEdit && <SongEdit song={songToEdit}
+    {songToEdit && <SongEdit
+      song={songToEdit}
       close={() => {
         setSongToEdit(null);
         setMidi(null);
@@ -138,8 +156,8 @@ function songContainer(
   s: Song,
   selectSong: (song: Song) => void,
   editSong: (song: Song) => void,
-  deleteSong: (song: Song) => void): React.JSX.Element {
-
+  deleteSong: (song: Song) => void,
+): React.JSX.Element {
   return <div
     key={s.id}
     className="song">

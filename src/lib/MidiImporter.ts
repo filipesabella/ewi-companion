@@ -6,8 +6,8 @@ export function importMidi(fileName: string, input: ArrayBuffer): Midi {
     // assume it's a single piano track with different tracks for left and
     // right hands
     const sameChannel = midi.tracks[0].channel === midi.tracks[1].channel;
-    const sameInstrument = JSON.stringify(midi.tracks[0].instrument) ===
-      JSON.stringify(midi.tracks[1].instrument);
+    const sameInstrument = JSON.stringify(midi.tracks[0].instrument)
+      === JSON.stringify(midi.tracks[1].instrument);
     if (sameChannel && sameInstrument) {
       // merge tracks
       midi.tracks[0].notes = midi.tracks[0].notes.concat(midi.tracks[1].notes);

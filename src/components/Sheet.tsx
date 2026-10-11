@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { Note } from '../db/Song';
-import { isSharp, midiToNoteName } from '../lib/utils';
+import {
+  isSharp,
+  midiToNoteName,
+} from '../lib/utils';
 
 import '../styles/sheet.scss';
 
@@ -20,17 +23,23 @@ const intervalHeight = 6.8;
 export function Sheet({
   currentNote,
   lowestNote,
-  highestNote, }: Props): React.JSX.Element {
+  highestNote,
+}: Props): React.JSX.Element {
   const midi = currentNote.midi;
 
   const sharp = isSharp(midi);
   const normalisedNote = sharp ? midi - 1 : midi;
 
   // this determines the `top` style attribute of almost all other elements
-  const amountOfLedgersUp = highestNote >= 79 ? 4
-    : highestNote >= 76 ? 3
-      : highestNote >= 72 ? 2
-        : highestNote >= 69 ? 1 : 0;
+  const amountOfLedgersUp = highestNote >= 79
+    ? 4
+    : highestNote >= 76
+    ? 3
+    : highestNote >= 72
+    ? 2
+    : highestNote >= 69
+    ? 1
+    : 0;
 
   const va = midi > highestNoteNoVA && midi <= highestNoteNoMA;
   const vb = midi < lowestNoteNoVB && midi >= lowestNoteNoMB;
@@ -49,13 +58,12 @@ export function Sheet({
   const sharpTop = 2 + (sharpRowIndex + extraRowIndex) * intervalHeight;
 
   return <div id="sheet">
-    <div className="clef"
-      style={{ top: 15 * amountOfLedgersUp }}>𝄞</div>
+    <div className="clef" style={{ top: 15 * amountOfLedgersUp }}>𝄞</div>
     <div className="ledger ledger-up">
-      {highestNote >= 79 && <div className='1'></div>}
-      {highestNote >= 76 && <div className='2'></div>}
-      {highestNote >= 72 && <div className='3'></div>}
-      {highestNote >= 69 && <div className='4'></div>}
+      {highestNote >= 79 && <div className="1"></div>}
+      {highestNote >= 76 && <div className="2"></div>}
+      {highestNote >= 72 && <div className="3"></div>}
+      {highestNote >= 69 && <div className="4"></div>}
     </div>
     <div className="staff">
       <div></div>
@@ -70,21 +78,22 @@ export function Sheet({
       {lowestNote <= 42 && <div></div>}
       {lowestNote <= 39 && <div></div>}
     </div>
-    <div className="sharp" style={{
-      display: sharp ? 'block' : 'none',
-      top: sharpTop + 'px'
-    }}>♯</div>
+    <div
+      className="sharp"
+      style={{
+        display: sharp ? 'block' : 'none',
+        top: sharpTop + 'px',
+      }}>
+      ♯
+    </div>
     <div className="note" style={{ top: noteTop + 'px' }}>𝅝</div>
-    <div className="octaves"
+    <div
+      className="octaves"
       style={{ top: amountOfLedgersUp < 3 ? 75 : amountOfLedgersUp * 8 }}>
-      <div className="octave"
-        style={{ display: va ? 'block' : 'none' }}>𝄶</div>
-      <div className="octave"
-        style={{ display: vb ? 'block' : 'none' }}>𝄷</div>
-      <div className="octave"
-        style={{ display: ma ? 'block' : 'none' }}>𝄸</div>
-      <div className="octave"
-        style={{ display: mb ? 'block' : 'none' }}>𝄹</div>
+      <div className="octave" style={{ display: va ? 'block' : 'none' }}>𝄶</div>
+      <div className="octave" style={{ display: vb ? 'block' : 'none' }}>𝄷</div>
+      <div className="octave" style={{ display: ma ? 'block' : 'none' }}>𝄸</div>
+      <div className="octave" style={{ display: mb ? 'block' : 'none' }}>𝄹</div>
     </div>
   </div>;
 }
@@ -154,4 +163,3 @@ const rowIndexes: { [key: string]: number } = {
   'B1': 19,
   'A1': 20, // midi 22
 };
-

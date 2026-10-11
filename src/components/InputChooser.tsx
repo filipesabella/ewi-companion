@@ -1,6 +1,12 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { Input, WebMidi } from 'webmidi';
+import {
+  useEffect,
+  useState,
+} from 'react';
+import {
+  Input,
+  WebMidi,
+} from 'webmidi';
 import { useAwakeMouse } from '../lib/useAwakeMouse';
 
 import '../styles/input-chooser.scss';
@@ -38,8 +44,8 @@ export function InputChooser({ setNoteBeingPlayed }: Props): React.JSX.Element {
     }).catch(e => {
       console.error(e);
 
-      const message = 'Sadly, the MIDI api does not work on this browser, ' +
-        'please try with Chrome/Edge/Brave/Safari.';
+      const message = 'Sadly, the MIDI api does not work on this browser, '
+        + 'please try with Chrome/Edge/Brave/Safari.';
 
       alert(message);
     });
@@ -70,7 +76,8 @@ export function InputChooser({ setNoteBeingPlayed }: Props): React.JSX.Element {
     () => 3000,
   );
 
-  return <div id="input-chooser"
+  return <div
+    id="input-chooser"
     style={{ display: showing || connectedToId === null ? 'block' : 'none' }}>
     {availableInputs.length === 0
       ? <div>No input devices found</div>
@@ -83,7 +90,8 @@ export function InputChooser({ setNoteBeingPlayed }: Props): React.JSX.Element {
           {availableInputs.map(i => {
             const connected = id(i) === connectedToId;
 
-            return <li key={id(i)}
+            return <li
+              key={id(i)}
               className={connected ? 'selected' : ''}
               onClick={() => selectInput(i)}>
               {i.name}

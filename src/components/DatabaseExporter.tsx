@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import {
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { useHotkeys } from '../lib/useHotkeys';
 import { AppContext } from './App';
 
@@ -29,7 +33,9 @@ export function DatabaseExporter({ close }: Props): React.JSX.Element {
       <div className="actions">
         <p
           className="close"
-          onClick={_ => close()}>Close</p>
+          onClick={_ => close()}>
+          Close
+        </p>
       </div>
     </div>
   </div>;

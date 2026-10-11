@@ -1,6 +1,12 @@
 import * as React from 'react';
-import { useContext, useState } from 'react';
-import { Note, Song } from '../db/Song';
+import {
+  useContext,
+  useState,
+} from 'react';
+import {
+  Note,
+  Song,
+} from '../db/Song';
 import { icons } from '../icons';
 import { useAwakeMouse } from '../lib/useAwakeMouse';
 import { useHotkeys } from '../lib/useHotkeys';
@@ -15,7 +21,10 @@ interface Props {
 }
 
 export function ProgressBar({
-  song, currentNote, setCurrentNote }: Props): React.JSX.Element {
+  song,
+  currentNote,
+  setCurrentNote,
+}: Props): React.JSX.Element {
   const { database } = useContext(AppContext);
 
   const totalNotes = song.notes.length;
@@ -73,25 +82,32 @@ export function ProgressBar({
 
   return <div className="progress-bar">
     {showBookmarks && <div className="bookmarks">
-      {song.bookmarks.map((b, i) => <div
-        key={b}
-        style={{ left: Math.min((b * 100 / (totalNotes - 1)), 98.5) + '%' }}>
+      {song.bookmarks.map((b, i) =>
         <div
-          className="bookmark"
-          onClick={() => gotoBookmark(b)}
-          title={`Click or press ${i + 2} to navigate`}>{icons.star}</div>
-        <div
-          className="deleteBookmark"
-          onClick={() => deleteBookmark(b)}
-          title="Click to remove this bookmark">{icons.bin}</div>
-      </div>)
-      }
+          key={b}
+          style={{ left: Math.min(b * 100 / (totalNotes - 1), 98.5) + '%' }}>
+          <div
+            className="bookmark"
+            onClick={() => gotoBookmark(b)}
+            title={`Click or press ${i + 2} to navigate`}>
+            {icons.star}
+          </div>
+          <div
+            className="deleteBookmark"
+            onClick={() => deleteBookmark(b)}
+            title="Click to remove this bookmark">
+            {icons.bin}
+          </div>
+        </div>
+      )}
     </div>}
-    {showBookmarks && <div onClick={() => saveBookmark()}
-      className="create-bookmark"
-      style={{ left: Math.min(completion, 98.5) + '%' }}>
-      {icons.star}
-    </div>}
+    {showBookmarks
+      && <div
+        onClick={() => saveBookmark()}
+        className="create-bookmark"
+        style={{ left: Math.min(completion, 98.5) + '%' }}>
+        {icons.star}
+      </div>}
     <div className="progress" style={{ width: completion + '%' }}>
       <p>{`${currentNoteIndex + 1}/${totalNotes}`}</p>
     </div>

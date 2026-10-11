@@ -1,6 +1,9 @@
 import Dexie from 'dexie';
 import { uuid } from '../lib/utils';
-import { Note, Song } from './Song';
+import {
+  Note,
+  Song,
+} from './Song';
 
 const dbName = 'ewi-companion-db';
 
@@ -58,12 +61,16 @@ export class Database {
   }
 
   public async savePreferredFingering(
-    songId: string, noteId: string, fingeringId: string | null): Promise<void> {
+    songId: string,
+    noteId: string,
+    fingeringId: string | null,
+  ): Promise<void> {
     db.songs.where({ id: songId }).modify(song => {
       song.notes = song.notes.map(n =>
         n.id === noteId
           ? { ...n, preferredEwiFingering: fingeringId }
-          : n)
+          : n
+      );
     });
   }
 
@@ -103,7 +110,7 @@ function seedSongs(): Song[] {
       id: uuid(),
       midi: i <= 83 ? i : 83 - i % 83,
       preferredEwiFingering: null,
-    })
+    });
   }
 
   const allNotes: Song = {

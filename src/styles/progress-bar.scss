@@ -14,8 +14,8 @@
 
     p {
       position: absolute;
-      right: .5em;
-      font-size: .8em;
+      right: 0.5em;
+      font-size: 0.8em;
     }
   }
 
@@ -25,7 +25,7 @@
     z-index: 3;
     transition: left 500ms;
     cursor: pointer;
-    margin-left: -.1em;
+    margin-left: -0.1em;
 
     svg {
       width: 1.5em;
@@ -49,13 +49,13 @@
     right: 0;
     height: 2em;
 
-    >div {
+    > div {
       position: absolute;
       margin-left: -0.1em;
       display: flex;
       flex-direction: column;
 
-      >div {
+      > div {
         cursor: pointer;
 
         svg {
@@ -75,7 +75,7 @@
         }
 
         &:hover {
-          +div {
+          + div {
             display: block;
           }
         }
@@ -98,5 +98,4 @@
       }
     }
   }
-
 }

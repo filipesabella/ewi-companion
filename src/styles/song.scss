@@ -8,7 +8,7 @@ $notes-shown: 5;
   height: 100vh;
   background: var(--bg-color);
 
-  >.ewi {
+  > .ewi {
     background-color: var(--bg-color);
     flex: 1;
     height: 100%;
@@ -44,16 +44,20 @@ $notes-shown: 5;
 
             &.notes-mask-left {
               left: 0;
-              background: linear-gradient(to left,
-                  var(--bg-color-transparent),
-                  var(--bg-color));
+              background: linear-gradient(
+                to left,
+                var(--bg-color-transparent),
+                var(--bg-color)
+              );
             }
 
             &.notes-mask-right {
               left: $note-width * ($notes-shown - 2);
-              background: linear-gradient(to right,
-                  var(--bg-color-transparent),
-                  var(--bg-color));
+              background: linear-gradient(
+                to right,
+                var(--bg-color-transparent),
+                var(--bg-color)
+              );
             }
           }
 
@@ -85,7 +89,7 @@ $notes-shown: 5;
             font-size: 3em;
             line-height: 1em;
             position: absolute;
-            top: .5em;
+            top: 0.5em;
             user-select: none;
             cursor: pointer;
 
@@ -169,14 +173,18 @@ $notes-shown: 5;
         left: 0;
         right: 0;
         top: 40%;
-        padding: .25em 0;
+        padding: 0.25em 0;
         font-size: 4em;
-        background-image: linear-gradient(to right, transparent, var(--error-color), transparent);
+        background-image: linear-gradient(
+          to right,
+          transparent,
+          var(--error-color),
+          transparent
+        );
         text-align: center;
         opacity: 0;
         animation: flash 500ms linear forwards;
       }
-
     }
 
     .finished {

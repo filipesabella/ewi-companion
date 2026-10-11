@@ -6,7 +6,8 @@ import { useEffect } from 'react';
 export function useAwakeMouse(
   show: () => void,
   hide: () => void,
-  time?: (e: MouseEvent) => number): void {
+  time?: (e: MouseEvent) => number,
+): void {
   useEffect(() => {
     let timeoutId = 0;
     const listener = (e: MouseEvent) => {

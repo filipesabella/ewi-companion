@@ -4,7 +4,8 @@ type KeyHandlers = { [key: number]: (key: number, e: KeyboardEvent) => void };
 
 export function useHotkeys(
   keyPress: KeyHandlers,
-  keyDown: KeyHandlers): void {
+  keyDown: KeyHandlers,
+): void {
   useEffect(() => {
     function handleKeysPress(e: KeyboardEvent): void {
       const key = e.which;

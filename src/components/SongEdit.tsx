@@ -1,8 +1,16 @@
 import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import {
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { Song } from '../db/Song';
 import { useHotkeys } from '../lib/useHotkeys';
-import { midiToNoteName, noteNameToMidi, uuid } from '../lib/utils';
+import {
+  midiToNoteName,
+  noteNameToMidi,
+  uuid,
+} from '../lib/utils';
 import { AppContext } from './App';
 
 import '../styles/song-editor.scss';
@@ -61,21 +69,24 @@ export function SongEdit({ song, close }: Props): React.JSX.Element {
         onChange={e => setName(e.target.value)} />
       <label>Notes</label>
       <textarea
-        placeholder={
-          'valid notes (in any octave): A1 A#1 B1 C1 C#1 D1 D#1 ' +
-          'E1 F1 F#1 G1 G#1'}
+        placeholder={'valid notes (in any octave): A1 A#1 B1 C1 C#1 D1 D#1 '
+          + 'E1 F1 F#1 G1 G#1'}
         defaultValue={notes}
-        onChange={e => setNotes(e.target.value.trim())}></textarea>
+        onChange={e => setNotes(e.target.value.trim())}>
+      </textarea>
       <div className="actions">
         <p
           className="cancel"
-          onClick={_ => close()}>Cancel</p>
+          onClick={_ => close()}>
+          Cancel
+        </p>
         <button
           className="save"
           disabled={!valid}
-          onClick={_ => save()}>Save</button>
+          onClick={_ => save()}>
+          Save
+        </button>
       </div>
     </div>
   </div>;
 }
-

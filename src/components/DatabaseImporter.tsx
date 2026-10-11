@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import {
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { useHotkeys } from '../lib/useHotkeys';
 import { AppContext } from './App';
 
@@ -52,12 +56,16 @@ export function DatabaseImporter({ close }: Props): React.JSX.Element {
       <div className="actions">
         <p
           className="close"
-          onClick={_ => close()}>Close</p>
+          onClick={_ => close()}>
+          Close
+        </p>
         <button
           className="save"
           disabled={!valid}
           title={!valid ? 'The data is invalid' : ''}
-          onClick={_ => save()}>Save</button>
+          onClick={_ => save()}>
+          Save
+        </button>
       </div>
     </div>
   </div>;

@@ -1,6 +1,13 @@
 import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
-import { Note, Song } from '../db/Song';
+import {
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import {
+  Note,
+  Song,
+} from '../db/Song';
 import { noteToFingerings } from '../lib/ewi';
 import { useAwakeMouse } from '../lib/useAwakeMouse';
 import { useHotkeys } from '../lib/useHotkeys';
@@ -45,11 +52,11 @@ export function SongComponent({ song, goBack }: Props): React.JSX.Element {
     const normalisedIndex = newIndex < 0
       ? song.notes.length - 1
       : newIndex > song.notes.length - 1
-        ? 0
-        : newIndex;
+      ? 0
+      : newIndex;
 
     changeCurrentNote(song.notes[normalisedIndex]);
-  }
+  };
 
   useHotkeys({}, {
     32: (_, e) => {
@@ -62,22 +69,26 @@ export function SongComponent({ song, goBack }: Props): React.JSX.Element {
 
   const empty = (i: number) => <div key={i} className="note"></div>;
   const noteContainers = song.notes.map((n, i) =>
-    <div key={i} className="note"><span>{midiToNoteName(n.midi)}</span></div>);
+    <div key={i} className="note">
+      <span>{midiToNoteName(n.midi)}</span>
+    </div>
+  );
 
   const onClickFingering = async (fingeringId: string) => {
     // reset to null if clicking on currently preferred fingering
-    const fingering =
-      currentNote.preferredEwiFingering === fingeringId
-        ? null : fingeringId;
+    const fingering = currentNote.preferredEwiFingering === fingeringId
+      ? null
+      : fingeringId;
 
     await database.savePreferredFingering(
       song.id,
       currentNote.id,
-      fingering);
+      fingering,
+    );
 
     setCurrentNote({
       ...currentNote,
-      preferredEwiFingering: fingering
+      preferredEwiFingering: fingering,
     });
   };
 
@@ -117,10 +128,14 @@ export function SongComponent({ song, goBack }: Props): React.JSX.Element {
     () => 1000,
   );
 
-  const lowestNote = React.useMemo(() =>
-    [...song.notes].sort((a, b) => a.midi - b.midi)[0].midi, [song]);
-  const highestNote = React.useMemo(() =>
-    [...song.notes].sort((a, b) => b.midi - a.midi)[0].midi, [song]);
+  const lowestNote = React.useMemo(
+    () => [...song.notes].sort((a, b) => a.midi - b.midi)[0].midi,
+    [song],
+  );
+  const highestNote = React.useMemo(
+    () => [...song.notes].sort((a, b) => b.midi - a.midi)[0].midi,
+    [song],
+  );
 
   const showSheet = React.useMemo(() => showMusicSheet(), []);
 
@@ -141,13 +156,17 @@ export function SongComponent({ song, goBack }: Props): React.JSX.Element {
             <div className="notes-mask notes-mask-left"></div>
             <div className="notes-mask notes-mask-right"></div>
             {showControls && <>
-              <div className="go-left"
+              <div
+                className="go-left"
                 onClick={() => skipNote(-1)}
-                title="Press left-arrow to go back one note">‹
+                title="Press left-arrow to go back one note">
+                ‹
               </div>
-              <div className="go-right"
+              <div
+                className="go-right"
                 onClick={() => skipNote(1)}
-                title="Press left-arrow or spacebar to go to the next note">›
+                title="Press left-arrow or spacebar to go to the next note">
+                ›
               </div>
             </>}
           </div>
@@ -165,30 +184,33 @@ export function SongComponent({ song, goBack }: Props): React.JSX.Element {
             {noteToFingerings(
               currentNote.midi,
               currentNote.preferredEwiFingering,
-              onClickFingering)}
+              onClickFingering,
+            )}
           </div>}
         </div>
       </div>
     </div>
-    {
-      showBack && <div
-        className="goBack"
-        title="Press Esc to go back to song selection"
-        onClick={() => goBack()}>Go back</div>
-    }
-  </div >;
+    {showBack && <div
+      className="goBack"
+      title="Press Esc to go back to song selection"
+      onClick={() => goBack()}>
+      Go back
+    </div>}
+  </div>;
 }
 
 function nextNote(
   song: Song,
-  currentNote: Note): Note | null {
+  currentNote: Note,
+): Note | null {
   const nextIndex = noteIndex(song, currentNote) + 1;
   return song.notes[nextIndex];
 }
 
 function scrollNotes(index: number): void {
   const noteWidth =
-    getComputedStyle(document.querySelector('#song > .ewi .note')!).width || '0';
+    getComputedStyle(document.querySelector('#song > .ewi .note')!).width
+    || '0';
 
   const container = document.querySelector<HTMLElement>('#song > .ewi .notes')!;
   const newLeft = parseFloat(noteWidth) * index * -1;

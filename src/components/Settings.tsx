@@ -22,7 +22,7 @@ export function Settings({ close }: Props): React.JSX.Element {
     const checked = e.target.checked;
     storeShowMusicSheet(checked);
     setShowSheet(checked);
-  }
+  };
 
   return <div id="settings">
     <div className="settings">
@@ -30,10 +30,12 @@ export function Settings({ close }: Props): React.JSX.Element {
         <fieldset>
           <legend>Settings</legend>
           <div className="showSheet">
-            <input id="showSheetCheckbox"
+            <input
+              id="showSheetCheckbox"
               type="checkbox"
               checked={showSheet}
-              onChange={onChange}></input>
+              onChange={onChange}>
+            </input>
             <label htmlFor="showSheetCheckbox">Show music sheet</label>
           </div>
         </fieldset>
@@ -46,7 +48,9 @@ export function Settings({ close }: Props): React.JSX.Element {
       <div className="actions">
         <p
           className="close"
-          onClick={_ => close()}>Close</p>
+          onClick={_ => close()}>
+          Close
+        </p>
       </div>
     </div>
     {exportingSongs && <DatabaseExporter
@@ -60,6 +64,6 @@ export function showMusicSheet(): boolean {
   return (localStorage.getItem('show-music-sheet') || 'false') === 'true';
 }
 
-function storeShowMusicSheet(show:boolean): void {
+function storeShowMusicSheet(show: boolean): void {
   localStorage.setItem('show-music-sheet', String(show));
 }

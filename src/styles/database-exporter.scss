@@ -14,7 +14,7 @@
     display: flex;
     flex-direction: column;
 
-    >p {
+    > p {
       padding: 0 0 1em 0;
     }
 
@@ -34,7 +34,7 @@
 
       .save {
         @include button;
-        margin-left: .8em;
+        margin-left: 0.8em;
       }
 
       .save[disabled], .save[disabled]:hover {

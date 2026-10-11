@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { createContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useEffect,
+  useState,
+} from 'react';
 import { Database } from '../db/Database';
 import { Song } from '../db/Song';
 import { InputChooser } from './InputChooser';
@@ -31,10 +35,9 @@ export function App(): React.JSX.Element {
     }
   }, []);
 
-
   const app = loading
     ? <div id="app">Loading...</div>
-    : <AppContext.Provider value={{ database, noteBeingPlayed, }}>
+    : <AppContext.Provider value={{ database, noteBeingPlayed }}>
       <div id="app">
         {!currentSong && <SongSelector
           setCurrentSong={setCurrentSong} />}

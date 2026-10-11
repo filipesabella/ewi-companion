@@ -14,8 +14,8 @@
     display: flex;
     flex-direction: column;
 
-    label+input {
-      margin-bottom: .5em;
+    label + input {
+      margin-bottom: 0.5em;
     }
 
     input,
@@ -55,7 +55,7 @@
       }
 
       .cancel {
-        font-size: .8em;
+        font-size: 0.8em;
         margin-right: 2em;
       }
     }
