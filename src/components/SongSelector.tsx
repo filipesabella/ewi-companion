@@ -31,6 +31,7 @@ export function SongSelector({
   const [midi, setMidi] = useState<Midi | null>(null);
   const [songToEdit, setSongToEdit] = useState<Song | null>(null);
   const [showSettings, setShowSettings] = useState<boolean>(false);
+  const [songToDelete, setSongToDelete] = useState<string | null>(null);
 
   useEffect(() => {
     database.listCurrentSongs().then(setSongs);
@@ -80,9 +81,8 @@ export function SongSelector({
   };
 
   const deleteSong = (s: Song) => {
-    if (confirm('Delete this song?')) {
-      database.deleteSong(s.id).then(_ => setReload({}));
-    }
+    setSongToDelete(null);
+    database.deleteSong(s.id).then(_ => setReload({}));
   };
 
   const newSong = () => {
@@ -99,7 +99,15 @@ export function SongSelector({
     {songs !== null && <div className="currentSongs">
       <h1>Songs</h1>
       {songs.map(song =>
-        songContainer(song, selectSong, setSongToEdit, deleteSong)
+        <SongItem
+          key={song.id}
+          song={song}
+          confirmingDelete={song.id === songToDelete}
+          select={() => selectSong(song)}
+          edit={() => setSongToEdit(song)}
+          askDelete={() => setSongToDelete(song.id)}
+          cancelDelete={() => setSongToDelete(null)}
+          confirmDelete={() => deleteSong(song)} />
       )}
       {!midi && <div className="actions">
         <div className="importButton">
@@ -152,23 +160,44 @@ export function SongSelector({
   </div>;
 }
 
-function songContainer(
-  s: Song,
-  selectSong: (song: Song) => void,
-  editSong: (song: Song) => void,
-  deleteSong: (song: Song) => void,
-): React.JSX.Element {
-  return <div
-    key={s.id}
-    className="song">
+interface SongItemProps {
+  song: Song;
+  confirmingDelete: boolean;
+  select: () => void;
+  edit: () => void;
+  askDelete: () => void;
+  cancelDelete: () => void;
+  confirmDelete: () => void;
+}
+
+function SongItem({
+  song,
+  confirmingDelete,
+  select,
+  edit,
+  askDelete,
+  cancelDelete,
+  confirmDelete,
+}: SongItemProps): React.JSX.Element {
+  return <div className={'song' + (confirmingDelete ? ' confirming' : '')}>
     <p
       className="title"
-      onClick={_ => selectSong(s)}>
-      {s.name}
+      onClick={_ => select()}>
+      {song.name}
     </p>
-    <div className="actions">
-      <button onClick={_ => editSong(s)}>edit</button>
-      <button onClick={_ => deleteSong(s)}>delete</button>
-    </div>
+    {confirmingDelete
+      ? <div className="actions">
+        <span className="question">delete?</span>
+        <button
+          className="confirm"
+          onClick={_ => confirmDelete()}>
+          yes
+        </button>
+        <button onClick={_ => cancelDelete()}>no</button>
+      </div>
+      : <div className="actions">
+        <button onClick={_ => edit()}>edit</button>
+        <button onClick={_ => askDelete()}>delete</button>
+      </div>}
   </div>;
 }

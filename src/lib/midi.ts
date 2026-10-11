@@ -22,6 +22,8 @@ export interface Midi {
   watch: (onDevices: (devices: MidiDevice[]) => void) => Promise<() => void>;
   // Connecting to a device replaces any previous connection.
   connect: (id: string, onNote: OnNote) => Promise<void>;
+  // Shown when watching fails.
+  unavailableMessage: string;
 }
 
 const webMidiDevice = (input: Input): MidiDevice => ({
@@ -55,6 +57,9 @@ const webMidi: Midi = {
     input?.addListener('noteon', e => onNote(e.note.number));
     input?.addListener('noteoff', () => onNote(null));
   },
+
+  unavailableMessage: 'MIDI is not available. Make sure this site is allowed '
+    + 'to access MIDI devices, or try Chrome/Edge/Brave.',
 };
 
 const tauriMidi: Midi = {
@@ -69,6 +74,8 @@ const tauriMidi: Midi = {
 
   connect: (id, onNote) =>
     invoke('midi_connect', { id, onNote: new Channel(onNote) }),
+
+  unavailableMessage: 'Could not access MIDI devices.',
 };
 
 export const midi: Midi = isTauri() ? tauriMidi : webMidi;

@@ -50,17 +50,24 @@
       .actions {
         display: none;
         position: absolute;
-        right: -5.5em;
+        left: 100%;
+        white-space: nowrap;
 
-        button {
+        button,
+        .question {
           padding-left: 1em;
           background: none;
           border: none;
           font-size: 0.8em;
         }
+
+        .confirm {
+          color: var(--error-color);
+        }
       }
 
       &:hover .actions,
+      &.confirming .actions,
       .actions:hover {
         display: block;
       }

@@ -19,6 +19,7 @@ export function InputChooser({ setNoteBeingPlayed }: Props): React.JSX.Element {
   const [showing, setShowing] = useState(true);
   const [availableInputs, setAvailableInputs] = useState<MidiDevice[]>([]);
   const [connectedToId, setConnectedToId] = useState<string | null>(null);
+  const [unavailable, setUnavailable] = useState(false);
 
   useEffect(() => {
     const stopWatching = midi.watch(devices => {
@@ -30,12 +31,7 @@ export function InputChooser({ setNoteBeingPlayed }: Props): React.JSX.Element {
       }
     }).catch(e => {
       console.error(e);
-
-      const message = 'Sadly, the MIDI api does not work on this browser, '
-        + 'please try with Chrome/Edge/Brave.';
-
-      alert(message);
-
+      setUnavailable(true);
       return () => {};
     });
 
@@ -58,7 +54,9 @@ export function InputChooser({ setNoteBeingPlayed }: Props): React.JSX.Element {
   return <div
     id="input-chooser"
     style={{ display: showing || connectedToId === null ? 'block' : 'none' }}>
-    {availableInputs.length === 0
+    {unavailable
+      ? <div className="error">{midi.unavailableMessage}</div>
+      : availableInputs.length === 0
       ? <div>No input devices found</div>
       : <>
         <p>

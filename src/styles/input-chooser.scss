@@ -7,6 +7,13 @@
   padding: 1em;
   line-height: 2em;
 
+  .error {
+    border-left: 0.25em solid var(--error-color);
+    padding-left: 0.5em;
+    max-width: 20em;
+    line-height: 1.5em;
+  }
+
   p {
     font-size: 0.9em;
     margin-top: -0.5em;
