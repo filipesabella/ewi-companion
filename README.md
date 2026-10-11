@@ -1,5 +1,5 @@
 # EWI-Companion
-![EWI-Companion](https://user-images.githubusercontent.com/33415/187092315-ff656988-72b6-4055-bf65-9ca3358114c5.png)
+![EWI-Companion](.github/screenshot.png)
 
 A tool to practice the fingerings of the Akai EWI 5000.
 
