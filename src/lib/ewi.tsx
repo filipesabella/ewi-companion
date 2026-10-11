@@ -155,7 +155,7 @@ export function noteToFingerings(
       className={'fingering'
         + (fingeringId === preferredFingering ? ' preferred' : '')}
       onClick={_ => onClick(fingeringId)}>
-      <svg>
+      <svg viewBox="8 6 148 583">
         <g name="Octave rollers">
           <path
             name="Octave roller 8"
