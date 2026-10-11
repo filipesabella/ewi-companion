@@ -1,9 +1,6 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
-// Set by the tauri cli when it runs the before{Dev,Build}Command
-const isTauri = !!process.env.TAURI_ENV_PLATFORM;
-
 export default defineConfig({
   root: 'src',
   base: './',
@@ -16,7 +13,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: isTauri ? '../.build' : '../docs',
+    outDir: '../.build',
     emptyOutDir: true,
   },
 });
