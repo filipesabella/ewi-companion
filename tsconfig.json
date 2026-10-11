@@ -1,48 +1,16 @@
 {
-  "include": [
-    "./src/**/*.ts",
-    "./src/**/*.tsx"
-  ],
+  "include": ["src"],
   "compilerOptions": {
     "target": "es2020",
+    "lib": ["es2020", "dom"],
     "module": "esnext",
-    "noImplicitAny": true,
-    "lib": [
-      "es2020",
-      "dom"
-    ],
-    "strictNullChecks": true,
-    "removeComments": true,
-    "jsx": "react-jsx",
     "moduleResolution": "bundler",
-    "preserveConstEnums": true,
-    "allowSyntheticDefaultImports": true,
+    "jsx": "react-jsx",
+    "types": ["vite/client"],
+    "strict": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "types": [
-      "vite/client"
-    ],
-    "noEmit": true,
-    "isolatedModules": true
-  },
-  "exclude": [
-    "node_modules",
-    "docs"
-  ],
-  "formatCodeOptions": {
-    "indentSize": 2,
-    "tabSize": 2,
-    "newLineCharacter": "\r\n",
-    "convertTabsToSpaces": true,
-    "insertSpaceAfterCommaDelimiter": true,
-    "insertSpaceAfterSemicolonInForStatements": true,
-    "insertSpaceBeforeAndAfterBinaryOperators": true,
-    "insertSpaceAfterKeywordsInControlFlowStatements": true,
-    "insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
-    "insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
-    "placeOpenBraceOnNewLineForFunctions": false,
-    "placeOpenBraceOnNewLineForControlBlocks": false
+    "isolatedModules": true,
+    "noEmit": true
   }
 }
