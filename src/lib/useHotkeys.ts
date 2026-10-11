@@ -1,26 +1,41 @@
-import { useEffect } from 'react';
+import {
+  useEffect,
+  useRef,
+} from 'react';
 
-type KeyHandlers = { [key: number]: (key: number, e: KeyboardEvent) => void };
+// keyed by `KeyboardEvent.key`, e.g. 'ArrowLeft', ' ' or 'b'
+type Handlers = { [key: string]: (e: KeyboardEvent) => void };
 
-export function useHotkeys(
-  keyPress: KeyHandlers,
-  keyDown: KeyHandlers,
-): void {
+const isTyping = (target: EventTarget | null) =>
+  target instanceof HTMLElement
+  && (target.isContentEditable
+    || target.matches(
+      'textarea, select, input:not([type=range], [type=checkbox], '
+        + '[type=radio], [type=button], [type=file])',
+    ));
+
+export function useHotkeys(handlers: Handlers, enabled = true): void {
+  // always call the latest handlers without re-registering the listener
+  const latest = useRef(handlers);
+  latest.current = handlers;
+
   useEffect(() => {
-    function handleKeysPress(e: KeyboardEvent): void {
-      const key = e.which;
-      keyPress[key] && keyPress[key](key, e);
+    if (!enabled) {
+      return;
     }
-    function handleKeysDown(e: KeyboardEvent): void {
-      const key = e.which;
-      keyDown[key] && keyDown[key](key, e);
-    }
-    window.addEventListener('keypress', handleKeysPress);
-    window.addEventListener('keydown', handleKeysDown);
 
-    return () => {
-      window.removeEventListener('keypress', handleKeysPress);
-      window.removeEventListener('keydown', handleKeysDown);
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey || e.metaKey || e.altKey || isTyping(e.target)) {
+        return;
+      }
+      const handler = latest.current[e.key];
+      if (handler) {
+        e.preventDefault();
+        handler(e);
+      }
     };
-  }, [keyPress, keyDown]);
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [enabled]);
 }

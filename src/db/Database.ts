@@ -47,8 +47,8 @@ export class Database {
         .join(',') !== song.notes.map(n => n.midi).join(',');
 
       if (wereTheNotesUpdated) {
-        // this erases bookmarks and preferred fingering
-        await db.songs.put(song);
+        // this erases bookmarks, preferred fingering and progress
+        await db.songs.put({ ...song, bookmarks: [], lastPosition: undefined });
       } else {
         await db.songs.update(song.id, {
           ...existingSong,
@@ -58,6 +58,16 @@ export class Database {
     } else {
       await db.songs.add(song);
     }
+  }
+
+  public async saveProgress(
+    songId: string,
+    lastPosition: number | undefined,
+  ): Promise<void> {
+    await db.songs.update(songId, {
+      lastPosition,
+      lastPracticedAt: Date.now(),
+    });
   }
 
   public async savePreferredFingering(
@@ -78,7 +88,7 @@ export class Database {
     return JSON.stringify(await this.listCurrentSongs());
   }
 
-  public async import(data: any): Promise<boolean> {
+  public async import(data: Song[]): Promise<boolean> {
     try {
       await db.transaction('rw', db.songs, async () => {
         await db.songs.clear();

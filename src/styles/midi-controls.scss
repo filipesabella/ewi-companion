@@ -1,0 +1,111 @@
+.midi-pill {
+  position: relative;
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    max-width: 18rem;
+    min-height: 2.75rem;
+    padding: 0 0.875rem 0 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    font-size: 0.875rem;
+
+    &:hover {
+      background: var(--surface-2);
+    }
+
+    .icon {
+      width: 1em;
+      height: 1em;
+      color: var(--muted);
+    }
+  }
+
+  .pill-label {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .popover {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: min(22rem, calc(100vw - 2rem));
+    padding: 0.75rem;
+    border-radius: 1rem;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    box-shadow: 0 1rem 2rem var(--shadow);
+    animation: fade-in 0.12s ease-out;
+  }
+}
+
+.device {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 1rem;
+  border-radius: 0.875rem;
+  border: 2px solid var(--line);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--surface-2);
+  }
+
+  &.selected {
+    border-color: var(--accent);
+    background: var(--surface-2);
+
+    .device-name {
+      font-weight: 600;
+    }
+  }
+
+  input {
+    flex: none;
+    width: 1.125rem;
+    height: 1.125rem;
+    margin: 0;
+    accent-color: var(--accent);
+  }
+
+  .device-text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .device-name {
+    font-weight: 500;
+    overflow-wrap: anywhere;
+  }
+
+  .device-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+}
+
+.device-note {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--muted);
+
+  &.error {
+    color: var(--bad-light);
+  }
+}

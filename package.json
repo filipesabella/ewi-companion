@@ -24,6 +24,8 @@
     "vite": "^8.3.4"
   },
   "dependencies": {
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
     "@tauri-apps/api": "^2",
     "@tonejs/midi": "^2.0.28",
     "dexie": "^4.4.6",
@@ -31,7 +33,6 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "reset-css": "^5.0.2",
-    "typeface-barlow": "^1.1.13",
     "webmidi": "^3.3.1"
   }
 }

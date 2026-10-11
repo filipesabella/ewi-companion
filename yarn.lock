@@ -152,6 +152,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource-variable/archivo@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "@fontsource-variable/archivo@npm:5.3.0"
+  checksum: 10c0/3af011f6ee09716625424c518bc9c4da93aa0989fc09904398451a125ef738d82af7d74569e195082dac6fc1df1c3a4aeba5d6d85f1a652245d001ed3aaf0c8c
+  languageName: node
+  linkType: hard
+
+"@fontsource-variable/jetbrains-mono@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "@fontsource-variable/jetbrains-mono@npm:5.3.0"
+  checksum: 10c0/ba983321b530a56696b12390a377c79a962376a33359eeda37c9a2141450802e0b630e6c232d90aab0281179e623d01c77d1bc8059ce595fe865fbc6d6022ffb
+  languageName: node
+  linkType: hard
+
 "@isaacs/fs-minipass@npm:^4.0.0":
   version: 4.0.1
   resolution: "@isaacs/fs-minipass@npm:4.0.1"
@@ -1127,6 +1141,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "midi-thing@workspace:."
   dependencies:
+    "@fontsource-variable/archivo": "npm:^5.3.0"
+    "@fontsource-variable/jetbrains-mono": "npm:^5.3.0"
     "@tauri-apps/api": "npm:^2"
     "@tauri-apps/cli": "npm:^2"
     "@tonejs/midi": "npm:^2.0.28"
@@ -1142,7 +1158,6 @@ __metadata:
     react-dom: "npm:^19.3.0"
     reset-css: "npm:^5.0.2"
     sass-embedded: "npm:^1.105.1"
-    typeface-barlow: "npm:^1.1.13"
     typescript: "npm:^7.0.2"
     vite: "npm:^8.3.4"
     webmidi: "npm:^3.3.1"
@@ -1639,13 +1654,6 @@ __metadata:
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
-  languageName: node
-  linkType: hard
-
-"typeface-barlow@npm:^1.1.13":
-  version: 1.1.13
-  resolution: "typeface-barlow@npm:1.1.13"
-  checksum: 10c0/eb9f2e5769b569cc00334749f0166dd47ce4bf1d121cc51deee0bf3dd5dbed1f32d444b2945a70801a56abd461de832f7832084a91ff0b151f8bc85c76ae416e
   languageName: node
   linkType: hard
 

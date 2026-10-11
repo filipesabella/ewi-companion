@@ -1,0 +1,454 @@
+.practice {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  .song-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    min-width: 0;
+  }
+
+  .song-name {
+    font-weight: 600;
+  }
+
+  .song-meta {
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+}
+
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0 1.5rem 0.25rem 2rem;
+
+  .counter {
+    font-size: 0.875rem;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: var(--muted);
+
+    strong {
+      font-weight: 600;
+      color: var(--text);
+    }
+  }
+
+  // sized to the longer label so the button keeps its width when toggled
+  .bookmark-label {
+    display: inline-grid;
+
+    &::after {
+      content: attr(data-longest);
+      height: 0;
+      visibility: hidden;
+    }
+  }
+
+  .bookmark-toggle.active {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+}
+
+.scrubber {
+  --thumb: 1rem;
+  --track: 0.375rem;
+
+  position: relative;
+  flex: 1;
+  min-width: 6rem;
+  height: 2.75rem;
+
+  .flag {
+    position: absolute;
+    top: 0.1rem;
+    left: calc(var(--thumb) / 2 + (100% - var(--thumb)) * var(--at));
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    border: none;
+    background: none;
+    transform: translateX(-50%);
+
+    &:hover .flag-label {
+      background: var(--accent);
+      color: var(--accent-ink);
+    }
+  }
+
+  .flag-label {
+    padding: 0 0.3rem;
+    border-radius: 0.25rem;
+    background: var(--line);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    line-height: 1rem;
+  }
+
+  .flag-pole {
+    width: 2px;
+    height: 0.75rem;
+    background: var(--line);
+  }
+
+  input[type='range'] {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1.25rem;
+    margin: 0;
+    background: transparent;
+    appearance: none;
+    cursor: pointer;
+
+    &::-webkit-slider-runnable-track {
+      height: var(--track);
+      border-radius: 999px;
+      background: linear-gradient(
+        to right,
+        var(--accent) var(--progress),
+        var(--surface-2) var(--progress)
+      );
+    }
+
+    &::-moz-range-track {
+      height: var(--track);
+      border-radius: 999px;
+      background: linear-gradient(
+        to right,
+        var(--accent) var(--progress),
+        var(--surface-2) var(--progress)
+      );
+    }
+
+    &::-webkit-slider-thumb {
+      width: var(--thumb);
+      height: var(--thumb);
+      margin-top: calc((var(--track) - var(--thumb)) / 2);
+      border: none;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 0.25rem var(--bg);
+      appearance: none;
+    }
+
+    &::-moz-range-thumb {
+      width: var(--thumb);
+      height: var(--thumb);
+      border: none;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 0.25rem var(--bg);
+    }
+  }
+}
+
+.stage {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem 4.5rem;
+  padding: 1rem 2rem;
+}
+
+.note-panel {
+  flex: 0 1 30rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .big-note {
+    display: flex;
+    align-items: baseline;
+    line-height: 0.85;
+    font-stretch: 75%;
+  }
+
+  .pitch {
+    font-size: clamp(6rem, 16vw, 11rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .accidental {
+    margin-left: 0.04em;
+    font-size: 0.5em;
+    vertical-align: 0.75em;
+  }
+
+  .octave {
+    margin-left: 0.375rem;
+    font-size: clamp(2.5rem, 6.5vw, 4.5rem);
+    font-weight: 500;
+    color: var(--muted);
+  }
+}
+
+.wrong-note {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  border: 1px solid var(--bad-line);
+  background: var(--bad-soft);
+  animation: nudge 0.3s ease-out;
+
+  .wrong-icon {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: var(--bad);
+    color: var(--accent-ink);
+  }
+
+  .wrong-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .wrong-title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+  }
+
+  .wrong-hint {
+    font-size: 0.9375rem;
+    color: var(--bad-light);
+  }
+}
+
+@keyframes nudge {
+  0%,
+  100% {
+    transform: none;
+  }
+
+  30% {
+    transform: translateX(-0.375rem);
+  }
+
+  65% {
+    transform: translateX(0.25rem);
+  }
+}
+
+.note-panel .note-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  font-stretch: 85%;
+
+  li {
+    padding: 0.5rem 0.75rem;
+    border: 2px solid transparent;
+    border-radius: 0.625rem;
+    background: var(--surface-2);
+    opacity: calc(1.2 - var(--distance) * 0.2);
+
+    &.played {
+      background: none;
+      color: var(--faint);
+      opacity: 1;
+    }
+
+    &.current {
+      border-color: var(--accent);
+      background: none;
+      color: var(--accent);
+      opacity: 1;
+    }
+  }
+}
+
+// Holds the card at its widest, so the rest of the stage stays put when a
+// note has fewer alternative fingerings and the card shrinks
+.fingering-slot {
+  --hero-height: min(34rem, 62vh);
+  // the diagram's viewBox is 148 wide by 583 tall
+  --hero-width: calc(var(--hero-height) * 148 / 583);
+  --thumb-height: calc(var(--hero-height) * 0.2);
+  --thumb-width: calc(var(--thumb-height) * 148 / 583 + 1.5rem);
+  // the diagram plus the button's vertical padding and border
+  --alternative-height: calc(var(--thumb-height) + 0.75rem + 4px);
+  // the most fingerings a note has is 12, laid out in 4 rows
+  --max-columns: 3;
+  --card-padding: 1.5rem;
+  --card-gap: 1.25rem;
+  --thumb-gap: 0.5rem;
+
+  display: flex;
+  width: calc(
+    var(--card-padding) * 2 + 2px + var(--hero-width) + var(--card-gap) * 2 +
+      1px +
+      var(--max-columns) * var(--thumb-width) +
+      (var(--max-columns) - 1) * var(--thumb-gap)
+  );
+}
+
+.fingering-card {
+  flex: none;
+  display: flex;
+  gap: var(--card-gap);
+  margin: 0;
+  padding: var(--card-padding);
+  border-radius: 1.75rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    .fingering-diagram {
+      height: var(--hero-height);
+    }
+  }
+
+  .alternatives {
+    display: grid;
+    grid-template-columns: repeat(var(--columns), var(--thumb-width));
+    // always take up the title plus 4 rows, so the card keeps its height
+    // whether a note has 1 or 4 rows of alternatives
+    grid-template-rows: auto repeat(4, var(--alternative-height));
+    align-content: start;
+    gap: var(--thumb-gap);
+    padding-left: var(--card-gap);
+    border-left: 1px solid var(--line);
+  }
+
+  .alternatives-title {
+    grid-column: 1 / -1;
+    padding-bottom: 0.25rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .alternative {
+    display: flex;
+    justify-content: center;
+    padding: 0.375rem 0;
+    border: 2px solid transparent;
+    border-radius: 0.75rem;
+    background: transparent;
+
+    .fingering-diagram {
+      height: var(--thumb-height);
+    }
+
+    &:hover {
+      background: var(--surface-2);
+    }
+
+    &[aria-pressed='true'] {
+      border-color: var(--accent);
+      background: var(--surface-2);
+    }
+  }
+}
+
+.next-note {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  // fixed so names like C♯4 and D4 don't shift the layout
+  width: 7rem;
+
+  .next-name {
+    font-size: 2.75rem;
+    line-height: 1;
+    font-weight: 600;
+    font-stretch: 75%;
+    color: var(--muted);
+  }
+
+  .fingering-diagram {
+    height: min(20rem, 38vh);
+  }
+}
+
+.complete {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+
+  .complete-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    background: var(--ok-soft);
+    color: var(--ok);
+
+    .icon {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    line-height: 1;
+    font-weight: 700;
+    font-stretch: 75%;
+  }
+
+  p {
+    font-size: 1.125rem;
+    color: var(--muted);
+  }
+
+  .button-row {
+    justify-content: center;
+    padding-top: 0.5rem;
+  }
+}
+
+.key-hints {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.75rem;
+  padding: 0.75rem 1.5rem 1.25rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+
+  kbd {
+    background: var(--surface);
+    color: var(--text);
+  }
+}

@@ -1,0 +1,46 @@
+.fingering-diagram {
+  display: block;
+  width: auto;
+  height: 100%;
+  margin: 0 auto;
+
+  .key,
+  .separator,
+  .roller {
+    fill: #1b2029;
+    stroke: #5b6475;
+  }
+
+  .key,
+  .separator {
+    stroke-width: 2px;
+  }
+
+  .roller {
+    stroke-width: 1px;
+  }
+
+  &.hero .on {
+    fill: var(--accent);
+    stroke: var(--accent);
+  }
+
+  &.thumb .on {
+    fill: #e6e9ef;
+    stroke: #e6e9ef;
+  }
+
+  &.dim {
+    .key,
+    .separator,
+    .roller {
+      fill: transparent;
+      stroke: #3f4757;
+    }
+
+    .on {
+      fill: #8d96a6;
+      stroke: #8d96a6;
+    }
+  }
+}

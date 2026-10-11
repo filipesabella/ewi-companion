@@ -1,0 +1,71 @@
+.staff {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+
+  .lines line {
+    stroke: #3a4250;
+    stroke-width: 1.25;
+  }
+
+  .highlight {
+    fill: var(--accent-soft);
+  }
+
+  .note {
+    color: var(--text);
+
+    &.played {
+      color: #4a5262;
+    }
+
+    &.current {
+      color: var(--accent);
+    }
+
+    &.upcoming {
+      opacity: calc(1.2 - var(--distance) * 0.2);
+    }
+  }
+
+  .head,
+  .octave-mark {
+    fill: currentColor;
+  }
+
+  .head,
+  .stem,
+  .sharp,
+  .ledger {
+    stroke: currentColor;
+    stroke-width: 1.5;
+  }
+
+  .sharp {
+    fill: none;
+  }
+
+  .ghost {
+    color: var(--bad);
+    animation: fade-in 0.15s ease-out;
+
+    .head.hollow {
+      fill: none;
+      stroke-width: 2;
+    }
+  }
+
+  .invalid {
+    rect {
+      fill: rgba(255, 122, 112, 0.15);
+      stroke: var(--bad);
+      stroke-width: 1.5;
+    }
+
+    text {
+      fill: var(--bad);
+      font-weight: 700;
+    }
+  }
+}
