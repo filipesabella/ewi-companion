@@ -20,7 +20,9 @@
   "excludes": [
     "**/node_modules",
     "docs",
-    ".yarn"
+    ".yarn",
+    "src/tauri/target",
+    "src/tauri/gen"
   ],
   "plugins": [
     "npm:@dprint/typescript@0.96.1",

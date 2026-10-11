@@ -4,9 +4,9 @@ import {
   useState,
 } from 'react';
 import {
-  Input,
-  WebMidi,
-} from 'webmidi';
+  midi,
+  MidiDevice,
+} from '../lib/midi';
 import { useAwakeMouse } from '../lib/useAwakeMouse';
 
 import '../styles/input-chooser.scss';
@@ -17,58 +17,37 @@ interface Props {
 
 export function InputChooser({ setNoteBeingPlayed }: Props): React.JSX.Element {
   const [showing, setShowing] = useState(true);
-  const [availableInputs, setAvailableInputs] = useState<Input[]>([]);
+  const [availableInputs, setAvailableInputs] = useState<MidiDevice[]>([]);
   const [connectedToId, setConnectedToId] = useState<string | null>(null);
 
   useEffect(() => {
-    WebMidi.enable().then(() => {
-      const inputs = WebMidi.inputs;
-      setAvailableInputs(inputs);
+    const stopWatching = midi.watch(devices => {
+      setAvailableInputs(devices);
+      setConnectedToId(id => devices.some(d => d.id === id) ? id : null);
 
-      if (inputs.length === 1) {
-        selectInput(inputs[0]);
+      if (devices.length === 1) {
+        selectInput(devices[0]);
       }
-
-      WebMidi.addListener('connected', () => {
-        const inputs = WebMidi.inputs;
-        setAvailableInputs([...inputs]);
-
-        if (inputs.length === 1) {
-          selectInput(inputs[0]);
-        }
-      });
-
-      WebMidi.addListener('disconnected', () => {
-        setAvailableInputs([...WebMidi.inputs]);
-      });
     }).catch(e => {
       console.error(e);
 
       const message = 'Sadly, the MIDI api does not work on this browser, '
-        + 'please try with Chrome/Edge/Brave/Safari.';
+        + 'please try with Chrome/Edge/Brave.';
 
       alert(message);
+
+      return () => {};
     });
 
     return () => {
-      WebMidi.removeListener('connected');
-      WebMidi.removeListener('disconnected');
+      stopWatching.then(stop => stop());
     };
   }, []);
 
-  const selectInput = (input: Input) => {
-    setConnectedToId(id(input));
-
-    input.addListener('disconnected', () => setConnectedToId(null));
-
-    input.addListener('noteon', e => {
-      setNoteBeingPlayed(e.note.number);
-    });
-
-    input.addListener('noteoff', () => {
-      setNoteBeingPlayed(null);
-    });
-  };
+  const selectInput = (device: MidiDevice) =>
+    midi.connect(device.id, setNoteBeingPlayed)
+      .then(() => setConnectedToId(device.id))
+      .catch(console.error);
 
   useAwakeMouse(
     () => setShowing(true),
@@ -87,23 +66,18 @@ export function InputChooser({ setNoteBeingPlayed }: Props): React.JSX.Element {
           {connectedToId === null ? ' (click to connect)' : ''}
         </p>
         <ul>
-          {availableInputs.map(i => {
-            const connected = id(i) === connectedToId;
+          {availableInputs.map(device => {
+            const connected = device.id === connectedToId;
 
             return <li
-              key={id(i)}
+              key={device.id}
               className={connected ? 'selected' : ''}
-              onClick={() => selectInput(i)}>
-              {i.name}
-              {i.manufacturer ? ` (${i.manufacturer})` : ''}
+              onClick={() => selectInput(device)}>
+              {device.label}
               {connected ? ' (connected)' : ''}
             </li>;
           })}
         </ul>
       </>}
   </div>;
-}
-
-function id(input: Input): string {
-  return input.id + input.name + input.manufacturer;
 }
