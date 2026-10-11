@@ -1,8 +1,5 @@
 import * as React from 'react';
-import {
-  useContext,
-  useState,
-} from 'react';
+import { useState } from 'react';
 import {
   Note,
   Song,
@@ -10,7 +7,6 @@ import {
 import { icons } from '../icons';
 import { useAwakeMouse } from '../lib/useAwakeMouse';
 import { useHotkeys } from '../lib/useHotkeys';
-import { AppContext } from './App';
 
 import '../styles/progress-bar.scss';
 
@@ -18,19 +14,20 @@ interface Props {
   song: Song;
   currentNote: Note;
   setCurrentNote: (note: Note) => void;
+  saveBookmarks: (bookmarks: number[]) => Promise<void>;
 }
 
 export function ProgressBar({
   song,
   currentNote,
   setCurrentNote,
+  saveBookmarks,
 }: Props): React.JSX.Element {
-  const { database } = useContext(AppContext);
-
   const totalNotes = song.notes.length;
   const currentNoteIndex = song.notes.indexOf(currentNote);
 
   const completion = currentNoteIndex * 100 / (totalNotes - 1);
+  const isCurrentNoteBookmarked = song.bookmarks.includes(currentNoteIndex);
 
   const [showBookmarks, setShowBookmarks] = useState(false);
 
@@ -68,15 +65,14 @@ export function ProgressBar({
   );
 
   const saveBookmark = async () => {
-    song.bookmarks = [...new Set(song.bookmarks).add(currentNoteIndex)]
-      .sort((a, b) => a - b);
-    await database.saveSong(song);
+    await saveBookmarks(
+      [...new Set(song.bookmarks).add(currentNoteIndex)].sort((a, b) => a - b),
+    );
     setShowBookmarks(false);
   };
 
   const deleteBookmark = async (b: number) => {
-    song.bookmarks = song.bookmarks.filter(i => i !== b);
-    await database.saveSong(song);
+    await saveBookmarks(song.bookmarks.filter(i => i !== b));
     setShowBookmarks(false);
   };
 
@@ -101,7 +97,7 @@ export function ProgressBar({
         </div>
       )}
     </div>}
-    {showBookmarks
+    {showBookmarks && !isCurrentNoteBookmarked
       && <div
         onClick={() => saveBookmark()}
         className="create-bookmark"

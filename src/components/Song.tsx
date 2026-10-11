@@ -98,6 +98,12 @@ export function SongComponent(props: Props): React.JSX.Element {
     );
   };
 
+  const saveBookmarks = async (bookmarks: number[]) => {
+    const updatedSong = { ...song, bookmarks };
+    setSong(updatedSong);
+    await database.saveSong(updatedSong);
+  };
+
   useEffect(() => {
     scrollNotes(noteIndex(song, currentNote));
   });
@@ -151,7 +157,8 @@ export function SongComponent(props: Props): React.JSX.Element {
         <ProgressBar
           song={song}
           currentNote={currentNote}
-          setCurrentNote={setCurrentNote} />
+          setCurrentNote={setCurrentNote}
+          saveBookmarks={saveBookmarks} />
         <div className="notes-and-fingerings">
           <div className="notes-container">
             <div className="notes">
