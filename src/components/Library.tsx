@@ -294,7 +294,16 @@ function SongRow({
   return <li className={'song-row' + (highlighted ? ' highlighted' : '')}>
     <Contour midis={midis} />
     <div className="song-text">
-      <span className="song-name">{song.name}</span>
+      {midis.length > 0
+        // a shortcut for the mouse, keyboards already have the practice button
+        ? <button
+          type="button"
+          className="song-name"
+          tabIndex={-1}
+          onClick={practice}>
+          {song.name}
+        </button>
+        : <span className="song-name">{song.name}</span>}
       <span className="song-meta">{meta}</span>
     </div>
     {confirmingDelete

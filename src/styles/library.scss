@@ -191,6 +191,20 @@
     text-overflow: ellipsis;
   }
 
+  button.song-name {
+    padding: 0;
+    border: none;
+    background: none;
+    color: inherit;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+
   .song-meta {
     font-size: 0.8125rem;
     color: var(--muted);
